@@ -4,7 +4,7 @@
 
 <h1>Register User</h1>
 <form action="user_manager/index.php" method="post">
-<input type="hidden" name="controllerRequest" value="add_user" /> 
+<input type="hidden" name="action" value="add_user" /> 
     <p>All fields are Required.</p>
   <div class="register">
       <label class='label_form' for="first_name">First Name</label>

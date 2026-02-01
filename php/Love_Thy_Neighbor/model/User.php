@@ -12,7 +12,9 @@ class User {
             $phone, 
             $userName,
             $password,
-            $dateCreated;
+            $dateCreated,
+            $accountType;
+
 
     public function __construct() {}
 
@@ -102,12 +104,20 @@ class User {
         return $this->password = $value;
     }
 
-     public function getDateCreated() {
+    public function getDateCreated() {
         return $this->dateCreated;
     }
 
     public function setDateCreated($value) {
         return $this->dateCreated = $value;
+    }
+
+    public function getAccountType() {
+        return $this->accountType;
+    }
+
+    public function setAccountType($value) {
+        return $this->accountType = $value;
     }
 }
 

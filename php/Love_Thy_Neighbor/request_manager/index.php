@@ -2,11 +2,11 @@
 
 require_once('../model/database.php');
 
-$controllerChoice = filter_input(INPUT_POST, 'controllerRequest');
-if ( $controllerChoice == NULL) {
-     $controllerChoice = filter_input(INPUT_GET, 'controllerRequest');
-    if ( $controllerChoice == NULL) {
-         $controllerChoice = 'Not-Set (Null)';
+$action = filter_input(INPUT_POST, 'action');
+if ( $action == NULL) {
+     $action = filter_input(INPUT_GET, 'action');
+    if ( $action == NULL) {
+         $action = 'Not-Set (Null)';
     }
 }
 
@@ -19,7 +19,7 @@ else {
        // Show generic else page
           require_once '../view/header.php'; 
           echo "<h1>Not yet implimented... </h1>";
-          echo "<h2> controllerChoice:  $controllerChoice</h2>";
+          echo "<h2> action:  $action</h2>";
           echo "<h3> File:  user_manager/index.php </h3>";
           require_once '../view/footer.php';
 }
