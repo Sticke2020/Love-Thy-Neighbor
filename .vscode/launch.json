@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Listen for Xdebug (Docker)",
+      "type": "php",
+      "request": "launch",
+      "port": 9003,
+      "pathMappings": {
+        "/var/www/html": "${workspaceFolder}/php"
+      }
+    },
+    {
+      "name": "Open site in Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}/php"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "PHP Debug + Open Browser",
+      "configurations": [
+        "Listen for Xdebug (Docker)",
+        "Open site in Chrome"
+      ]
+    }
+  ]
+}
