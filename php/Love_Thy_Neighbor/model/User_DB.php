@@ -35,7 +35,7 @@ public static function createUser($user) {
     $zip = $user->getZip();
     $phone = $user->getPhone();
     $email = $user->getEmail();
-    $username = $user->getUsername();
+    $userName = $user->getUserName();
     $password = $user->getPassword();
     $userTypeId = $user->getUserTypeId();
 
@@ -44,7 +44,7 @@ public static function createUser($user) {
     $query = 'INSERT INTO user
             (user_type_id, first_name, last_name, city, state, zip, email_address, phone, username, password)
         VALUES
-            (:userTypeId, :firstName, :lastName, :city, :state, :zip, :email, :phone, :username, :password)';
+            (:userTypeId, :firstName, :lastName, :city, :state, :zip, :email, :phone, :userName, :password)';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userTypeId', $userTypeId);
@@ -55,7 +55,7 @@ public static function createUser($user) {
     $statement->bindvalue(':zip', $zip);
     $statement->bindvalue(':email', $email);
     $statement->bindvalue(':phone', $phone);
-    $statement->bindvalue(':username', $username);
+    $statement->bindvalue(':userName', $userName);
     $statement->bindvalue(':password', $password);
     $statement->execute();
     $statement->closeCursor();

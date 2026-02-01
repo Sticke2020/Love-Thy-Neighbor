@@ -42,8 +42,8 @@
           required value="">
   </div>
   <div class="register">
-      <label class='label_form' for="username">Username</label>
-      <input class="text_input" type="text" name="password" id="password"
+      <label class='label_form' for="user_name">UserName</label>
+      <input class="text_input" type="text" name="user_name" id="user_name"
           required value="">
   </div>
   <div class="register">
@@ -52,21 +52,8 @@
           required value="">
   </div>
   <div class="register">
-      <label class='radio_label' for="personal_account">This is a Personal account</label>
-      <input class="radio_input" type="radio" name="account_type" id="personal" value="personal" checked>
-  </div>
-  <div class="register">
-      <label class='radio_label' for="employee_account">This is an Employee account</label>
-      <input class="radio_input" type="radio" name="account_type" id="employee" value="employee">
-  </div>
-  <div class="register">
-      <label class='radio_label' for="business_account">This is a Business account</label>
-      <input class="radio_input" type="radio" name="account_type" id="business" value="business">
-  </div>
-  <div class="register">
       <label class='label_form' for="button_register"></label>
       <input class="clickable_form" type="submit" id="button_register" value="Register">
   </div>
-
 </form>
 <?php require_once '../view/footer.php'; ?>

@@ -15,10 +15,10 @@
 </header>
         <ul id="header_ul">             
         <li>
-            <a href="user_manager/index.php?controllerRequest=register_user">Sign up</a>
+            <a href="user_manager/index.php?action=sign_up">Sign up</a>
         </li>
         <li>
-            <a href="user_manager?controllerRequest=login_user">Login</a>
+            <a href="user_manager?action=login_user">Login</a>
         </li>
         </ul>
         

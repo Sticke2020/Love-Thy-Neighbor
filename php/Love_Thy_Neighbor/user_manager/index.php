@@ -6,6 +6,8 @@ $prefix;
 $suffix;
 
 require_once('../model/Database.php');
+require_once('../model/User.php');
+require_once('../model/User_DB.php');
 
 // Get the data from either the GET or POST collection.
 $action = filter_input(INPUT_POST, 'action');
@@ -18,8 +20,22 @@ if ( $action == NULL) {
 
 switch ($action) {
 
-     case 'register_user':
-          include('user_register.php');
+     case 'sign_up':
+          include('user_choose_account_type.php');
+          break;
+
+     case 'register_account':
+          $accountType = filter_input(INPUT_POST, 'account_type');
+
+          if ($accountType == 'PERSONAL') {
+               include('user_register.php');
+          }
+          else if ($accountType == 'EMPLOYEE') {
+               include('user_employee_register.php');
+          }
+          else if ($accountType == 'BUSINESS') {
+               include('user_business_register.php');
+          }
           break;
 
      case 'add_user':
@@ -33,11 +49,13 @@ switch ($action) {
           $user->setZip(filter_input(INPUT_POST, 'zip'));
           $user->setPhone(filter_input(INPUT_POST, 'phone'));
           $user->setEmail(filter_input(INPUT_POST, 'email'));
+          $user->setUserName(filter_input(INPUT_POST, 'user_name'));
           $user->setPassword(filter_input(INPUT_POST, 'password'));
           $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
 
           if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
-               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null) {
+               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
+               $user->getUserName() == null) {
 
                $errorMessage = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');

@@ -307,7 +307,6 @@ INSERT INTO request_image (request_id, image_id) VALUES
 (3, 7);
 
 -- uncomment the below if you want to use it
-/*
 -- Recreate user and assign privileges
 CREATE USER  IF NOT EXISTS 'mgs_user'@'%' IDENTIFIED BY 'pa55word';
 
@@ -315,4 +314,4 @@ CREATE USER  IF NOT EXISTS 'mgs_user'@'%' IDENTIFIED BY 'pa55word';
 GRANT SELECT, INSERT, DELETE, UPDATE ON love_thy_neighbor.* TO 'mgs_user'@'%';
 
 FLUSH PRIVILEGES;
-*/
+
