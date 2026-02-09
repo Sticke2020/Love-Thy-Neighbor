@@ -9,6 +9,7 @@ class Business {
             $state, 
             $zip,
             $description,
+            $verificationCode,
             $dateCreated;
 
 
@@ -19,6 +20,10 @@ class Business {
     public function getId() {
         return $this->id;
     } 
+
+    public function setId($value) {
+        return $this->id = $value;
+    }
 
     public function getName() {
         return $this->name;
@@ -74,6 +79,14 @@ class Business {
 
     public function setDescription($value) {
         return $this->description = $value;
+    }
+
+    public function getVerificationCode() {
+        return $this->verificationCode;
+    }
+
+    public function setVerificationCode($value) {
+        return $this->verificationCode = $value;
     }
 
     public function getDateCreated() {

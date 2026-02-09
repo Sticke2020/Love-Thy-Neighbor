@@ -71,6 +71,7 @@ CREATE TABLE `business` (
   `state` varchar(50) NOT NULL,
   `zip` varchar(20) NOT NULL,
   `description` text NOT NULL,
+  `verification_code` varchar(50) NOT NULL,
   `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` DATETIME
 );
@@ -117,7 +118,8 @@ CREATE TABLE `report_type` (
 -- Create business_user table
 CREATE TABLE `business_user` (
   `user_id` int,
-  `business_id` int
+  `business_id` int,
+   `is_admin` boolean
 );
 
 -- Create image table
@@ -243,16 +245,16 @@ INSERT INTO user (user_type_id, first_name, last_name, city, state, zip, email_a
 (3, 'Melissa', 'Heart', 'New Richmond', 'WI', 54017, 'mel@mel.com', '715-678-6677', 'Melissa', 'pass', NOW());
 
 -- Insert business
-INSERT INTO business (name, phone, address, city, state, zip, description, date_created) VALUES 
-('Rons Automotive', '715-123-4321', '511 Main St', 'NewRichmond', 'WI', '54017', 'Rons Automotive is the one stop shop for all your automotive needs', NOW()),
-('NR Plumbing', '715-443-4342', '642 Main St', 'NewRichmond', 'WI', '54017', 'NR Plumbing, we get it done', NOW()),
-('Glass Palace', '715-543-4114', '31 2nd St', 'NewRichmond', 'WI', '54017', 'Glass Palace, Theres no better place to get your windows today', NOW());
+INSERT INTO business (name, phone, address, city, state, zip, description, verification_code, date_created) VALUES 
+('Rons Automotive', '715-123-4321', '511 Main St', 'NewRichmond', 'WI', '54017', 'Rons Automotive is the one stop shop for all your automotive needs', '123123123', NOW()),
+('NR Plumbing', '715-443-4342', '642 Main St', 'NewRichmond', 'WI', '54017', 'NR Plumbing, we get it done', 'testing123', NOW()),
+('Glass Palace', '715-543-4114', '31 2nd St', 'NewRichmond', 'WI', '54017', 'Glass Palace, Theres no better place to get your windows today', 'xyzxyzxyz12', NOW());
 
 -- Insert business_user
-INSERT INTO business_user (user_id, business_id) VALUES
-(4, 1),
-(7, 2),
-(6, 3);
+INSERT INTO business_user (user_id, business_id, is_admin) VALUES
+(4, 1, TRUE),
+(7, 2, TRUE),
+(6, 3, TRUE);
 
 -- Insert request
 INSERT INTO request (user_id, title, body, request_status_type_id, date_created) VALUES

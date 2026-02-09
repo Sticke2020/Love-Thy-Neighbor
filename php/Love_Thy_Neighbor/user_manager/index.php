@@ -8,6 +8,8 @@ $suffix;
 require_once('../model/Database.php');
 require_once('../model/User.php');
 require_once('../model/User_DB.php');
+require_once('../model/BusinessUser.php');
+require_once('../model/Business_DB.php');
 
 // Get the data from either the GET or POST collection.
 $action = filter_input(INPUT_POST, 'action');
@@ -35,6 +37,49 @@ switch ($action) {
           }
           else if ($accountType == 'BUSINESS') {
                include('user_business_register.php');
+          }
+          break;
+
+     case 'login_user':
+          $errorMessage = "";
+          include('user_login.php');
+          break;
+
+     case 'validate_login':
+          if (session_status() === PHP_SESSION_ACTIVE ) {
+               session_destroy();
+          }
+          $_SESSION = array();
+          session_start();
+
+          $email = filter_input(INPUT_POST, 'email');
+          $password = filter_input(INPUT_POST, 'password');
+
+          if ($email == null || $password == null) {
+               $errorMessage = "Please enter a valid email and password";
+               include('user_login.php');
+          } 
+          else {
+               $user = UserDB::getUserByEmailAndPassword($email,$password);
+               if($user->getId() == false || $user->getId() == null) {
+                    $errorMessage = "Incorrect email or password";
+                    include('user_login.php');
+               }
+               else if ($user != false && $user != null) {
+                    $ID = $user->getId();
+                    if($ID > 0) {
+                         $user = UserDB::getUserById($ID);
+                         $errorMessage = "";
+                         session_regenerate_id(true);
+                         $_SESSION['user'] = $user;
+                         
+                         include('user_dashboard.php');
+                    } 
+                    else{
+                         $errorMessage = "Incorrect email or password";
+                         include('user_login.php');
+                    }
+               }
           }
           break;
 
@@ -66,6 +111,10 @@ switch ($action) {
           }
           else if (UserDB::emailAddressExists($user->getEmail())) {
                $error = "Email address in use, you must use a different email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::userNameExists($user->getUserName())) {
+               $error = "UserName is NOT available, you must choose a different UserName";
                include('../errors/error.php');
           }
           else if (strlen(trim($user->getZip())) > 10) {
@@ -101,7 +150,212 @@ switch ($action) {
                UserDB::createUser($user);
                include('user_registered.php');
           }
+          break;
 
+     case 'add_user_employee':
+          $user = new User();
+          $businessUser = new BusinessUser();
+          $business = new Business();
+
+          $user->setUserTypeId(3);
+          $user->setFirstName(filter_input(INPUT_POST, 'first_name'));
+          $user->setLastName(filter_input(INPUT_POST, 'last_name'));
+          $user->setCity(filter_input(INPUT_POST, 'city'));
+          $user->setState(filter_input(INPUT_POST, 'state'));
+          $user->setZip(filter_input(INPUT_POST, 'zip'));
+          $user->setPhone(filter_input(INPUT_POST, 'phone'));
+          $user->setEmail(filter_input(INPUT_POST, 'email'));
+          $user->setUserName(filter_input(INPUT_POST, 'user_name'));
+          $user->setPassword(filter_input(INPUT_POST, 'password'));
+          $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
+
+          $businessId = (filter_input(INPUT_POST, 'business_id'));
+          $verificationCode = (filter_input(INPUT_POST, 'business_code'));
+          $business = BusinessDB::getBusinessById($businessId);
+
+          if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
+               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
+               $user->getUserName() == null) {
+
+               $errorMessage = "Invalid user data. Check all fields and try again.";
+               include('../errors/error.php');
+          }
+
+          if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
+               $phone = $user->getPhone();
+               $phoneNumbersOnly = preg_replace('/\D/', '', $phone);
+
+               if ((int)strlen($phoneNumbersOnly) != 10) {
+               $error = "Phone number must be 10 digits\n". 
+                    "Invalid phone number";
+               include('../errors/error.php');
+               }
+               else if ((int)strlen($phoneNumbersOnly) == 10) {
+                    $areaCode = substr($phoneNumbersOnly, 0 , 3);
+                    $prefix = substr($phoneNumbersOnly, 3 , 3);
+                    $suffix = substr($phoneNumbersOnly, 6 , 4);
+
+                    $user->setPhone($areaCode . "-" . $prefix . "-" . $suffix);
+               }
+          }
+
+          if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
+               $error = "You must enter a valid email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::emailAddressExists($user->getEmail())) {
+               $error = "Email address in use, you must use a different email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::userNameExists($user->getUserName())) {
+               $error = "UserName is NOT available, you must choose a different UserName";
+               include('../errors/error.php');
+          }
+          else if (strlen(trim($user->getZip())) > 10) {
+               $error = "Postal Code must be 10 digits or less.";
+               include('../errors/error.php');
+          }
+          else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
+               $error = "Phone number must be 10 digits\n". 
+                              "Invalid phone number";
+               include('../errors/error.php');
+          }
+          else if ($businessId == null || $verificationCode == null) {
+               $error = "You must enter a Business ID and Verification Code";
+               include('../errors/error.php');
+          }
+          else if ($business->getVerificationCode() != $verificationCode) {
+               $error = "The Business ID and Verification code are invalid.\n".
+                         "Please make sure you entered the ID and Code correctly.\n".
+                         "If you continue to see this error contact your employer";
+               include('../errors/error.php');
+          }
+          else {
+               UserDB::createUser($user);
+               $userId = UserDB::getUserByEmail($user->getEmail());
+               BusinessDB::createBusinessUser($userId->getId(), $businessId, 0);
+               include('user_employee_registered.php');
+          }
+          break;
+
+     case 'add_user_business':
+          $user = new User();
+          $businessUser = new BusinessUser();
+          $business = new Business();
+
+          $user->setUserTypeId(3);
+          $user->setFirstName(filter_input(INPUT_POST, 'first_name'));
+          $user->setLastName(filter_input(INPUT_POST, 'last_name'));
+          $user->setCity(filter_input(INPUT_POST, 'city'));
+          $user->setState(filter_input(INPUT_POST, 'state'));
+          $user->setZip(filter_input(INPUT_POST, 'zip'));
+          $user->setPhone(filter_input(INPUT_POST, 'phone'));
+          $user->setEmail(filter_input(INPUT_POST, 'email'));
+          $user->setUserName(filter_input(INPUT_POST, 'user_name'));
+          $user->setPassword(filter_input(INPUT_POST, 'password'));
+          $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
+
+          $business->setName(filter_input(INPUT_POST, 'business_name'));
+          $business->setPhone(filter_input(INPUT_POST, 'business_phone'));
+          $business->setAddress(filter_input(INPUT_POST, 'business_address'));
+          $business->setCity(filter_input(INPUT_POST, 'business_city'));
+          $business->setState(filter_input(INPUT_POST, 'business_state'));
+          $business->setZip(filter_input(INPUT_POST, 'business_zip'));
+          $business->setDescription(filter_input(INPUT_POST, 'business_description'));
+          $business->setVerificationCode(filter_input(INPUT_POST, 'business_code'));
+
+          if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
+               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
+               $user->getUserName() == null) {
+
+               $errorMessage = "Invalid user data. Check all fields and try again.";
+               include('../errors/error.php');
+          }
+
+          if ($business->getName() == null || $business->getPhone() == null || $business->getAddress() == null ||
+               $business->getCity() == null || $business->getState() == null || $business->getZip() == null ||
+               $business->getDescription() == null || $business->getVerificationCode() == null) {
+
+               $errorMessage = "Invalid Business data. Check all fields and try again.";
+               include('../errors/error.php');
+          }
+
+          if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
+               $phone = $user->getPhone();
+               $phoneNumbersOnly = preg_replace('/\D/', '', $phone);
+
+               if ((int)strlen($phoneNumbersOnly) != 10) {
+               $error = "Phone number must be 10 digits\n". 
+                    "Invalid phone number";
+               include('../errors/error.php');
+               }
+               else if ((int)strlen($phoneNumbersOnly) == 10) {
+                    $areaCode = substr($phoneNumbersOnly, 0 , 3);
+                    $prefix = substr($phoneNumbersOnly, 3 , 3);
+                    $suffix = substr($phoneNumbersOnly, 6 , 4);
+
+                    $user->setPhone($areaCode . "-" . $prefix . "-" . $suffix);
+               }
+          }
+
+          if (!empty($business->getPhone()) && (int)strlen($business->getPhone()) >= 10) {
+               $phone = $business->getPhone();
+               $phoneNumbersOnly = preg_replace('/\D/', '', $phone);
+
+               if ((int)strlen($phoneNumbersOnly) != 10) {
+               $error = "Phone number must be 10 digits\n". 
+                    "Invalid phone number";
+               include('../errors/error.php');
+               }
+               else if ((int)strlen($phoneNumbersOnly) == 10) {
+                    $areaCode = substr($phoneNumbersOnly, 0 , 3);
+                    $prefix = substr($phoneNumbersOnly, 3 , 3);
+                    $suffix = substr($phoneNumbersOnly, 6 , 4);
+
+                    $business->setPhone($areaCode . "-" . $prefix . "-" . $suffix);
+               }
+          }
+
+          if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
+               $error = "You must enter a valid email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::emailAddressExists($user->getEmail())) {
+               $error = "Email address in use, you must use a different email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::userNameExists($user->getUserName())) {
+               $error = "UserName is NOT available, you must choose a different UserName";
+               include('../errors/error.php');
+          }
+          else if (strlen(trim($user->getZip())) > 10) {
+               $error = "Postal Code must be 10 digits or less.";
+               include('../errors/error.php');
+          }
+          else if (strlen(trim($business->getZip())) > 10) {
+               $error = "Postal Code must be 10 digits or less.";
+               include('../errors/error.php');
+          }
+          else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
+               $error = "Phone number must be 10 digits\n". 
+                              "Invalid phone number";
+               include('../errors/error.php');
+          }
+          else if (empty($business->getPhone()) || (int)strlen($business->getPhone()) < 10) {
+               $error = "Phone number must be 10 digits\n". 
+                              "Invalid phone number";
+               include('../errors/error.php');
+          }
+          else {
+               UserDB::createUser($user);
+               BusinessDB::createBusiness($business);
+
+               $newBusiness = BusinessDB::getBusinessByName($business->getName());
+               $userId = UserDB::getUserByEmail($user->getEmail());
+
+               BusinessDB::createBusinessUser($userId->getId(), $newBusiness->getId(), 1);
+               include('user_business_registered.php');
+          }
           break;
 
      default:

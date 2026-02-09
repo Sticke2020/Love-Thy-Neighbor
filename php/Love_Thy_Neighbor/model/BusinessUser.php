@@ -1,7 +1,7 @@
 <?php
 
 class BusinessUser {
-    private $userId, $businessId; 
+    private $userId, $businessId, $isAdmin; 
 
 
     // Getters and Setters
@@ -19,6 +19,14 @@ class BusinessUser {
 
     public function setBusinessId($value) {
         return $this->businessId = $value;
+    }
+
+    public function getIsAdmin() {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin($value) {
+        return $this->isAdmin = $value;
     }
 }
 ?>

@@ -3,6 +3,79 @@ require_once("User.php");
 
 class UserDB {
 
+public static function getUserByEmailAndPassword($email, $password) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user WHERE email_address = :email AND password = :password';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':password', $password);
+        $statement->execute();
+        $user = $statement->fetch();
+        $statement->closeCursor();
+
+        $selectedUser = new User();
+
+        if ($user == false) {
+            $selectedUser->setId(null);
+        }
+        else {
+            $selectedUser->setID($user['id']);
+        }
+        
+    return $selectedUser;
+}
+
+public static function getUserByEmail($email) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user WHERE email_address = :email';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':email', $email);
+        $statement->execute();
+        $user = $statement->fetch();
+        $statement->closeCursor();
+
+        $selectedUser = new User();
+
+        if ($user == false) {
+            $selectedUser->setId(null);
+        }
+        else {
+            $selectedUser->setID($user['id']);
+        }
+        
+    return $selectedUser;
+}
+
+
+public static function getUserById($ID) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user WHERE id = :ID';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':ID', $ID);
+    $statement->execute();
+    $user = $statement->fetch();
+    $statement->closeCursor();
+
+    $selectedUser = new User();
+        $selectedUser->setId($user['id']);
+        $selectedUser->setUserTypeId($user['user_type_id']);
+        $selectedUser->setFirstName($user['first_name']);
+        $selectedUser->setLastName($user['last_name']);
+        $selectedUser->setCity($user['city']);
+        $selectedUser->setState($user['state']);
+        $selectedUser->setZip($user['zip']);
+        $selectedUser->setEmail($user['email_address']);
+        $selectedUser->setPhone($user['phone']);
+        $selectedUser->setUserName($user['username']);
+    return $selectedUser;
+}
+
 public static function emailAddressExists($email, $excludeId = null) {
     $db = DataBase::getDB();
 
@@ -18,6 +91,30 @@ public static function emailAddressExists($email, $excludeId = null) {
                 WHERE email_address = :email';
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
+    }
+
+    $statement->execute();
+    $count = $statement->fetchColumn();
+    $statement->closeCursor();
+
+    return $count;
+}
+
+public static function userNameExists($userName, $excludeId = null) {
+    $db = DataBase::getDB();
+
+    if ($excludeId) {
+        $query = 'SELECT COUNT(*) FROM user
+                    WHERE username = :userName AND id != :id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userName', $userName);
+        $statement->bindValue(':id', $excludeId);
+    }
+    else {
+        $query = 'SELECT COUNT(*) FROM user 
+                WHERE username = :userName';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userName', $userName);
     }
 
     $statement->execute();

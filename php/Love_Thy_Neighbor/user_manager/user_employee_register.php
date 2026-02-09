@@ -4,7 +4,7 @@
 
 <h1>Register Employee</h1>
 <form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="add_user" /> 
+<input type="hidden" name="action" value="add_user_employee" /> 
     <p>All fields are Required.</p>
     <div class="register">
         <label class='label_form' for="first_name">First Name</label>
@@ -52,8 +52,12 @@
             required value="">
     </div>
 
-    <p>Enter the code provided by your employer for varification</p>
+    <p>Enter the ID and Verification Code provided by your employer.</p>
 
+    <div class="register">
+        <label class='label_form' for="business_id">Business ID</label>
+        <input class="text_input" type="text" name="business_id" id="business_id" required value="">
+    </div> 
     <div class="register">
         <label class='label_form' for="business_code">Verification Code</label>
         <input class="text_input" type="text" name="business_code" id="business_code" required value="">

@@ -24,6 +24,10 @@ class User {
         return $this->id;
     } 
 
+    public function setId($value) {
+        return $this->id = $value;
+    } 
+
     public function getUserTypeId() {
         return $this->userTypeId;
     }

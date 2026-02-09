@@ -4,7 +4,7 @@
 
 <h1>Register Business</h1>
 <form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="add_user" /> 
+<input type="hidden" name="action" value="add_user_business" /> 
     <p>All fields are Required.</p>
     <p>A User account will be created and tied to your Business</p>
 
@@ -78,7 +78,8 @@
     </div>
 
     <p>Create a verification code and enter it below.</p>
-    <p>This code will be used to verify your employees when they create Employee Accounts.</p>
+    <p>This code will be used to verify your employees when they create Employee Accounts.</p> 
+    <p>Your Employees will also need your Business ID which will be proviede after Registration.</p> 
     <p>Use a strong unique code. Dont lose this code, your employees must provide this code when creating an Employee Account.</p>
 
     <div class="register">
