@@ -1,5 +1,5 @@
 
-<?php require_once ('../view/header.php'); ?>
+<?php require_once ('../view/user_header.php'); ?>
 
 <h1><?php echo $user->getFirstName() . " " . $user->getLastName() . " HomePage" ?></h1>
 

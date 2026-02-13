@@ -11,6 +11,13 @@ require_once('../model/User_DB.php');
 require_once('../model/BusinessUser.php');
 require_once('../model/Business_DB.php');
 
+if(session_status() === PHP_SESSION_NONE) {
+    $lifetime = 60 * 60 * 24 * 14;
+    session_name('userSession');
+    session_set_cookie_params($lifetime, '/');
+    session_start();
+}
+
 // Get the data from either the GET or POST collection.
 $action = filter_input(INPUT_POST, 'action');
 if ( $action == NULL) {
@@ -45,10 +52,17 @@ switch ($action) {
           include('user_login.php');
           break;
 
+     case 'logout_user':
+          $_SESSION = array();
+          session_destroy();
+          $lifetime = 60 * 60 * 24 * -14;
+          setcookie('userSession', '', $lifetime, '/');
+          $errorMessage = '';
+          include('user_login.php');
+          break;
+
      case 'validate_login':
-          if (session_status() === PHP_SESSION_ACTIVE ) {
-               session_destroy();
-          }
+          session_destroy();
           $_SESSION = array();
           session_start();
 
@@ -84,6 +98,8 @@ switch ($action) {
           break;
 
      case 'add_user':
+          $password = filter_input(INPUT_POST, 'password');
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
           $user = new User();
 
           $user->setUserTypeId(3);
@@ -95,7 +111,7 @@ switch ($action) {
           $user->setPhone(filter_input(INPUT_POST, 'phone'));
           $user->setEmail(filter_input(INPUT_POST, 'email'));
           $user->setUserName(filter_input(INPUT_POST, 'user_name'));
-          $user->setPassword(filter_input(INPUT_POST, 'password'));
+          $user->setPassword($hashedPassword);
           $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
 
           if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
@@ -153,6 +169,8 @@ switch ($action) {
           break;
 
      case 'add_user_employee':
+          $password = filter_input(INPUT_POST, 'password');
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
           $user = new User();
           $businessUser = new BusinessUser();
           $business = new Business();
@@ -166,7 +184,7 @@ switch ($action) {
           $user->setPhone(filter_input(INPUT_POST, 'phone'));
           $user->setEmail(filter_input(INPUT_POST, 'email'));
           $user->setUserName(filter_input(INPUT_POST, 'user_name'));
-          $user->setPassword(filter_input(INPUT_POST, 'password'));
+          $user->setPassword($hashedPassword);
           $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
 
           $businessId = (filter_input(INPUT_POST, 'business_id'));
@@ -239,6 +257,8 @@ switch ($action) {
           break;
 
      case 'add_user_business':
+          $password = filter_input(INPUT_POST, 'password');
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
           $user = new User();
           $businessUser = new BusinessUser();
           $business = new Business();
@@ -252,7 +272,7 @@ switch ($action) {
           $user->setPhone(filter_input(INPUT_POST, 'phone'));
           $user->setEmail(filter_input(INPUT_POST, 'email'));
           $user->setUserName(filter_input(INPUT_POST, 'user_name'));
-          $user->setPassword(filter_input(INPUT_POST, 'password'));
+          $user->setPassword($hashedPassword);
           $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
 
           $business->setName(filter_input(INPUT_POST, 'business_name'));

@@ -24,5 +24,3 @@ class DataBase {
         return self::$db;
     }
 }
-
-?>

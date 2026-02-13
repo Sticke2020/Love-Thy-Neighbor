@@ -124,5 +124,3 @@ class User {
         return $this->accountType = $value;
     }
 }
-
-?>

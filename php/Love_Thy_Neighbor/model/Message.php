@@ -51,4 +51,3 @@ class Message {
         return $this->isRead = $value;
     }
 }
-?>

@@ -88,4 +88,3 @@ public static function createBusinessUser($userId, $businessId, $isAdmin) {
 }
 
 }
-?>

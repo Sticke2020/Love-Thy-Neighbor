@@ -6,11 +6,10 @@ class UserDB {
 public static function getUserByEmailAndPassword($email, $password) {
     $db = DataBase::getDB();
 
-    $query = 'SELECT * FROM user WHERE email_address = :email AND password = :password';
+    $query = 'SELECT * FROM user WHERE email_address = :email';
 
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
-        $statement->bindValue(':password', $password);
         $statement->execute();
         $user = $statement->fetch();
         $statement->closeCursor();
@@ -19,9 +18,14 @@ public static function getUserByEmailAndPassword($email, $password) {
 
         if ($user == false) {
             $selectedUser->setId(null);
+            return $selectedUser;
+        }
+
+        if (password_verify($password, $user['password'])) {
+            $selectedUser->setID($user['id']);
         }
         else {
-            $selectedUser->setID($user['id']);
+            $selectedUser->setId(null);
         }
         
     return $selectedUser;
@@ -159,4 +163,3 @@ public static function createUser($user) {
 }
 
 }
-?>

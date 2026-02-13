@@ -29,4 +29,3 @@ class BusinessUser {
         return $this->isAdmin = $value;
     }
 }
-?>
