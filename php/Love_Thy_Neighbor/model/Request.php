@@ -1,7 +1,7 @@
 <?php
 
 class Request {
-    private $id, $userId, $title, $body, $requestStatusTypeId, $dateCreated;
+    private $id, $userId, $title, $body, $requestStatusTypeId, $dateCreated, $dateUpdated, $requestImageId, $fileName, $fileUrl;
 
     public function __construct() {}
 
@@ -10,6 +10,10 @@ class Request {
     public function getId() {
         return $this->id;
     } 
+
+    public function setId($value) {
+        return $this->id = $value;
+    }
 
     public function getUserId() {
         return $this->userId;
@@ -43,11 +47,43 @@ class Request {
         return $this->requestStatusTypeId = $value;
     }
 
-     public function getDateCreated() {
+    public function getDateCreated() {
         return $this->dateCreated;
     }
 
     public function setDateCreated($value) {
         return $this->dateCreated = $value;
+    }
+
+    public function getDateUpdated() {
+        return $this->dateUpdated;
+    }
+
+    public function setDateUpdated($value) {
+        return $this->dateUpdated = $value;
+    }
+
+    public function getRequestImageId() {
+        return $this->requestImageId;
+    }
+
+    public function setRequestImageId($value) {
+        return $this->requestImageId = $value;
+    }
+
+    public function getFileName() {
+        return $this->fileName;
+    }
+
+    public function setFileName($value) {
+        return $this->fileName = $value;
+    }
+
+    public function getFileUrl() {
+        return $this->fileUrl;
+    }
+
+    public function setFileUrl($value) {
+        return $this->fileUrl = $value;
     }
 }

@@ -10,6 +10,8 @@ require_once('../model/User.php');
 require_once('../model/User_DB.php');
 require_once('../model/BusinessUser.php');
 require_once('../model/Business_DB.php');
+require_once('../model/Request.php');
+require_once('../model/Request_DB.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
@@ -17,6 +19,7 @@ if(session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params($lifetime, '/');
     session_start();
 }
+
 
 // Get the data from either the GET or POST collection.
 $action = filter_input(INPUT_POST, 'action');
@@ -27,7 +30,17 @@ if ( $action == NULL) {
     }
 }
 
-switch ($action) {
+switch ($action) { 
+/*  REMOVE THIS CASE BEFORE FINAL PRODUCTION ******************
+     case 'hash_passwords':
+          UserDB::hashPasswordsInDB();
+          break;
+*****************************************************************/
+     case 'home':
+          $user = UserDB::getUserById($_SESSION['userId']);
+          $requests = RequestDB::getRequestsByUserId($user->getId());
+          include('user_dashboard.php');
+          break;
 
      case 'sign_up':
           include('user_choose_account_type.php');
@@ -85,8 +98,10 @@ switch ($action) {
                          $user = UserDB::getUserById($ID);
                          $errorMessage = "";
                          session_regenerate_id(true);
-                         $_SESSION['user'] = $user;
+                         $_SESSION['userId'] = $ID;
                          
+                         $requests = RequestDB::getRequestsByUserId($ID);
+
                          include('user_dashboard.php');
                     } 
                     else{
@@ -376,6 +391,13 @@ switch ($action) {
                BusinessDB::createBusinessUser($userId->getId(), $newBusiness->getId(), 1);
                include('user_business_registered.php');
           }
+          break;
+
+     case 'edit_user':
+          $userId = $_SESSION['userId'];
+          $user = UserDB::getUserById($userId);
+
+          include("user_edit_info.php");
           break;
 
      default:

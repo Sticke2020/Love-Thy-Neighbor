@@ -18,16 +18,16 @@
             <a href="user_manager?action=home">Home</a>
         </li>
         <li>
-            <a href="request_manager?action=requests">Requests</a>
+            <a href="request_manager?action=requests">All Requests</a>
         </li>
         <li>
-            <a href="">File Report</a>
+            <a href="request_manager?action=unfulfilled_requests">Unfulfilled Requests</a>
         </li>
         <li>
-            <a href="user_manager?action=edit_user">Edit Profile</a>
+            <a href="request_manager?action=fulfilled_requests">Fulfilled Requests</a>
         </li>
         <li>
-            <a href="user_manager?action=logout_user">Logout</a>
+            <a href="request_manager?action=make_request">Make A Request</a>
         </li>
         </ul>
         

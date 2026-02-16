@@ -77,6 +77,7 @@ public static function getUserById($ID) {
         $selectedUser->setEmail($user['email_address']);
         $selectedUser->setPhone($user['phone']);
         $selectedUser->setUserName($user['username']);
+        $selectedUser->setPassword($user['password']);
     return $selectedUser;
 }
 
@@ -161,5 +162,41 @@ public static function createUser($user) {
     $statement->execute();
     $statement->closeCursor();
 }
+
+/*  REMOVE THIS METHOD BEFORE FINAL PRODUCTION ********************************************
+public static function hashPasswordsInDB() {
+    $db = DataBase::getDB(); 
+    
+    $query = 'SELECT id, password
+    FROM user';
+    $statement = $db->prepare($query);
+    $statement->execute();
+
+    $users = array();
+    foreach ($statement as $row) {
+        $user = new User();
+        $user->setID($row['id']);
+        $user->setPassword($row['password']);
+
+        $users[] = $user;
+    }
+    foreach ($users as $user) {
+        $password = $user->getPassword();
+
+        if (strlen($password) === 60 && str_starts_with($password, '$2y$')) {
+            continue;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $query = 'UPDATE user SET password = :password WHERE id = :id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':password', $hashedPassword);
+        $statement->bindValue(':id', $user->getId());
+        $statement->execute();
+    }
+}
+***********************************************************************************************/
+
 
 }

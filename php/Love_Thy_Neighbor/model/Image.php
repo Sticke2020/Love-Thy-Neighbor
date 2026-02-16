@@ -1,7 +1,7 @@
 <?php
 
 class Image {
-    private $id, $userId, $fileName, $fileUrl, $fileSizeBytes, $dateCreated;
+    private $id, $userId, $fileName, $fileUrl, $fileSizeBytes, $dateCreated, $requestId;
 
     public function __construct() {}
 
@@ -49,5 +49,13 @@ class Image {
 
     public function setDateCreated($value) {
         return $this->dateCreated = $value;
+    }
+
+    public function getRequestId() {
+        return $this->requestId;
+    }
+
+    public function setRequestId($value) {
+        return $this->requestId = $value;
     }
 }

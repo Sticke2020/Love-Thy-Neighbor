@@ -7,8 +7,8 @@ if(session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params($lifetime, '/');
     session_start();
 }
-if (isset($_SESSION['user'])) {
-    $sessionDetails = "Welcome " . $_SESSION['user']->getFirstName() . " " . $_SESSION['user']->getLastName();
+if (isset($_SESSION['userId'])) {
+    $sessionDetails = "Welcome ";
     $header = 'view/user_header.php';
     $messageWelcome = "You are Still Logged In";
 } else {
@@ -22,5 +22,12 @@ if (isset($_SESSION['user'])) {
 
 <h1><?php echo $sessionDetails ?></h1><br>
 <h1><?php echo $messageWelcome ?></h1><br>
-
+<!--
+// REMOVE THIS CODE BEFORE FINISHED ////////////////////////////
+<form method="POST" action="user_manager/index.php">
+    <input type="hidden" name="action" value="hash_passwords">
+    <input type="submit" value="Hash Passwords">
+</form>
+///////////////////////////////////////////////////////////////
+-->
 <?php require_once 'view/footer.php'; ?>
