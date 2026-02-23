@@ -26,7 +26,9 @@
         <div>
             <h2><?php echo $request->getTitle(); ?></h2>
             <div>
-                <img src="<?php echo $request->getFileUrl(); ?>" >
+                <?php foreach ($request->getImages() as $image): ?>
+                    <img src="<?php echo $image->getFileUrl(); ?>" width="200">
+                <?php endforeach; ?>
             </div>
             <div>
                 <p><?php echo $request->getBody(); ?></p>

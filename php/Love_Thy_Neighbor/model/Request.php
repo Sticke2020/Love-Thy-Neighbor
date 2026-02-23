@@ -1,7 +1,10 @@
 <?php
 
 class Request {
-    private $id, $userId, $title, $body, $requestStatusTypeId, $dateCreated, $dateUpdated, $requestImageId, $fileName, $fileUrl;
+    private $id, $userId, $title, $body, $requestStatusTypeId, $dateCreated, $dateUpdated;
+
+    // So requests can hold more than 1 image
+    private $images = [];
 
     public function __construct() {}
 
@@ -63,27 +66,11 @@ class Request {
         return $this->dateUpdated = $value;
     }
 
-    public function getRequestImageId() {
-        return $this->requestImageId;
+    public function addImage($image) {
+        $this->images[] = $image;
     }
 
-    public function setRequestImageId($value) {
-        return $this->requestImageId = $value;
-    }
-
-    public function getFileName() {
-        return $this->fileName;
-    }
-
-    public function setFileName($value) {
-        return $this->fileName = $value;
-    }
-
-    public function getFileUrl() {
-        return $this->fileUrl;
-    }
-
-    public function setFileUrl($value) {
-        return $this->fileUrl = $value;
+    public function getImages() {
+        return $this->images;
     }
 }

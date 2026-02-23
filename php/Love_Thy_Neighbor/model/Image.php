@@ -11,6 +11,10 @@ class Image {
         return $this->id;
     } 
 
+    public function setId($value) {
+        return $this->id = $value;
+    }
+
     public function getUserId() {
         return $this->userId;
     }

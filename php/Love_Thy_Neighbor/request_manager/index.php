@@ -8,6 +8,7 @@ require_once('../model/Image_DB.php');
 require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
 
+
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
     session_name('userSession');

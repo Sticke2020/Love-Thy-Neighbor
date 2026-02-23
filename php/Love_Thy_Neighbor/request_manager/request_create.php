@@ -3,6 +3,7 @@
 <h1>Make A New Request</h1>
 
 <body>
+<p>Note: If you want to upload more than 1 Image you must select multiple Images together</p>
     <fieldset>
         <form action="request_manager/index.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="action" value="create_request">

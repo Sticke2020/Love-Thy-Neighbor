@@ -43,6 +43,7 @@ public static function insertRequestImage($imageId, $requestId) {
 }
 
 public static function uploadRequestImages($requestId, $uploadDirectory, $userId) {
+
     $db = DataBase::getDB();
 
     if (!empty($_FILES['images']['name'][0])) {
@@ -74,7 +75,6 @@ public static function uploadRequestImages($requestId, $uploadDirectory, $userId
                     $imageId = ImageDB::insertImage($image);
 
                     ImageDB::insertRequestImage($imageId, $requestId);
-
                 }
             }
         }
