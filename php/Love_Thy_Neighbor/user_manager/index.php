@@ -12,6 +12,8 @@ require_once('../model/BusinessUser.php');
 require_once('../model/Business_DB.php');
 require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
+require_once('../model/Image.php');
+require_once('../model/Image_DB.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
@@ -35,10 +37,12 @@ switch ($action) {
      case 'hash_passwords':
           UserDB::hashPasswordsInDB();
           break;
+
 *****************************************************************/
      case 'home':
           $user = UserDB::getUserById($_SESSION['userId']);
           $requests = RequestDB::getRequestsByUserId($user->getId());
+          $profilePic = ImageDB::getImageById($user->getProfileImageId());
           include('user_dashboard.php');
           break;
 
@@ -101,6 +105,7 @@ switch ($action) {
                          $_SESSION['userId'] = $ID;
                          
                          $requests = RequestDB::getRequestsByUserId($ID);
+                         $profilePic = ImageDB::getImageById($user->getProfileImageId());
 
                          include('user_dashboard.php');
                     } 

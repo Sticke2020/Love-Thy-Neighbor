@@ -13,6 +13,7 @@ class User {
             $userName,
             $password,
             $dateCreated,
+            $profileImageId,
             $accountType;
 
 
@@ -114,6 +115,14 @@ class User {
 
     public function setDateCreated($value) {
         return $this->dateCreated = $value;
+    }
+
+    public function getProfileImageId() {
+        return $this->profileImageId;
+    }
+
+    public function setProfileImageId($value) {
+        return $this->profileImageId = $value;
     }
 
     public function getAccountType() {

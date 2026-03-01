@@ -78,6 +78,7 @@ public static function getUserById($ID) {
         $selectedUser->setPhone($user['phone']);
         $selectedUser->setUserName($user['username']);
         $selectedUser->setPassword($user['password']);
+        $selectedUser->setProfileImageId($user['profile_image_id']);
     return $selectedUser;
 }
 
@@ -159,6 +160,20 @@ public static function createUser($user) {
     $statement->bindvalue(':phone', $phone);
     $statement->bindvalue(':userName', $userName);
     $statement->bindvalue(':password', $password);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function setUserProfilePic($userId, $imageId) {
+    $db = DataBase::getDB();
+
+    $query = 'UPDATE user
+            SET profile_image_id = :imageId
+            WHERE id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':imageId', $imageId);
+    $statement->bindValue(':userId', $userId);
     $statement->execute();
     $statement->closeCursor();
 }

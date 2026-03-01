@@ -1,7 +1,32 @@
 <?php
 require_once("Image.php");
 
+
 class ImageDB {
+
+public static function getImageById($imageId) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM image WHERE id = :imageId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':imageId', $imageId);
+    $statement->execute();
+    $row = $statement->fetch();
+    $statement->closeCursor();
+
+    if (!$row) {
+        return null; 
+    }
+
+    $image = new Image();
+        $image->setId($row['id']);
+        $image->setUserId($row['user_id']);
+        $image->setFileName($row['file_name']);
+        $image->setFileUrl($row['file_url']);
+        
+    return $image;
+}
 
 public static function insertImage($image) {
     $userId = $image->getUserId();
@@ -25,6 +50,35 @@ public static function insertImage($image) {
 
     $imageId = $db->lastInsertId();
     return $imageId;
+}
+
+public static function uploadProfileImage($uploadDirectory, $userId) {
+    $db = DataBase::getDB();
+
+    if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
+
+        $fileSize = $_FILES['image']['size'];
+
+        $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+        $name =  bin2hex(random_bytes(16))  . '.' . $extension;
+
+        $destination = $uploadDirectory . $name;
+
+        $fileUrl = 'http://localhost:8082/uploads/' . $name;
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
+            $image = new Image();
+
+            $image->setFileName($name);
+            $image->setFileUrl($fileUrl);
+            $image->setUserId($userId);
+            $image->setFileSizeBytes($fileSize);
+
+            $imageId = ImageDB::insertImage($image);
+            UserDB::setUserProfilePic($userId, $imageId);
+        }
+    }
 }
 
 public static function insertRequestImage($imageId, $requestId) {

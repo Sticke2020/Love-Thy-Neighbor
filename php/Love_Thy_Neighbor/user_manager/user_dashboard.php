@@ -5,7 +5,11 @@
 
 <aside class="grid_container">
     <div class="profile_pic_wrapper">
-        <img src="Images/eye_001_.png" alt="This is a test image">
+        <?php if ($profilePic == null) { ?>
+            <img src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo $user->getUserName()?>">
+        <?php } else { ?>
+            <img src="<?php echo $profilePic->getFileUrl(); ?>">
+        <?php } ?>
     </div> 
 
     <div class="user_info">
@@ -14,8 +18,8 @@
     </div>
 </aside>
 
-    <form action="upload_manager/index.php" method="POST">
-        <input type="hidden" value="add_profile_image" />
+    <form action="image_manager/index.php" method="POST">
+        <input type="hidden" name="action" value="add_profile_image" />
         <input type="submit" value="Change Profile Image" />
     </form>
 

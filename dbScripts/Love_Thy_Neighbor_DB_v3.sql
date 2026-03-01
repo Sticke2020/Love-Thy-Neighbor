@@ -235,14 +235,14 @@ INSERT INTO report_type (id, description) VALUES
 
 -- Insert user
 INSERT INTO user (user_type_id, first_name, last_name, city, state, zip, email_address, phone, username, password, date_created) VALUES
-(1, 'Matt', 'Feagin', 'New Richmond', 'WI', 54017, 'matt@matt.com', '715-777-7777', 'Admin', 'changeme', NOW()),
-(2, 'Alex', 'Prime', 'New Richmond', 'WI', 54017, 'prime@prime.com', '715-123-4567', 'Moderator', 'changeme', NOW()),
-(3, 'Susan', 'Smith', 'Somerset', 'WI', 54025, 'smith@smith.com', '715-111-1111', 'Susan', 'password', NOW()),
-(3, 'Ron', 'Nor', 'New Richmond', 'WI', 54017, 'ron@ron.com', '715-222-2222', 'Ronald', 'pass1234', NOW()),
-(3, 'Debbie', 'James', 'New Richmond', 'WI', 54017, 'deb@deb.com', '715-333-3333', 'Debbs', 'pass', NOW()),
-(3, 'Tiffany', 'Wood', 'New Richmond', 'WI', 54017, 'tiff@tiff.com', '715-444-4444', 'Tiff', 'pass', NOW()),
-(3, 'Samuel', 'Rose', 'Somerset', 'WI', 54025, 'sam@sam.com', '715-555-5555', 'Sammy', 'pass', NOW()),
-(3, 'Melissa', 'Heart', 'New Richmond', 'WI', 54017, 'mel@mel.com', '715-678-6677', 'Melissa', 'pass', NOW());
+(1, 'Matt', 'Feagin', 'New Richmond', 'WI', 54017, 'matt@matt.com', '715-777-7777', 'Admin', 'test', NOW()),
+(2, 'Alex', 'Prime', 'New Richmond', 'WI', 54017, 'prime@prime.com', '715-123-4567', 'Moderator', 'test', NOW()),
+(3, 'Susan', 'Smith', 'Somerset', 'WI', 54025, 'smith@smith.com', '715-111-1111', 'Susan', 'test', NOW()),
+(3, 'Ron', 'Nor', 'New Richmond', 'WI', 54017, 'ron@ron.com', '715-222-2222', 'Ronald', 'test', NOW()),
+(3, 'Debbie', 'James', 'New Richmond', 'WI', 54017, 'deb@deb.com', '715-333-3333', 'Debbs', 'test', NOW()),
+(3, 'Tiffany', 'Wood', 'New Richmond', 'WI', 54017, 'tiff@tiff.com', '715-444-4444', 'Tiff', 'test', NOW()),
+(3, 'Samuel', 'Rose', 'Somerset', 'WI', 54025, 'sam@sam.com', '715-555-5555', 'Sammy', 'test', NOW()),
+(3, 'Melissa', 'Heart', 'New Richmond', 'WI', 54017, 'mel@mel.com', '715-678-6677', 'Melissa', 'test', NOW());
 
 -- Insert business
 INSERT INTO business (name, phone, address, city, state, zip, description, verification_code, date_created) VALUES 
@@ -294,13 +294,13 @@ INSERT INTO log (user_id, action_type_id, date_created) VALUES
 
 -- Insert images
 INSERT INTO image (user_id, file_name, file_url, file_size_bytes, date_created) VALUES
-(3, 'profileimage.jpg', 'some/file/location/profileimage.jpg', 602112, NOW()),
-(3, 'screen_door.jpg', 'some/file/location/screen_door.jpg', 602112, NOW()),
-(4, 'workpic.jpg', 'some/file/location/workpic.jpg', 600112, NOW()),
-(5, 'me.jpg', 'some/file/location/me.jpg', 500234, NOW()),
-(6, 'selfie.jpg', 'some/file/location/selfie.jpg', 600000, NOW()),
-(5, 'tire.jpg', 'some/file/location/tire.jpg', 600000, NOW()),
-(8, 'pipe.jpg', 'some/file/location/pipe.jpg', 600000, NOW());
+(3, 'c7dd3aba9592a006d1ae9b8cde83bbf4.png', 'http://localhost:8082/uploads/c7dd3aba9592a006d1ae9b8cde83bbf4.png', 16885, NOW()),
+(3, '0f06038d381b71f0a2920f2be7700e99.png', 'http://localhost:8082/uploads/0f06038d381b71f0a2920f2be7700e99.png', 16885, NOW()),
+(4, 'c2b12f9f83fbb9a4026a7114184b5650.png', 'http://localhost:8082/uploads/c2b12f9f83fbb9a4026a7114184b5650.png', 16885, NOW()),
+(5, '2b005b6ee482a9186dc6cb5c79f76efb.png', 'http://localhost:8082/uploads/2b005b6ee482a9186dc6cb5c79f76efb.png', 16885, NOW()),
+(6, '4504345c5757ca58bb692f15b702a50b.png', 'http://localhost:8082/uploads/4504345c5757ca58bb692f15b702a50b.png', 16885, NOW()),
+(5, '14ffb8e23e36c464a2c2dd54913fd2bf.png', 'http://localhost:8082/uploads/14ffb8e23e36c464a2c2dd54913fd2bf.png', 17885, NOW()),
+(8, '02e96f996b9c2545d47ef9af82936e15.png', 'http://localhost:8082/uploads/02e96f996b9c2545d47ef9af82936e15.png', 17885, NOW());
 
 -- Insert request images
 INSERT INTO request_image (request_id, image_id) VALUES
