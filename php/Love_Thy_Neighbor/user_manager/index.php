@@ -9,6 +9,7 @@ require_once('../model/Database.php');
 require_once('../model/User.php');
 require_once('../model/User_DB.php');
 require_once('../model/BusinessUser.php');
+require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
 require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
@@ -43,6 +44,12 @@ switch ($action) {
           $user = UserDB::getUserById($_SESSION['userId']);
           $requests = RequestDB::getRequestsByUserId($user->getId());
           $profilePic = ImageDB::getImageById($user->getProfileImageId());
+          $business = null;
+
+          if (isset($_SESSION['businessUser'])) {
+               $business = BusinessDB::getBusinessById($_SESSION['businessUser']->getBusinessId());
+          }
+
           include('user_dashboard.php');
           break;
 
@@ -101,11 +108,22 @@ switch ($action) {
                     if($ID > 0) {
                          $user = UserDB::getUserById($ID);
                          $errorMessage = "";
+                         $business = null;
+                         $businessUser = null;
                          session_regenerate_id(true);
                          $_SESSION['userId'] = $ID;
                          
                          $requests = RequestDB::getRequestsByUserId($ID);
                          $profilePic = ImageDB::getImageById($user->getProfileImageId());
+
+                         // Check if user is also a business user
+                         $isBusinessUser = BusinessDB::isBusinessUser($ID);
+
+                         if ($isBusinessUser) {
+                              $businessUser = BusinessDB::getBusinessUserByUserId($ID);
+                              $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
+                              $_SESSION['businessUser'] = $businessUser;
+                         }
 
                          include('user_dashboard.php');
                     } 
@@ -399,10 +417,89 @@ switch ($action) {
           break;
 
      case 'edit_user':
-          $userId = $_SESSION['userId'];
-          $user = UserDB::getUserById($userId);
-
+          $user = UserDB::getUserById($_SESSION['userId']);
           include("user_edit_info.php");
+          break;
+
+     case 'edit_business':
+          $user = UserDB::getUserById($_SESSION['userId']);
+          $business = BusinessDB::getBusinessById($_SESSION['businessUser']->getBusinessId());
+          include("user_edit_business.php");
+          break;
+
+     case 'update_user':
+          $user = new User();
+
+          $user->setID(filter_input(INPUT_POST, 'user_id', FILTER_VALIDATE_INT));
+          $user->setUserTypeId(filter_input(INPUT_POST, 'user_type_id'));
+          $user->setFirstName(filter_input(INPUT_POST, 'first_name'));
+          $user->setLastName(filter_input(INPUT_POST, 'last_name'));
+          $user->setCity(filter_input(INPUT_POST, 'city'));
+          $user->setState(filter_input(INPUT_POST, 'state'));
+          $user->setZip(filter_input(INPUT_POST, 'zip'));
+          $user->setEmail(filter_input(INPUT_POST, 'email'));
+          $user->setPhone(filter_input(INPUT_POST, 'phone'));
+          $user->setUserName(filter_input(INPUT_POST, 'user_name'));
+
+          if ($user->getID() == null || $user->getUserTypeId() == null || $user->getFirstName() == null ||
+               $user->getLastName() == null || $user->getCity() == null || $user->getState() == null || 
+               $user->getZip() == null || $user->getEmail() == null || $user->getPhone() == null ||
+               $user->getUserName() == null) {
+          $error = "Invalid customer data. Check all fields and try again.";
+          include('../errors/error.php');
+          }
+          else if (strlen(trim($user->getState())) !== 2) {
+               $error = "State must be a 2 letters like AZ or CA";
+               include('../errors/error.php');
+          }
+          else if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
+               $error = "You must enter a valid email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::emailAddressExists($user->getEmail(), $user->getId())) {
+               $error = "Email address in use, you must use a different email address";
+               include('../errors/error.php');
+          }
+          else if (UserDB::userNameExists($user->getUserName(), $user->getId())) {
+               $error = "UserName is NOT available, you must choose a different UserName";
+               include('../errors/error.php');
+          }
+          else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
+               $error = "Phone number must be 10 digits\n". 
+                              "Invalid phone number";
+               include('../errors/error.php');
+          }
+          else if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
+               $phone = $user->getPhone();
+               $phoneNumbersOnly = preg_replace('/\D/', '', $phone);
+
+               if ((int)strlen($phoneNumbersOnly) != 10) {
+                    $error = "Phone number must be 10 digits\n". 
+                         "Invalid phone number";
+                    include('../errors/error.php');
+               }
+               else if ((int)strlen($phoneNumbersOnly) == 10) {
+                    $areaCode = substr($phoneNumbersOnly, 0 , 3);
+                    $prefix = substr($phoneNumbersOnly, 3 , 3);
+                    $suffix = substr($phoneNumbersOnly, 6 , 4);
+
+                    $user->setPhone($areaCode . "-" . $prefix . "-" . $suffix);
+                    $errorMessage = "";
+                    UserDB::updateUser($user);
+               
+                    include('../view/updates.php');
+               }
+          }
+          else {
+               UserDB::updateUser($user);
+               include('../view/updates.php');
+          }
+          break;
+
+     case 'update_user_business':
+          break;
+
+     case 'change_password':
           break;
 
      default:

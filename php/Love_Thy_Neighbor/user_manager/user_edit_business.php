@@ -1,8 +1,10 @@
 <?php 
  require_once '../view/user_header.php'; 
+/** @var Business $business */  // <-- docblock to tell view $business is a Business object
 ?> 
 
-<h1>Edit User</h1>
+
+<h1>Edit User Info</h1>
 <fieldset>
 <form action="user_manager/index.php" method="post">
 <input type="hidden" name="action" value="update_user" /> 
@@ -51,6 +53,52 @@
     <div class="edit">
       <label></label>
       <input type="submit" value="Save Changes" class="form_input_button">
+    </div>
+</form>
+</fieldset>
+
+<h1>Edit Business Info</h1>  
+<fieldset>  
+<form action="business_manager/index.php" method="post">
+<input type="hidden" name="action" value="update_business" />
+<input type="hidden" name="business_id" value="<?php echo $business->getId(); ?>">
+    <div class="edit">
+        <label>Name</label>
+        <input class="form_input" name="business_name" value="<?php echo htmlspecialchars($business->getName()); ?>">
+    </div>
+    <div class="edit">
+        <label>Phone</label>
+        <input class="form_input" name="business_phone" value="<?php echo htmlspecialchars($business->getPhone()); ?>">
+    </div>
+    <div class="edit">
+        <label>Address</label>
+        <input class="form_input" name="business_address" value="<?php echo htmlspecialchars($business->getAddress()); ?>">
+    </div>
+    <div class="edit">
+        <label>City</label>
+        <input class="form_input" name="business_City" value="<?php echo htmlspecialchars($business->getCity()); ?>">
+    </div>
+    <div class="edit">
+        <label>State</label>
+        <input class="form_input" name="business_state" value="<?php echo htmlspecialchars($business->getState()); ?>">
+    </div>
+    <div class="edit">
+        <label>Zip</label>
+        <input class="form_input" name="business_zip" value="<?php echo htmlspecialchars($business->getZip()); ?>">
+    </div>
+    <div class="edit">
+        <label>Description</label>
+        <textarea class="text_area" rows="8" name="business_description" id="business_description">
+            <?php echo htmlspecialchars($business->getDescription()); ?>
+        </textarea>
+    </div>
+    <div class="edit">
+        <label>Verification Code</label>
+        <input class="form_input" name="business_code" value="<?php echo htmlspecialchars($business->getVerificationCode()); ?>">
+    </div>
+    <div class="edit">
+        <label></label>
+        <input type="submit" value="Save Changes" class="form_input_button">
     </div>
 </form>
 </fieldset>

@@ -234,7 +234,7 @@ INSERT INTO report_type (id, description) VALUES
 (11, 'Need Assistance');
 
 -- Insert user
-INSERT INTO user (user_type_id, first_name, last_name, city, state, zip, email_address, phone, username, password, date_created) VALUES
+INSERT INTO user (user_type_id, first_name, last_name, city, state, zip, email_address, phone, username, password,  date_created) VALUES
 (1, 'Matt', 'Feagin', 'New Richmond', 'WI', 54017, 'matt@matt.com', '715-777-7777', 'Admin', 'test', NOW()),
 (2, 'Alex', 'Prime', 'New Richmond', 'WI', 54017, 'prime@prime.com', '715-123-4567', 'Moderator', 'test', NOW()),
 (3, 'Susan', 'Smith', 'Somerset', 'WI', 54025, 'smith@smith.com', '715-111-1111', 'Susan', 'test', NOW()),
@@ -307,6 +307,23 @@ INSERT INTO request_image (request_id, image_id) VALUES
 (1, 2),
 (2, 6),
 (3, 7);
+
+-- Final Updates
+UPDATE `user` 
+SET profile_image_id = 1
+WHERE id = 3;
+
+UPDATE `user`
+SET profile_image_id = 3
+WHERE id = 4;
+
+UPDATE `user` 
+SET profile_image_id = 4
+WHERE id = 5;
+
+UPDATE `user` 
+SET profile_image_id = 5
+WHERE id = 6;
 
 -- uncomment the below if you want to use it
 -- Recreate user and assign privileges

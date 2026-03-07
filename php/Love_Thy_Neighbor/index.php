@@ -1,5 +1,7 @@
 <?php 
 require_once("model/User.php");
+require_once("model/BusinessUser.php");
+
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
@@ -22,12 +24,12 @@ if (isset($_SESSION['userId'])) {
 
 <h1><?php echo $sessionDetails ?></h1><br>
 <h1><?php echo $messageWelcome ?></h1><br>
-<!--
+
 // REMOVE THIS CODE BEFORE FINISHED ////////////////////////////
 <form method="POST" action="user_manager/index.php">
     <input type="hidden" name="action" value="hash_passwords">
     <input type="submit" value="Hash Passwords">
 </form>
 ///////////////////////////////////////////////////////////////
--->
+
 <?php require_once 'view/footer.php'; ?>

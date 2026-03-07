@@ -25,12 +25,15 @@ if ( $action == NULL) {
 }
 
 switch ($action) {
+/*******test to see if this is ever used *****************************************************************
 
      case 'user_requests':
           $requests = RequestDB::getRequestsByUserId($_SESSION['userId']);
           break;
 
+**********************************************************************************************************/  
      case 'requests':
+          $requests = RequestDB::getRequests();
           include('requests.php');
           break;
 

@@ -178,6 +178,10 @@ public static function setUserProfilePic($userId, $imageId) {
     $statement->closeCursor();
 }
 
+public static function updateUser($user) {
+
+}
+
 /*  REMOVE THIS METHOD BEFORE FINAL PRODUCTION ********************************************
 public static function hashPasswordsInDB() {
     $db = DataBase::getDB(); 

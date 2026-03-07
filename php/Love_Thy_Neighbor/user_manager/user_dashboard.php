@@ -11,17 +11,23 @@
             <img src="<?php echo $profilePic->getFileUrl(); ?>">
         <?php } ?>
     </div> 
-
     <div class="user_info">
         <h1><?php echo $user->getUserName()?></h1>
-        <h1>business name</h1>
+        <?php if ($business == null) { ?>
+        <?php } else { ?>
+            <?php if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin()) { ?>
+                <h1>Representative of <?php echo $business->getName()?></h1>
+            <?php } else { ?>
+                <h1>Employee of <?php echo $business->getName()?></h1>
+            <?php } ?>
+        <?php } ?>
     </div>
 </aside>
 
-    <form action="image_manager/index.php" method="POST">
-        <input type="hidden" name="action" value="add_profile_image" />
-        <input type="submit" value="Change Profile Image" />
-    </form>
+<form class="grid_container" action="image_manager/index.php" method="POST">
+    <input type="hidden" name="action" value="add_profile_image" />
+    <input class="dashboard_button" type="submit" value="Change Profile Image" />
+</form>
 
 <section>
     <fieldset>
