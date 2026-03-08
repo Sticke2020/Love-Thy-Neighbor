@@ -33,6 +33,7 @@
     <fieldset>
     <legend><?php echo $user->getUserName() . "'s " . 'Requests' ?></legend>
     <?php foreach ($requests as $request) :?>
+        <fieldset>
         <div>
             <h2><?php echo $request->getTitle(); ?></h2>
             <div>
@@ -56,7 +57,13 @@
                 <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
                 <input type="submit" value="Request Has Been Fulfilled">
             </form>
+            <form action="request_manager/index.php" method="POST">
+                <input type="hidden" name="action" value="edit_request">
+                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                <input type="submit" value="Edit Request">
+            </form>
         </div>
+        </fieldset>
     <?php endforeach; ?>
     </fieldset>
 </section>

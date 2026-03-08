@@ -1,12 +1,15 @@
 <?php
 
-require_once('../model/database.php');
-require_once('../model/Image_DB.php');
-require_once('../model/Image.php');
+require_once('../model/Database.php');
 require_once('../model/User.php');
 require_once('../model/User_DB.php');
-require_once('../model/Request_DB.php');
+require_once('../model/BusinessUser.php');
+require_once('../model/Business.php');
+require_once('../model/Business_DB.php');
 require_once('../model/Request.php');
+require_once('../model/Request_DB.php');
+require_once('../model/Image.php');
+require_once('../model/Image_DB.php');
 require_once('../model/Utility.php');
 
 if(session_status() === PHP_SESSION_NONE) {
@@ -16,6 +19,8 @@ if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+
+// Get the data from either the GET or POST collection.
 $action = filter_input(INPUT_POST, 'action');
 if ( $action == NULL) {
      $action = filter_input(INPUT_GET, 'action');
@@ -24,39 +29,20 @@ if ( $action == NULL) {
     }
 }
 
+switch ($action) { 
+/*  REMOVE THIS CASE BEFORE FINAL PRODUCTION ******************
+     case 'hash_passwords':
+          UserDB::hashPasswordsInDB();
+          break;
 
-switch ($action) {
+*****************************************************************/
+     case 'home':
+          
+          break;
 
-    case 'add_profile_image':
-        $userId = $_SESSION['userId'];
-        include('image_profile.php');
-        break;
 
-    case 'upload_profile_image':
-        $image = filter_input(INPUT_POST, 'image');
-        $userId = filter_input(INPUT_POST, 'user_id');
-        try {
-               $db = DataBase::getDB();
-               $db->beginTransaction();
 
-               $uploadDirectory = '/var/www/uploads/';
-
-               ImageDB::uploadProfileImage($uploadDirectory, $userId);
-
-               $db->commit();
-          }
-          catch (PDOException $e) {
-               $db->rollBack();
-               echo "Transaction failed: " . $e->getMessage();
-          }
-        
-        Utility::returnToDashboard();
-        break;
-
-    case 'delete_image':
-        break;
-
-    default:
+     default:
           // Borrowed this code from Andy
           // very helpful for debugging.
           // Show this is an unhandled $controllerChoice
@@ -67,5 +53,4 @@ switch ($action) {
           echo "<h3> File:  user_manager/index.php </h3>";
           require_once '../view/footer.php';
 }
-
 ?>

@@ -20,12 +20,37 @@ public static function getImageById($imageId) {
     }
 
     $image = new Image();
-        $image->setId($row['id']);
-        $image->setUserId($row['user_id']);
-        $image->setFileName($row['file_name']);
-        $image->setFileUrl($row['file_url']);
+    $image->setId($row['id']);
+    $image->setUserId($row['user_id']);
+    $image->setFileName($row['file_name']);
+    $image->setFileUrl($row['file_url']);
         
     return $image;
+}
+
+public static function getImagesByRequestId($requestId) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM image i
+                JOIN request_image ri
+                ON i.id = ri.image_id
+             WHERE ri.request_id = :requestId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':requestId', $requestId);
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+    $images = [];
+    foreach ($results as $row) {
+        $image = new Image();
+        $image->setId($row['image_id']);
+        $image->setFileName($row['file_name']);
+
+        $images[] = $image;
+    }
+    return $images;
 }
 
 public static function insertImage($image) {
@@ -96,7 +121,8 @@ public static function insertRequestImage($imageId, $requestId) {
     $statement->closeCursor();
 }
 
-public static function uploadRequestImages($requestId, $uploadDirectory, $userId) {
+public static function uploadRequestImages($requestId, $userId) {
+    $uploadDirectory = '/var/www/uploads/';
 
     $db = DataBase::getDB();
 
@@ -134,6 +160,41 @@ public static function uploadRequestImages($requestId, $uploadDirectory, $userId
         }
     }
 
+}
+
+public static function deleteImageById($imageId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM image WHERE id = :imageId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':imageId', $imageId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function deleteRequestImageTableEntry($imageId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM request_image 
+                WHERE image_id = :imageId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':imageId', $imageId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function deleteImageFromImageServer($imageId) {
+    $image = ImageDB::getImageById($imageId);
+    $fileName = $image->getFileName();
+    $path = '/var/www/uploads/' . $fileName;
+    
+    if (file_exists($path)) {
+        if (!unlink($path)) {
+            throw new Exception("Failed to delete image file" . $path);
+        }
+    }
 }
 
 }

@@ -15,6 +15,7 @@ require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
 require_once('../model/Image.php');
 require_once('../model/Image_DB.php');
+require_once('../model/Utility.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
@@ -41,16 +42,7 @@ switch ($action) {
 
 *****************************************************************/
      case 'home':
-          $user = UserDB::getUserById($_SESSION['userId']);
-          $requests = RequestDB::getRequestsByUserId($user->getId());
-          $profilePic = ImageDB::getImageById($user->getProfileImageId());
-          $business = null;
-
-          if (isset($_SESSION['businessUser'])) {
-               $business = BusinessDB::getBusinessById($_SESSION['businessUser']->getBusinessId());
-          }
-
-          include('user_dashboard.php');
+          Utility::returnToDashboard();
           break;
 
      case 'sign_up':
@@ -112,20 +104,25 @@ switch ($action) {
                          $businessUser = null;
                          session_regenerate_id(true);
                          $_SESSION['userId'] = $ID;
-                         
-                         $requests = RequestDB::getRequestsByUserId($ID);
-                         $profilePic = ImageDB::getImageById($user->getProfileImageId());
 
-                         // Check if user is also a business user
-                         $isBusinessUser = BusinessDB::isBusinessUser($ID);
-
-                         if ($isBusinessUser) {
-                              $businessUser = BusinessDB::getBusinessUserByUserId($ID);
-                              $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
-                              $_SESSION['businessUser'] = $businessUser;
+                         if ($user->getUserTypeId() == 1) {
+                              $_SESSION['user'] = $user;
+                              include('../admin_manager/admin_dashboard.php');
                          }
+                         else if ($user->getUserTypeId() != 1) {
+                              $requests = RequestDB::getRequestsByUserId($ID);
+                              $profilePic = ImageDB::getImageById($user->getProfileImageId());
 
+                              // Check if user is also a business user
+                              $isBusinessUser = BusinessDB::isBusinessUser($ID);
+
+                              if ($isBusinessUser) {
+                                   $businessUser = BusinessDB::getBusinessUserByUserId($ID);
+                                   $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
+                                   $_SESSION['businessUser'] = $businessUser;
+                              }
                          include('user_dashboard.php');
+                         }
                     } 
                     else{
                          $errorMessage = "Incorrect email or password";

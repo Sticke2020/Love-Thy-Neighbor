@@ -93,6 +93,46 @@ public static function getRequestsByUserId($ID) {
     return $requests;
 }
 
+public static function getRequestById($id) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT r.id AS request_id, r.user_id, r.title, r.body, r.request_status_type_id,
+                    r.date_created, r.date_updated, ri.id AS request_image_id, i.id AS image_id, i.file_name, i.file_url 
+                FROM request r 
+                    LEFT JOIN request_image ri ON r.id = ri.request_id 
+                    LEFT JOIN image i on ri.image_id = i.id 
+                WHERE r.id = :id';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+
+    $request = null;
+    foreach ($statement as $row) {
+
+        if ($request === null) {
+            $request = new Request();
+            $request->setId($row['request_id']);
+            $request->setUserId($row['user_id']);
+            $request->setTitle($row['title']);
+            $request->setBody($row['body']);
+            $request->setRequestStatusTypeId($row['request_status_type_id']);
+            $request->setDateCreated($row['date_created']);
+            $request->setDateUpdated($row['date_updated']);
+        }
+
+        if ($row['image_id'] !== null) {
+            $image = new Image();
+            $image->setId($row['image_id']);
+            $image->setFileName($row['file_name']);
+            $image->setFileUrl($row['file_url']);
+
+            $request->addImage($image);
+        } 
+    }
+    return $request;
+}
+
 public static function createRequest($request) {
     $userId =  $request->getUserId();
     $title = $request->getTitle();
@@ -115,6 +155,33 @@ public static function createRequest($request) {
     
     $requestId = $db->lastInsertId();
     return $requestId;
+}
+
+public static function updateRequest($requestId, $title, $body) {
+    $db = DataBase::getDB();
+    $query = 'UPDATE request
+                SET 
+                    title = :title, body = :body, date_updated = NOW()
+                WHERE
+                    id = :requestId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':requestId', $requestId);
+    $statement->bindValue(':title', $title);
+    $statement->bindValue(':body', $body);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function deleteRequest($requestId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM request WHERE id = :requestId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':requestId', $requestId);
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 }

@@ -7,6 +7,7 @@ require_once('../model/Image.php');
 require_once('../model/Image_DB.php');
 require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
+require_once('../model/Utility.php');
 
 
 if(session_status() === PHP_SESSION_NONE) {
@@ -57,9 +58,8 @@ switch ($action) {
                $db->beginTransaction();
 
                $requestId = RequestDB::createRequest($request);
-               $uploadDirectory = '/var/www/uploads/';
 
-               ImageDB::uploadRequestImages($requestId, $uploadDirectory, $userId);
+               ImageDB::uploadRequestImages($requestId, $userId);
 
                $db->commit();
           }
@@ -67,7 +67,77 @@ switch ($action) {
                $db->rollBack();
                echo "Transaction failed: " . $e->getMessage();
           }
+
+          $requests = RequestDB::getRequests();
           include('requests.php');
+          break;
+
+     case 'edit_request':
+          $requestId = filter_input(INPUT_POST, 'request_id');
+          $request = RequestDB::getRequestById($requestId);
+
+          include('request_edit.php');
+          break;
+
+     case 'update_request':
+          $userId = $_SESSION['userId'];
+          $requestId = filter_input(INPUT_POST, 'request_id');
+          $title = filter_input(INPUT_POST, 'title');
+          $body = filter_input(INPUT_POST, 'body');
+          
+          try{
+          $db = DataBase::getDB();
+          $db->beginTransaction();
+
+          RequestDB::updateRequest($requestId, $title, $body);
+
+          if (!empty($_POST['delete_images'])) {
+               foreach ($_POST['delete_images'] as $imageId) {
+                    ImageDB::deleteImageFromImageServer($imageId);
+                    ImageDB::deleteRequestImageTableEntry($imageId);
+                    ImageDB::deleteImageById($imageId);
+                    
+               }
+          }
+
+          ImageDB::uploadRequestImages($requestId, $userId);
+
+          $db->commit();
+          }
+          catch (Exception $e) {
+               $db->rollBack();
+          }
+
+          Utility::returnToDashboard();
+          break;
+
+     case 'delete_request':
+          $requestId = filter_input(INPUT_POST, 'request_id');
+
+          try {
+               $db = DataBase::getDB();
+               $db->beginTransaction();
+
+               $images = ImageDB::getImagesByRequestId($requestId);
+
+               foreach ($images as $image) {
+                    $imageId = $image->getId();
+
+                    ImageDB::deleteImageFromImageServer($imageId);
+                    ImageDB::deleteRequestImageTableEntry($imageId);
+                    ImageDB::deleteImageById($imageId);
+               }
+
+               RequestDB::deleteRequest($requestId);
+
+               $db->commit();
+
+          } catch (Exception $e) {
+               $db->rollBack();
+               error_log($e->getMessage());
+          }
+          
+          Utility::returnToDashboard();
           break;
 
      default:
