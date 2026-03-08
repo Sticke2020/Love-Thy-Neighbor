@@ -3,6 +3,25 @@ require_once("User.php");
 
 class UserDB {
 
+public static function confirmUserPassword($userId, $password) {
+    $isCorrectPassword = false;
+
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user WHERE id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $user = $statement->fetch();
+    $statement->closeCursor();
+
+    if (password_verify($password, $user['password'])) {
+        $isCorrectPassword = true;
+    }
+    return $isCorrectPassword; 
+}
+
 public static function getUserByEmailAndPassword($email, $password) {
     $db = DataBase::getDB();
 
@@ -53,7 +72,6 @@ public static function getUserByEmail($email) {
         
     return $selectedUser;
 }
-
 
 public static function getUserById($ID) {
     $db = DataBase::getDB();
@@ -168,7 +186,7 @@ public static function setUserProfilePic($userId, $imageId) {
     $db = DataBase::getDB();
 
     $query = 'UPDATE user
-            SET profile_image_id = :imageId
+            SET profile_image_id = :imageId, date_updated = NOW()
             WHERE id = :userId';
 
     $statement = $db->prepare($query);
@@ -179,7 +197,54 @@ public static function setUserProfilePic($userId, $imageId) {
 }
 
 public static function updateUser($user) {
+    $userId = $user->getID();
+    $userTypeId = $user->getUserTypeID();
+    $firstName = $user->getFirstName();
+    $lastName = $user->getLastName();
+    $city = $user->getCity();
+    $state = $user->getState();
+    $zip = $user->getZip();
+    $email = $user->getEmail();
+    $phone = $user->getPhone();
+    $userName = $user->getUserName();
 
+    $db = DataBase::getDB();
+    $query = 'UPDATE user
+                SET 
+                    user_type_id = :userTypeId, first_name = :firstName, last_name = :lastName,
+                    city = :city, state = :state, zip = :zip, email_address = :email, 
+                    phone = :phone, username = :userName, date_updated = NOW()
+                WHERE
+                    id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->bindValue(':userTypeId', $userTypeId);
+    $statement->bindValue(':firstName', $firstName);
+    $statement->bindValue(':lastName', $lastName);
+    $statement->bindvalue(':city', $city);
+    $statement->bindvalue(':state', $state);
+    $statement->bindvalue(':zip', $zip);
+    $statement->bindvalue(':phone', $phone);
+    $statement->bindvalue(':email', $email);
+    $statement->bindvalue(':userName', $userName);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function updatePassword($userId, $hashedPassword) {
+    $db = DataBase::getDB();
+    $query = 'UPDATE user
+                SET 
+                    password = :hashedPassword, date_updated = NOW()
+                WHERE
+                    id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->bindvalue(':hashedPassword', $hashedPassword);
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 /*  REMOVE THIS METHOD BEFORE FINAL PRODUCTION ********************************************

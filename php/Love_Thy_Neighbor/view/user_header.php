@@ -28,13 +28,15 @@
                 <a href="user_manager?action=edit_business">Edit Profile</a>
             <?php } else if (!isset($_SESSION['businessUser'])) { ?>
                 <a href="user_manager?action=edit_user">Edit Profile</a>
+            <?php } else if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin() == 0) { ?>
+                <a href="user_manager?action=edit_user">Edit Profile</a>
             <?php } ?>
         </li>
         <li>
             <a href="user_manager?action=logout_user">Logout</a>
         </li>
         </ul>
-        
+
     
      
     

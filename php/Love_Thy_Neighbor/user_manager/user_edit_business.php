@@ -8,16 +8,19 @@
 <fieldset>
 <form action="user_manager/index.php" method="post">
 <input type="hidden" name="action" value="update_user" /> 
-    <?php if ($user->getUserTypeId() != 3): ?>
+    <?php if ($user->getUserTypeId() != 3){ ?>
         <div class="edit">
             <label>User Id</label>
             <input class="form_input" name="user_id" value="<?php echo htmlspecialchars($user->getID()); ?>" readonly>
         </div>
         <div class="edit">
             <label>User Type Id</label>
-            <input class="form_input" name="user_type_id" value="<?php echo htmlspecialchars($user->getUserTypeId()); ?>" readonly>
+            <input class="form_input" name="user_type_id" value="<?php echo htmlspecialchars($user->getUserTypeId()); ?>">
         </div>
-    <?php endif; ?>
+    <?php } else { ?>
+        <input type="hidden" class="form_input" name="user_id" value="<?php echo htmlspecialchars($user->getID()); ?>">
+        <input type="hidden" class="form_input" name="user_type_id" value="<?php echo htmlspecialchars($user->getUserTypeId()); ?>">
+    <?php } ?>
     <div class="edit">
         <label>First Name</label>
         <input class="form_input" name="first_name" value="<?php echo htmlspecialchars($user->getFirstName()); ?>">
@@ -76,7 +79,7 @@
     </div>
     <div class="edit">
         <label>City</label>
-        <input class="form_input" name="business_City" value="<?php echo htmlspecialchars($business->getCity()); ?>">
+        <input class="form_input" name="business_city" value="<?php echo htmlspecialchars($business->getCity()); ?>">
     </div>
     <div class="edit">
         <label>State</label>
@@ -117,7 +120,7 @@
     </div>
     <div class="edit">
         <label>Re-Enter New Password</label>
-        <input class="form_input" name="new_password_confirm" value="">
+        <input class="form_input" name="new_password_confirmed" value="">
     </div>
     <div class="edit">
         <label></label>

@@ -496,10 +496,26 @@ switch ($action) {
           }
           break;
 
-     case 'update_user_business':
-          break;
-
      case 'change_password':
+          $password = filter_input(INPUT_POST, 'current_password');
+          $newPassword = filter_input(INPUT_POST, 'new_password');
+          $newPasswordConfirmed = filter_input(INPUT_POST, 'new_password_confirmed');
+
+          if (UserDB::confirmUserPassword($_SESSION['userId'], $password)) {
+               if ($newPassword === $newPasswordConfirmed && $newPassword != null) {
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    UserDB::updatePassword($_SESSION['userId'], $hashedPassword);
+                    include('../view/updates.php');
+               }
+               else {
+                    $error = "Your new password entries do not match";
+                    include('../errors/error.php');
+               }
+          }
+          else {
+               $error = "Your current password is incorrect";
+                    include('../errors/error.php');
+          }
           break;
 
      default:

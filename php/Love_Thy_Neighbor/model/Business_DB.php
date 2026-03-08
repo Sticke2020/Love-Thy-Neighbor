@@ -192,7 +192,8 @@ public static function updateBusiness($business) {
     $query = 'UPDATE business
                 SET
                     name = :name, phone = :phone, address = :address, city = :city,
-                    state = :state, zip = :zip, description = :description, verification_code = :code
+                    state = :state, zip = :zip, description = :description, 
+                    verification_code = :code, date_updated = NOW()
                 WHERE
                     id = :id';
 

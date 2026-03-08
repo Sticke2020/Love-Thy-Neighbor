@@ -6,6 +6,9 @@ $prefix;
 $suffix;
 
 require_once('../model/database.php');
+require_once('../model/Business.php');
+require_once('../model/Business_DB.php');
+require_once('../model/BusinessUser.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
