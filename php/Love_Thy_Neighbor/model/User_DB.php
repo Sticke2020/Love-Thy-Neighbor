@@ -22,6 +22,37 @@ public static function confirmUserPassword($userId, $password) {
     return $isCorrectPassword; 
 }
 
+public static function getUsers() {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user';
+
+    $statement = $db->prepare($query);
+    $statement->execute();
+
+    $users = array();
+    foreach ($statement as $row) {
+        $user = new User();
+        $user->setID($row['id']);
+        $user->setUserTypeId($row['user_type_id']);
+        $user->setFirstName($row['first_name']);
+        $user->setLastName($row['last_name']);
+        $user->setCity($row['city']);
+        $user->setState($row['state']);
+        $user->setZip($row['zip']);
+        $user->setEmail($row['email_address']);
+        $user->setPhone($row['phone']);
+        $user->setUserName($row['username']);
+        $user->setPassword($row['password']);
+        $user->setProfileImageId($row['profile_image_id']);
+        $user->setDateCreated($row['date_created']);
+        $user->setDateUpdated($row['date_updated']);
+
+        $users[] = $user;
+    }
+    return $users;
+}
+
 public static function getUserByEmailAndPassword($email, $password) {
     $db = DataBase::getDB();
 
@@ -71,6 +102,50 @@ public static function getUserByEmail($email) {
         }
         
     return $selectedUser;
+}
+
+public static function searchUsersByUserName($userName) {
+    $db = DataBase::getDB();
+
+    if ($userName != '') {	
+        $userName = '%'.$userName.'%';
+        $query = 'SELECT * FROM user WHERE username like :userName ORDER BY id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userName', $userName);
+        $statement->execute();
+        $users = $statement->fetchAll();
+        $statement->closeCursor();
+    }
+    else {
+        $query = 'SELECT * FROM user
+                        ORDER BY id';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $users = $statement->fetchAll();
+        $statement->closeCursor();
+    }
+
+    $userArray = array();
+    foreach ($users as $row) {
+        $user = new User();
+        $user->setID($row['id']);
+        $user->setUserTypeId($row['user_type_id']);
+        $user->setFirstName($row['first_name']);
+        $user->setLastName($row['last_name']);
+        $user->setCity($row['city']);
+        $user->setState($row['state']);
+        $user->setZip($row['zip']);
+        $user->setEmail($row['email_address']);
+        $user->setPhone($row['phone']);
+        $user->setUserName($row['username']);
+        $user->setPassword($row['password']);
+        $user->setProfileImageId($row['profile_image_id']);
+        $user->setDateCreated($row['date_created']);
+        $user->setDateUpdated($row['date_updated']);
+
+        $userArray[] = $user;
+    }
+    return $userArray;
 }
 
 public static function getUserById($ID) {

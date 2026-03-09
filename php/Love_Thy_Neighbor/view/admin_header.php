@@ -18,13 +18,13 @@
             <a href="admin_manager?action=home">Home</a>
         </li>
         <li>
-            <a href="request_manager?action=requests">Requests</a>
+            <a href="admin_manager?action=requests">Requests</a>
         </li>
         <li>
             <a href="">File Report</a>
         </li>
         <li>
-            <a href="user_manager?action=users">Users</a>
+            <a href="admin_manager?action=search_users">Users</a>
         </li>
         <li>
             <a href="user_manager?action=logout_user">Logout</a>

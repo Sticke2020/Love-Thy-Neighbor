@@ -37,10 +37,35 @@ switch ($action) {
 
 *****************************************************************/
      case 'home':
-          
+          include('../admin_manager/admin_dashboard.php');
           break;
 
+     case 'search_users':
+          $users = UserDB::getUsers();
+          include('../admin_manager/admin_users.php');
+          break;
 
+     case 'search_users_by_username':
+          $userName = filter_input(INPUT_POST, 'search_username');
+          $users = UserDB::searchUsersByUserName($userName);
+          include('../admin_manager/admin_users.php');
+          break;
+
+     case 'view_user':
+          break;
+
+     case 'requests':
+          $requests = RequestDB::getRequests();
+          include('../admin_manager/admin_requests.php');
+          break;
+
+     case 'requests_by_user_id':
+
+          break;
+
+     case 'edit_user':
+
+          break;
 
      default:
           // Borrowed this code from Andy

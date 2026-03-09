@@ -1,6 +1,9 @@
 <?php 
+require_once("model/DataBase.php");
 require_once("model/User.php");
+require_once("model/User_DB.php");
 require_once("model/BusinessUser.php");
+
 
 
 if(session_status() === PHP_SESSION_NONE) {
@@ -11,7 +14,14 @@ if(session_status() === PHP_SESSION_NONE) {
 }
 if (isset($_SESSION['userId'])) {
     $sessionDetails = "Welcome ";
-    $header = 'view/user_header.php';
+    $user = UserDB::getUserById($_SESSION['userId']);
+    $header = null;
+    if ($user->getUserTypeId() == 3) {
+        $header = 'view/user_header.php';
+    }
+    if ($user->getUserTypeId() == 1) {
+        $header = 'view/admin_header.php';
+    }
     $messageWelcome = "You are Still Logged In";
 } else {
      $sessionDetails = "User Not Logged In.";
