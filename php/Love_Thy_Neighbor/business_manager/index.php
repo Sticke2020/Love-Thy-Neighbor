@@ -5,7 +5,7 @@ $areaCode;
 $prefix;
 $suffix;
 
-require_once('../model/database.php');
+require_once('../model/Database.php');
 require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
 require_once('../model/BusinessUser.php');

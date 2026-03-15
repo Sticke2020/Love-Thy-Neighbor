@@ -13,6 +13,8 @@ require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
 require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
+require_once('../model/Feedback.php');
+require_once('../model/Feedback_DB.php');
 require_once('../model/Image.php');
 require_once('../model/Image_DB.php');
 require_once('../model/Utility.php');

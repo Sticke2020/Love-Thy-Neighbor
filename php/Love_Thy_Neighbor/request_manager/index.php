@@ -1,6 +1,6 @@
 <?php
 
-require_once('../model/database.php');
+require_once('../model/Database.php');
 require_once('../model/User.php');
 require_once('../model/User_DB.php');
 require_once('../model/Image.php');
@@ -35,6 +35,32 @@ switch ($action) {
 **********************************************************************************************************/  
      case 'requests':
           $requests = RequestDB::getRequests();
+          include('requests.php');
+          break;
+
+     case 'fulfilled_requests':
+          $requestsAll = RequestDB::getRequests();
+          $requests = array();
+
+          foreach ($requestsAll as $request) {
+               if ($request->getRequestStatusTypeId() === 2) {
+                    $requests[] = $request;
+               }
+          }
+
+          include('requests.php');
+          break;
+
+     case 'unfulfilled_requests':
+          $requestsAll = RequestDB::getRequests();
+          $requests = array();
+
+          foreach ($requestsAll as $request) {
+               if ($request->getRequestStatusTypeId() === 1) {
+                    $requests[] = $request;
+               }
+          }
+
           include('requests.php');
           break;
 
@@ -93,10 +119,9 @@ switch ($action) {
 
           if (!empty($_POST['delete_images'])) {
                foreach ($_POST['delete_images'] as $imageId) {
-                    ImageDB::deleteImageFromImageServer($imageId);
+                    ImageDB::deleteImageFromImageServer($imageId, null);
                     ImageDB::deleteRequestImageTableEntry($imageId);
                     ImageDB::deleteImageById($imageId);
-                    
                }
           }
 
@@ -123,7 +148,7 @@ switch ($action) {
                foreach ($images as $image) {
                     $imageId = $image->getId();
 
-                    ImageDB::deleteImageFromImageServer($imageId);
+                    ImageDB::deleteImageFromImageServer($imageId, null);
                     ImageDB::deleteRequestImageTableEntry($imageId);
                     ImageDB::deleteImageById($imageId);
                }
@@ -139,6 +164,7 @@ switch ($action) {
           
           Utility::returnToDashboard();
           break;
+
 
      default:
           // Borrowed this code from Andy

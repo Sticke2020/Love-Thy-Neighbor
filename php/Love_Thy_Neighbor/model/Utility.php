@@ -9,6 +9,8 @@ require_once('../model/Image_DB.php');
 require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
 require_once('../model/BusinessUser.php');
+require_once('../model/Feedback.php');
+require_once('../model/Feedback_DB.php');
 require_once('../model/Utility.php');
 
 class Utility {
@@ -17,6 +19,7 @@ class Utility {
         $user = UserDB::getUserById($_SESSION['userId']);
         $requests = RequestDB::getRequestsByUserId($user->getId());
         $profilePic = ImageDB::getImageById($user->getProfileImageId());
+        $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
         $business = null;
 
         if (isset($_SESSION['businessUser'])) {

@@ -33,21 +33,35 @@ switch ($action) {
         break;
 
     case 'upload_profile_image':
-        $image = filter_input(INPUT_POST, 'image');
         $userId = filter_input(INPUT_POST, 'user_id');
+        $user = UserDB::getUserById($userId);
+        $profilePic = null;
+        $profilePicId = null;
+
+        if ($user->getProfileImageId()) {
+            $profilePic = ImageDB::getImageById($user->getProfileImageId());
+            $profilePicId = $profilePic->getId();
+        }
+
         try {
-               $db = DataBase::getDB();
-               $db->beginTransaction();
+            $db = DataBase::getDB();
+            $db->beginTransaction();
 
-               $uploadDirectory = '/var/www/uploads/';
+            // Upload new profile pic
+            $uploadDirectory = '/var/www/uploads/';
+            ImageDB::uploadProfileImage($uploadDirectory, $userId);
 
-               ImageDB::uploadProfileImage($uploadDirectory, $userId);
+            // Remove old profile pic 
+            if ($profilePicId !== null) {
+                ImageDB::deleteImageById($profilePicId);
+                ImageDB::deleteImageFromImageServer($profilePicId, $profilePic);
+            }
 
-               $db->commit();
-          }
-          catch (PDOException $e) {
-               $db->rollBack();
-               echo "Transaction failed: " . $e->getMessage();
+            $db->commit();
+        }
+        catch (Exception $e) {
+            $db->rollBack();
+            echo "Transaction failed: " . $e->getMessage();
           }
         
         Utility::returnToDashboard();

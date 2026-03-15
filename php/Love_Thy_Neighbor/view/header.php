@@ -3,8 +3,10 @@
 <head>
     <title>Love Thy Neighbor</title>
             
-    <base href="http://localhost:8080/Love_Thy_Neighbor/">  
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <base href="http://localhost:8080/Love_Thy_Neighbor/"> 
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/custom-bootstrap-styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/header.css">
 </head>
 
 <body>

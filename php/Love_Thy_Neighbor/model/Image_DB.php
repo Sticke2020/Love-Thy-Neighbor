@@ -170,6 +170,11 @@ public static function deleteImageById($imageId) {
     $statement = $db->prepare($query);
     $statement->bindValue(':imageId', $imageId);
     $statement->execute();
+
+    if ($statement->rowCount() === 0) {
+        throw new Exception("No image deleted");
+    }
+
     $statement->closeCursor();
 }
 
@@ -185,11 +190,21 @@ public static function deleteRequestImageTableEntry($imageId) {
     $statement->closeCursor();
 }
 
-public static function deleteImageFromImageServer($imageId) {
-    $image = ImageDB::getImageById($imageId);
-    $fileName = $image->getFileName();
-    $path = '/var/www/uploads/' . $fileName;
-    
+public static function deleteImageFromImageServer($imageId, $image) {
+    $image = $image;
+    $imageId = $imageId;
+    $fileName = null;
+    $path = null;
+    if ($image === null) {
+        $image = ImageDB::getImageById($imageId);
+        $fileName = $image->getFileName();
+        $path = '/var/www/uploads/' . $fileName;
+    }
+    else {
+        $fileName = $image->getFileName();
+        $path = '/var/www/uploads/' . $fileName;
+    }
+
     if (file_exists($path)) {
         if (!unlink($path)) {
             throw new Exception("Failed to delete image file" . $path);
