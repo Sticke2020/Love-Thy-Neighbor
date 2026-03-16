@@ -47,6 +47,10 @@ switch ($action) {
           Utility::returnToDashboard();
           break;
 
+     case 'users':
+
+          break;
+
      case 'sign_up':
           include('user_choose_account_type.php');
           break;

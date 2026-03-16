@@ -45,13 +45,13 @@
 
             <!-- User Requests Card -->
             <div class="card">
-                <div class="card-header text-center fs-4 bg-custom-light-yellow">
+                <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Requests"; ?>
                 </div>
                 <div class="card-body bg-custom-blue">
 
                     <?php if (empty($requests)) : ?>
-                        <p class="text-muted">No requests found.</p>
+                        <p class="text-muted text-custom-white fs-4">No requests found.</p>
                     <?php else : ?>
                         <?php foreach ($requests as $request) : ?>
                             <div class="card mb-3 bg-custom-gold">
@@ -104,20 +104,20 @@
         <div class="col">
             <!--User Feedback-->
             <div class="card">
-                <div class="card-header text-center fs-4 bg-custom-light-yellow">
+                <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Feedback"; ?>
                 </div>
                 <div class="card-body bg-custom-blue">
                     <?php if (empty($feedback)) : ?>
-                        <p class="text-muted">No Feedback found.</p>
+                        <p class="text-muted text-custom-white fs-4">No Feedback found.</p>
                     <?php else : ?>
                         <?php foreach ($feedback as $comment) : ?>
                             <div class="card mb-3 bg-custom-gold">
                                 <div class="card-body">
-                                    <h5 class="card-title">From: <?php echo $comment->getSender(); ?></h5>
+                                    <h5 class="card-title fs-4">From: <?php echo $comment->getSender(); ?></h5>
                                     <img class="img-fluid" style="max-width: 20%;" src="<?php echo $comment->getSenderImage(); ?>">
-                                    <p class="card-text"><?php echo $comment->getComment(); ?></p>
-                                    <p><strong>Date Created:</strong>
+                                    <p class="card-text fs-4"><?php echo $comment->getComment(); ?></p>
+                                    <p class="fs-5"><strong>Date Created:</strong>
                                         <?php echo $comment->getDateCreated(); ?>
                                     </p>
                                 </div>
