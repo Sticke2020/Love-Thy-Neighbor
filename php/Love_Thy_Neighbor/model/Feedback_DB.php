@@ -33,7 +33,7 @@ public static function getFeedbackByUserId($userId) {
     $query = 'SELECT f.*, u.username, u.profile_image_id, i.file_url
                 FROM feedback f
                 JOIN user u ON f.author_id = u.id
-                JOIN image i ON u.profile_image_id = i.id
+                LEFT JOIN image i ON u.profile_image_id = i.id
                 WHERE f.target_user_id = :userId
                 ORDER BY f.date_created DESC';
 
@@ -47,7 +47,7 @@ public static function getFeedbackByUserId($userId) {
         $feedback->setID($row['id']);
         $feedback->setSender($row['username']);
         $feedback->setSenderId($row['author_id']);
-        $feedback->setSenderImage($row['file_url']);
+        $feedback->setSenderImage($row['file_url'] ?? 'https://api.dicebear.com/9.x/initials/svg?seed=' . urlencode($row['username']));
         $feedback->setReceiverId($row['target_user_id']);
         $feedback->setComment($row['comment']);
         $feedback->setDateCreated($row['date_created']);
@@ -57,5 +57,24 @@ public static function getFeedbackByUserId($userId) {
     return $feedbackAll;
 }
 
+public static function createFeedback($feedback) {
+    $db = DataBase::getDB();
+
+    $senderId = $feedback->getSenderId();
+    $receiverId = $feedback->getReceiverId();
+    $comment = $feedback->getComment();
+
+    $query = 'INSERT INTO feedback
+            (author_id, target_user_id, comment)
+        VALUES
+            (:senderId, :receiverId, :comment)';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':senderId', $senderId);
+    $statement->bindValue(':receiverId', $receiverId);
+    $statement->bindValue(':comment', $comment);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 }

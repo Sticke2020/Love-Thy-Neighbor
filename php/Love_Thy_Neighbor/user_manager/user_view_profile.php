@@ -98,6 +98,14 @@
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Feedback"; ?>
                 </div>
+                <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
+                    <form action="feedback_manager/index.php" method="POST">
+                        <input type="hidden" name="action" value="leave_feedback">
+                        <input type="hidden" name="sender_id" value="<?php echo $_SESSION['userId'] ?>">
+                        <input type="hidden" name="receiver_id" value="<?php echo $userId ?>">
+                        <input type="submit" class="btn bg-custom-white w-100 mt-2 fs-4" value="Leave Feedback">
+                    </form>
+                </div>
                 <div class="card-body bg-custom-blue">
                     <?php if (empty($feedback)) : ?>
                         <p class="text-muted text-custom-white fs-4">No Feedback found.</p>
@@ -110,8 +118,12 @@
                                     <form action="user_manager/index.php" method="POST" class="d-inline-block align-top">
                                         <input type="hidden" name="action" value="view_user">
                                         <input type="hidden" name="user_id" value="<?php echo $comment->getSenderId(); ?>">
-                                        <input type="image" class="me-2 mb-2 img-thumbnail"
-                                         style="max-width: 20%;" src="<?php echo $comment->getSenderImage(); ?>">
+
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="<?php echo $comment->getSenderImage(); ?>"
+                                                class="me-2 mb-2 img-thumbnail"
+                                                style="width:100px; height:100px; object-fit:cover;">
+                                        </button>
                                     </form>
 
                                     <p class="card-text fs-4"><?php echo $comment->getComment(); ?></p>

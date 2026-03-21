@@ -3,6 +3,7 @@
 require_once('../model/Database.php');
 require_once('../model/Feedback.php');
 require_once('../model/Feedback_DB.php');
+require_once('../model/Utility.php');
 
 
 if(session_status() === PHP_SESSION_NONE) {
@@ -21,8 +22,34 @@ if ( $action == NULL) {
 }
 
 switch ($action) {  
-     case 'feedback':
-          
+     case 'leave_feedback':
+          $senderId = filter_input(INPUT_POST, 'sender_id');
+          $receiverId = filter_input(INPUT_POST, 'receiver_id');
+          include('feedback_create.php');
+          break;
+
+     case 'create_feedback':
+          $senderId = filter_input(INPUT_POST, 'sender_id');
+          $receiverId = filter_input(INPUT_POST, 'receiver_id');
+          $comment = filter_input(INPUT_POST, 'comment');
+          $feedback = new Feedback();
+
+          $feedback->setSenderId($senderId);
+          $feedback->setReceiverId($receiverId);
+          $feedback->setComment($comment);
+
+          if ($feedback->getSenderId() == null  || $feedback->getReceiverId() == null || $feedback->getComment() == null) {
+               $errorMessage = "Invalid data, please try again.";
+               include('../errors/error.php');
+          }
+          else if (strlen($feedback->getComment()) > 16000) {
+               $errorMessage = "Feedback must be less that 16,000 characters long";
+               include('../errors/error.php');
+          }
+          else {
+               FeedbackDB::createFeedback($feedback);
+               Utility::returnToDashboard();
+          }
           break;
 
 

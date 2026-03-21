@@ -119,8 +119,11 @@
                                     <form action="user_manager/index.php" method="POST" class="d-inline-block align-top">
                                         <input type="hidden" name="action" value="view_user">
                                         <input type="hidden" name="user_id" value="<?php echo $comment->getSenderId(); ?>">
-                                        <input type="image" class="me-2 mb-2 img-thumbnail"
-                                         style="max-width: 20%;" src="<?php echo $comment->getSenderImage(); ?>">
+
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="<?php echo $comment->getSenderImage(); ?>"
+                                                class="me-2 mb-2 img-thumbnail"
+                                                style="width:100px; height:100px; object-fit:cover;">
                                         </button>
                                     </form>
                                     
