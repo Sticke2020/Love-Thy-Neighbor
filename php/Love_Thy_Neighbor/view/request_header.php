@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Love Thy Neighbor</title> 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="http://localhost:8080/Love_Thy_Neighbor/">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/custom-bootstrap-styles.css">

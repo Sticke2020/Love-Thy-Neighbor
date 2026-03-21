@@ -165,6 +165,10 @@ switch ($action) {
           Utility::returnToDashboard();
           break;
 
+     case 'fulfill_request':
+
+          break;
+
 
      default:
           // Borrowed this code from Andy

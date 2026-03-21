@@ -1,7 +1,7 @@
 <?php
 
 class Feedback {
-    private $id, $sender, $senderImage, $receiverId, $comment, $dateCreated;
+    private $id, $sender, $senderId, $senderImage, $receiverId, $comment, $dateCreated;
 
     public function __construct() {}
    
@@ -21,6 +21,14 @@ class Feedback {
 
     public function setSender($value) {
         return $this->sender = $value;
+    }
+
+    public function getSenderId() {
+        return $this->senderId;
+    }
+
+    public function setSenderId($value) {
+        return $this->senderId = $value;
     }
 
     public function getSenderImage() {

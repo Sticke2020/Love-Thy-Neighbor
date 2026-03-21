@@ -10,14 +10,16 @@
         <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
 
             <?php if ($profilePic == null) { ?>
-                <img class="img-fluid" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo urlencode($user->getUserName())?>">
+                <img class="img-fluid" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo urlencode($user->getUserName()) ?>">
             <?php } else { ?>
                 <img class="img-fluid" src="<?php echo $profilePic->getFileUrl(); ?>">
             <?php } ?>
-
-            <form action="image_manager/index.php" method="POST">
-                <input type="hidden" name="action" value="add_profile_image" />
-                <input class="btn bg-custom-white w-100 mt-2 fs-4" type="submit" value="Change Profile Image" />
+            <!--This form is to keep uniformity with the dashboard layout since the image size is related
+                to the button size, there may be a better way to fix this later, the image doesnt display 
+                properly without this -->
+            <form >
+                <input type="hidden" />
+                <input class="btn bg-custom-gold w-100 mt-2 fs-4" style="border: none" value="                    " disabled/>
             </form>
 
         </div> 
@@ -27,7 +29,7 @@
             <h1 class="mt-1"><?php echo $user->getUserName()?></h1>
             <?php if ($business == null) { ?>
             <?php } else { ?>
-                <?php if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin()) { ?>
+                <?php if ($businessUser->getIsAdmin() == 1) { ?>
                     <h1 class="mt-2">Representative of <?php echo $business->getName()?></h1>
                 <?php } else { ?>
                     <h1 class="mt-2">Employee of <?php echo $business->getName()?></h1>
@@ -75,22 +77,11 @@
                                     <!-- Action Buttons -->
                                     <div class="d-flex gap-2 flex-wrap">
                                         <form action="request_manager/index.php" method="POST">
-                                            <input type="hidden" name="action" value="delete_request">
+                                            <input type="hidden" name="action" value="fulfill_request">
                                             <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-danger btn-sm" type="submit">Delete Request</button>
+                                            <button class="btn btn-success btn-sm" type="submit">Fulfill Request</button>
                                         </form>
 
-                                        <form action="request_manager/index.php" method="POST">
-                                            <input type="hidden" name="action" value="mark_request_fulfilled">
-                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-success btn-sm" type="submit">Mark Fulfilled</button>
-                                        </form>
-
-                                        <form action="request_manager/index.php" method="POST">
-                                            <input type="hidden" name="action" value="edit_request">
-                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-primary btn-sm" type="submit">Edit Request</button>
-                                        </form>
                                     </div>
 
                                 </div>
@@ -115,15 +106,14 @@
                             <div class="card mb-3 bg-custom-gold">
                                 <div class="card-body">
                                     <h5 class="card-title fs-4">From: <?php echo $comment->getSender(); ?></h5>
-
+                                    
                                     <form action="user_manager/index.php" method="POST" class="d-inline-block align-top">
                                         <input type="hidden" name="action" value="view_user">
                                         <input type="hidden" name="user_id" value="<?php echo $comment->getSenderId(); ?>">
                                         <input type="image" class="me-2 mb-2 img-thumbnail"
                                          style="max-width: 20%;" src="<?php echo $comment->getSenderImage(); ?>">
-                                        </button>
                                     </form>
-                                    
+
                                     <p class="card-text fs-4"><?php echo $comment->getComment(); ?></p>
                                     <p class="fs-5"><strong>Date Created:</strong>
                                         <?php echo $comment->getDateCreated(); ?>

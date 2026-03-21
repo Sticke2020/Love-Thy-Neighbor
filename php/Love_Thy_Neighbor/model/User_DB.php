@@ -43,7 +43,6 @@ public static function getUsers() {
         $user->setEmail($row['email_address']);
         $user->setPhone($row['phone']);
         $user->setUserName($row['username']);
-        $user->setPassword($row['password']);
         $user->setProfileImageId($row['profile_image_id']);
         $user->setDateCreated($row['date_created']);
         $user->setDateUpdated($row['date_updated']);
@@ -88,6 +87,29 @@ public static function getUserByEmail($email) {
 
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
+        $statement->execute();
+        $user = $statement->fetch();
+        $statement->closeCursor();
+
+        $selectedUser = new User();
+
+        if ($user == false) {
+            $selectedUser->setId(null);
+        }
+        else {
+            $selectedUser->setID($user['id']);
+        }
+        
+    return $selectedUser;
+}
+
+public static function getUserByUserName($userName) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user WHERE username = :userName';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userName', $userName);
         $statement->execute();
         $user = $statement->fetch();
         $statement->closeCursor();

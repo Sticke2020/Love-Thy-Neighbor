@@ -48,7 +48,25 @@ switch ($action) {
           break;
 
      case 'users':
+          $users = UserDB::getUsers();
+          include('users.php');
+          break;
 
+     case 'view_user':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $user = UserDB::getUserById($userId);
+          $requests = RequestDB::getRequestsByUserId($user->getId());
+          $profilePic = ImageDB::getImageById($user->getProfileImageId());
+          $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
+          $business = null;
+          $businessUser = new BusinessUser();
+
+          if (BusinessDB::isBusinessUser($userId)) {
+               $businessUser = BusinessDB::getBusinessUserByUserId($userId);
+               $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
+          }
+
+          include('user_view_profile.php');
           break;
 
      case 'sign_up':
@@ -127,6 +145,7 @@ switch ($action) {
                                    $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
                                    $_SESSION['businessUser'] = $businessUser;
                               }
+                              $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
                          include('user_dashboard.php');
                          }
                     } 

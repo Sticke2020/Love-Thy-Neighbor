@@ -46,6 +46,7 @@ public static function getFeedbackByUserId($userId) {
         $feedback = new Feedback();
         $feedback->setID($row['id']);
         $feedback->setSender($row['username']);
+        $feedback->setSenderId($row['author_id']);
         $feedback->setSenderImage($row['file_url']);
         $feedback->setReceiverId($row['target_user_id']);
         $feedback->setComment($row['comment']);
