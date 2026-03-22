@@ -2,31 +2,82 @@
  require_once '../view/header.php'; 
 ?> 
 
-<h1>Choose Account Type</h1>
-<form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="register_account" /> 
-    <p>Choose the type of account you will be creating</p>
-    <p>If you are creating an account for yourself select Personal Account</p>
-    <p>If you are creating as an Employee that is associated with a Business that has a Business Account already
-        choose Employee Account</p>
-    <p>If you are creating an account for a Business and are either the owner or representative of that Business
-        choose Business Account</p>
-  <div class="register">
-      <label class='radio_label' for="personal_account">This is a Personal account</label>
-      <input class="radio_input" type="radio" name="account_type" id="personal" value="PERSONAL" checked>
-  </div>
-  <div class="register">
-      <label class='radio_label' for="employee_account">This is an Employee account</label>
-      <input class="radio_input" type="radio" name="account_type" id="employee" value="EMPLOYEE">
-  </div>
-  <div class="register">
-      <label class='radio_label' for="business_account">This is a Business account</label>
-      <input class="radio_input" type="radio" name="account_type" id="business" value="BUSINESS">
-  </div>
-  <div class="register">
-      <label class='label_form' for="button_next"></label>
-      <input class="clickable_form" type="submit" id="button_next" value="Next">
-  </div>
+<div class="container my-5">
 
-</form>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+
+            <div class="card">
+                <div class="card-header bg-custom-blue text-custom-white text-center">
+                    <h4 class="mb-0">Choose Account Type</h4>
+                </div>
+
+                <div class="card-body bg-custom-light-yellow">
+
+                    <p class="fs-3">
+                        Select the type of account you want to create.
+                    </p>
+
+                    <ul class="fs-4 m-4">
+                        <li><strong>Personal Account:</strong> For individual users</li>
+                        <li><strong>Employee Account:</strong> For users linked to an existing business</li>
+                        <li><strong>Business Account:</strong> For business owners or representatives</li>
+                    </ul>
+
+                    <form action="user_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="register_account">
+
+                        <!-- Radio Options -->
+                        <div class="list-group mb-4">
+
+                            <label class="list-group-item d-flex align-items-center fs-4 bg-custom-light-yellow">
+                                <input class="form-check-input me-4"
+                                       type="radio"
+                                       name="account_type"
+                                       value="PERSONAL"
+                                       checked>
+                                <div>
+                                    <strong>Personal Account</strong><br>
+                                    <small>For individual use</small>
+                                </div>
+                            </label>
+
+                            <label class="list-group-item d-flex align-items-center fs-4 bg-custom-light-yellow">
+                                <input class="form-check-input me-4"
+                                       type="radio"
+                                       name="account_type"
+                                       value="EMPLOYEE">
+                                <div>
+                                    <strong>Employee Account</strong><br>
+                                    <small>Join an existing business</small>
+                                </div>
+                            </label>
+
+                            <label class="list-group-item d-flex align-items-center fs-4 bg-custom-light-yellow">
+                                <input class="form-check-input me-4"
+                                       type="radio"
+                                       name="account_type"
+                                       value="BUSINESS">
+                                <div>
+                                    <strong>Business Account</strong><br>
+                                    <small>Create and manage a business</small>
+                                </div>
+                            </label>
+
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 fs-4">
+                            Next
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 <?php require_once '../view/footer.php'; ?>

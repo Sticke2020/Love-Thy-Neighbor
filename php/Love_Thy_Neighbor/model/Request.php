@@ -1,7 +1,7 @@
 <?php
 
 class Request {
-    private $id, $userId, $title, $body, $requestStatusTypeId, $dateCreated, $dateUpdated;
+    private $id, $userId, $title, $body, $userName, $userImage, $requestStatusTypeId, $dateCreated, $dateUpdated;
 
     // So requests can hold more than 1 image
     private $images = [];
@@ -40,6 +40,22 @@ class Request {
 
     public function setBody($value) {
         return $this->body = $value;
+    }
+
+    public function getUserImage() {
+        return $this->userImage;
+    }
+
+    public function setUserImage($value) {
+        return $this->userImage = $value;
+    }
+
+    public function getUserName() {
+        return $this->userName;
+    }
+
+    public function setUserName($value) {
+        return $this->userName = $value;
     }
 
     public function getRequestStatusTypeId() {

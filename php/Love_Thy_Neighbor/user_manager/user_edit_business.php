@@ -4,129 +4,199 @@
 ?> 
 
 
-<h1>Edit User Info</h1>
-<fieldset>
-<form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="update_user" /> 
-    <?php if ($user->getUserTypeId() != 3){ ?>
-        <div class="edit">
-            <label>User Id</label>
-            <input class="form_input" name="user_id" value="<?php echo htmlspecialchars($user->getID()); ?>" readonly>
-        </div>
-        <div class="edit">
-            <label>User Type Id</label>
-            <input class="form_input" name="user_type_id" value="<?php echo htmlspecialchars($user->getUserTypeId()); ?>">
-        </div>
-    <?php } else { ?>
-        <input type="hidden" class="form_input" name="user_id" value="<?php echo htmlspecialchars($user->getID()); ?>">
-        <input type="hidden" class="form_input" name="user_type_id" value="<?php echo htmlspecialchars($user->getUserTypeId()); ?>">
-    <?php } ?>
-    <div class="edit">
-        <label>First Name</label>
-        <input class="form_input" name="first_name" value="<?php echo htmlspecialchars($user->getFirstName()); ?>">
-    </div>
-    <div class="edit">
-        <label>Last Name</label>
-        <input class="form_input" name="last_name" value="<?php echo htmlspecialchars($user->getLastName()); ?>">
-    </div>
-    <div class="edit">
-        <label>City</label>
-        <input class="form_input" name="city" value="<?php echo htmlspecialchars($user->getCity()); ?>">
-    </div>
-    <div class="edit">
-        <label>State</label>
-        <input class="form_input" name="state" value="<?php echo htmlspecialchars($user->getState()); ?>">
-    </div>
-    <div class="edit">
-        <label>Zip</label>
-        <input class="form_input" name="zip" value="<?php echo htmlspecialchars($user->getZip()); ?>">
-    </div>
-    <div class="edit">
-        <label>Email</label>
-        <input class="form_input" name="email" value="<?php echo htmlspecialchars($user->getEmail()); ?>">
-    </div>
-    <div class="edit">
-        <label>Phone</label>
-        <input class="form_input" name="phone" value="<?php echo htmlspecialchars($user->getPhone()); ?>">
-    </div>
-    <div class="edit">
-        <label>UserName</label>
-        <input class="form_input" name="user_name" value="<?php echo htmlspecialchars($user->getUserName()); ?>">
-    </div>
-    <div class="edit">
-      <label></label>
-      <input type="submit" value="Save Changes" class="form_input_button">
-    </div>
-</form>
-</fieldset>
+<div class="container my-4">
 
-<h1>Edit Business Info</h1>  
-<fieldset>  
-<form action="business_manager/index.php" method="post">
-<input type="hidden" name="action" value="update_business" />
-<input type="hidden" name="business_id" value="<?php echo $business->getId(); ?>">
-    <div class="edit">
-        <label>Name</label>
-        <input class="form_input" name="business_name" value="<?php echo htmlspecialchars($business->getName()); ?>">
-    </div>
-    <div class="edit">
-        <label>Phone</label>
-        <input class="form_input" name="business_phone" value="<?php echo htmlspecialchars($business->getPhone()); ?>">
-    </div>
-    <div class="edit">
-        <label>Address</label>
-        <input class="form_input" name="business_address" value="<?php echo htmlspecialchars($business->getAddress()); ?>">
-    </div>
-    <div class="edit">
-        <label>City</label>
-        <input class="form_input" name="business_city" value="<?php echo htmlspecialchars($business->getCity()); ?>">
-    </div>
-    <div class="edit">
-        <label>State</label>
-        <input class="form_input" name="business_state" value="<?php echo htmlspecialchars($business->getState()); ?>">
-    </div>
-    <div class="edit">
-        <label>Zip</label>
-        <input class="form_input" name="business_zip" value="<?php echo htmlspecialchars($business->getZip()); ?>">
-    </div>
-    <div class="edit">
-        <label>Description</label>
-        <textarea class="text_area" rows="8" name="business_description" id="business_description">
-            <?php echo htmlspecialchars($business->getDescription()); ?>
-        </textarea>
-    </div>
-    <div class="edit">
-        <label>Verification Code</label>
-        <input class="form_input" name="business_code" value="<?php echo htmlspecialchars($business->getVerificationCode()); ?>">
-    </div>
-    <div class="edit">
-        <label></label>
-        <input type="submit" value="Save Changes" class="form_input_button">
-    </div>
-</form>
-</fieldset>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
 
-<h1>Change Password</h1>  
-<fieldset>  
-<form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="change_password" />
-    <div class="edit">
-        <label>Current Password</label>
-        <input class="form_input" name="current_password" value="">
+            <!-- ================= USER INFO ================= -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Edit User Info</h4>
+                </div>
+
+                <div class="card-body">
+                    <form action="user_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="update_user">
+
+                        <?php if ($user->getUserTypeId() != 3){ ?>
+                            <div class="mb-3">
+                                <label class="form-label">User ID</label>
+                                <input class="form-control" name="user_id"
+                                       value="<?= htmlspecialchars($user->getID()); ?>" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">User Type ID</label>
+                                <input class="form-control" name="user_type_id"
+                                       value="<?= htmlspecialchars($user->getUserTypeId()); ?>">
+                            </div>
+                        <?php } else { ?>
+                            <input type="hidden" name="user_id" value="<?= htmlspecialchars($user->getID()); ?>">
+                            <input type="hidden" name="user_type_id" value="<?= htmlspecialchars($user->getUserTypeId()); ?>">
+                        <?php } ?>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name</label>
+                                <input class="form-control" name="first_name"
+                                       value="<?= htmlspecialchars($user->getFirstName()); ?>">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input class="form-control" name="last_name"
+                                       value="<?= htmlspecialchars($user->getLastName()); ?>">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">City</label>
+                                <input class="form-control" name="city"
+                                       value="<?= htmlspecialchars($user->getCity()); ?>">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">State</label>
+                                <input class="form-control" name="state"
+                                       value="<?= htmlspecialchars($user->getState()); ?>">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Zip</label>
+                                <input class="form-control" name="zip"
+                                       value="<?= htmlspecialchars($user->getZip()); ?>">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" name="email"
+                                   value="<?= htmlspecialchars($user->getEmail()); ?>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input class="form-control" name="phone"
+                                   value="<?= htmlspecialchars($user->getPhone()); ?>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input class="form-control" name="user_name"
+                                   value="<?= htmlspecialchars($user->getUserName()); ?>">
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ================= BUSINESS INFO ================= -->
+            <div class="card mb-4">
+                <div class="card-header bg-warning">
+                    <h4 class="mb-0">Edit Business Info</h4>
+                </div>
+
+                <div class="card-body">
+                    <form action="business_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="update_business">
+                        <input type="hidden" name="business_id" value="<?= $business->getId(); ?>">
+
+                        <div class="mb-3">
+                            <label class="form-label">Business Name</label>
+                            <input class="form-control" name="business_name"
+                                   value="<?= htmlspecialchars($business->getName()); ?>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input class="form-control" name="business_phone"
+                                   value="<?= htmlspecialchars($business->getPhone()); ?>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <input class="form-control" name="business_address"
+                                   value="<?= htmlspecialchars($business->getAddress()); ?>">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">City</label>
+                                <input class="form-control" name="business_city"
+                                       value="<?= htmlspecialchars($business->getCity()); ?>">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">State</label>
+                                <input class="form-control" name="business_state"
+                                       value="<?= htmlspecialchars($business->getState()); ?>">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Zip</label>
+                                <input class="form-control" name="business_zip"
+                                       value="<?= htmlspecialchars($business->getZip()); ?>">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="4" name="business_description"><?= htmlspecialchars($business->getDescription()); ?></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Verification Code</label>
+                            <input class="form-control" name="business_code"
+                                   value="<?= htmlspecialchars($business->getVerificationCode()); ?>">
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ================= PASSWORD ================= -->
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Change Password</h4>
+                </div>
+
+                <div class="card-body">
+                    <form action="user_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="change_password">
+
+                        <div class="mb-3">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-control" name="current_password">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" name="new_password">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Re-Enter New Password</label>
+                            <input type="password" class="form-control" name="new_password_confirmed">
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100">
+                            Change Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="edit">
-        <label>New Password</label>
-        <input class="form_input" name="new_password" value="">
-    </div>
-    <div class="edit">
-        <label>Re-Enter New Password</label>
-        <input class="form_input" name="new_password_confirmed" value="">
-    </div>
-    <div class="edit">
-        <label></label>
-        <input type="submit" value="Change Password" class="form_input_button">
-    </div>
-</form>
-</fieldset>
+
+</div>
 
 <?php require_once '../view/footer.php'; ?>

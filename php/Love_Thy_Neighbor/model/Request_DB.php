@@ -8,12 +8,33 @@ class RequestDB {
 public static function getRequests() {
     $db = DataBase::getDB();
 
-    $query = 'SELECT r.id AS request_id, r.user_id, r.title, r.body, r.request_status_type_id,
-                    r.date_created, r.date_updated, ri.id AS request_image_id, i.id AS image_id, i.file_name, i.file_url 
-                FROM request r 
-                    LEFT JOIN request_image ri ON r.id = ri.request_id 
-                    LEFT JOIN image i on ri.image_id = i.id 
-                ORDER BY r.date_created desc';
+    $query = 'SELECT 
+    r.id AS request_id, 
+    r.user_id, 
+    u.username,
+    r.title, 
+    r.body, 
+    r.request_status_type_id,
+    r.date_created, 
+    r.date_updated, 
+    ri.id AS request_image_id, 
+    ri_img.file_name AS request_file_name,
+    ri_img.file_url AS request_file_url,
+    ui.id AS user_image_id,
+    ui.file_name AS user_file_name,
+    ui.file_url AS user_file_url
+FROM request r
+LEFT JOIN request_image ri ON r.id = ri.request_id
+LEFT JOIN image ri_img ON ri.image_id = ri_img.id
+LEFT JOIN user u ON u.id = r.user_id
+-- Get ONE user image not linked to the request
+LEFT JOIN image ui ON ui.user_id = r.user_id 
+    AND ui.id NOT IN (
+        SELECT image_id 
+        FROM request_image 
+        WHERE request_id = r.id
+    )
+ORDER BY r.date_created DESC';
 
     $statement = $db->prepare($query);
     $statement->execute();
@@ -29,6 +50,8 @@ public static function getRequests() {
             $request->setUserId($row['user_id']);
             $request->setTitle($row['title']);
             $request->setBody($row['body']);
+            $request->setUserImage($row['user_file_url'] ?? 'https://api.dicebear.com/9.x/initials/svg?seed=' . urlencode($row['username']));
+            $request->setUserName($row['username']);
             $request->setRequestStatusTypeId($row['request_status_type_id']);
             $request->setDateCreated($row['date_created']);
             $request->setDateUpdated($row['date_updated']);
@@ -36,11 +59,20 @@ public static function getRequests() {
             $requests[$requestId] = $request;
         }
 
-        if (!empty($row['image_id'])) {
+        // need to check for duplicates before adding to array
+            $request = $requests[$requestId];
+            $existingImageIds = array();
+            $imagesAdded = $requests[$requestId]->getImages();
+
+            foreach ($imagesAdded as $img) {
+                $existingImageIds[] = $img->getId(); // add each image's ID to the array
+            }
+
+        if (!empty($row['request_image_id']) && !in_array($row['request_image_id'], $existingImageIds)) {
             $image = new Image();
-            $image->setId($row['image_id']);
-            $image->setFileName($row['file_name']);
-            $image->setFileUrl($row['file_url']);
+            $image->setId($row['request_image_id']);
+            $image->setFileName($row['request_file_name']);
+            $image->setFileUrl($row['request_file_url']);
 
             $requests[$requestId]->addImage($image);
         } 

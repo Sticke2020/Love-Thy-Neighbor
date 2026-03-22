@@ -48,7 +48,7 @@
                 </li>
 
                 <li class="nav-item fs-4">
-                    <a class="nav-link text-custom-white" href="#">File Report</a>
+                    <a class="nav-link text-custom-white" href="report_manager?action=file_report">File Report</a>
                 </li>
 
                 <li class="nav-item fs-4">

@@ -2,93 +2,141 @@
  require_once '../view/header.php'; 
 ?> 
 
-<h1>Register Business</h1>
-<form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="add_user_business" /> 
-    <p>All fields are Required.</p>
-    <p>A User account will be created and tied to your Business</p>
+<div class="container my-4">
 
-    <p>Enter your user info</p>
-    <div class="register">
-        <label class='label_form' for="first_name">First Name</label>
-        <input class="text_input" type="text" name="first_name" id="first_name" required value="">
-    </div>
-    <div class="register">
-        <label  class='label_form'for="last_name">Last Name</label>
-        <input class="text_input" type="text" name="last_name" id="last_name" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="city">City</label>
-        <input class="text_input" type="text" name="city" id="city" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="state">State</label>
-        <input class="text_input" type="text" name="state" id="state" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="zip">Zip Code</label>
-        <input class="text_input" type="text" name="zip" id="zip" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="phone">Phone</label>
-        <input class="text_input" type="text" name="phone" id="phone" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="email">Email</label>
-        <input class="text_input" type="text" name="email" id="email" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="user_name">UserName</label>
-        <input class="text_input" type="text" name="user_name" id="user_name" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="password">Password</label>
-        <input class="text_input" type="text" name="password" id="password" required value="">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <div class="card">
+                <div class="card-header bg-custom-blue text-custom-white">
+                    <h4 class="mb-0">Register Business</h4>
+                </div>
+
+                <div class="card-body bg-custom-light-yellow">
+                    <p class="fs-3">All fields are required.</p>
+                    <p class="fs-3">A user account will be created and tied to your business.</p>
+
+                    <form action="user_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="add_user_business">
+
+                        <!-- USER INFO -->
+                        <h5 class="mt-3 fs-3 mt-5">User Information</h5>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3 fs-4">
+                                <label class="form-label">First Name</label>
+                                <input type="text" name="first_name" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3 fs-4">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" name="last_name" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">City</label>
+                                <input type="text" name="city" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">State</label>
+                                <input type="text" name="state" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">Zip Code</label>
+                                <input type="text" name="zip" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="user_name" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <!-- BUSINESS INFO -->
+                        <h5 class="mt-4 fs-3 mt-5">Business Information</h5>
+                        <hr>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Business Name</label>
+                            <input type="text" name="business_name" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Business Phone</label>
+                            <input type="text" name="business_phone" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Address</label>
+                            <input type="text" name="business_address" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">City</label>
+                                <input type="text" name="business_city" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">State</label>
+                                <input type="text" name="business_state" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">Zip</label>
+                                <input type="text" name="business_zip" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Description</label>
+                            <textarea name="business_description" class="form-control form-control-lg border-2 border-black" rows="3" required></textarea>
+                        </div>
+
+                        <!-- VERIFICATION -->
+                        <h5 class="mt-4 fs-3 mt-5">Verification Setup</h5>
+                        <hr>
+
+                        <p class="fs-3">
+                            Create a verification code for your employees. They will need this code and your Business ID to register.
+                        </p>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Verification Code</label>
+                            <input type="text" name="business_code" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white fs-4 w-100 mt-5">
+                            Register Business
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <p>Enter your Business info</p>
-
-    <div class="register">
-        <label class='label_form' for="business_name">Business Name</label>
-        <input class="text_input" type="text" name="business_name" id="business_name" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="business_phone">Phone</label>
-        <input class="text_input" type="text" name="business_phone" id="business_phone" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="business_address">Address</label>
-        <input class="text_input" type="text" name="business_address" id="business_address" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="business_city">City</label>
-        <input class="text_input" type="text" name="business_city" id="business_city" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="business_state">State</label>
-        <input class="text_input" type="text" name="business_state" id="business_state" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="business_zip">Zip</label>
-        <input class="text_input" type="text" name="business_zip" id="business_zip" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="business_description">Description</label>
-        <input class="text_input" type="text" name="business_description" id="business_description" required value="">
-    </div>
-
-    <p>Create a verification code and enter it below.</p>
-    <p>This code will be used to verify your employees when they create Employee Accounts.</p> 
-    <p>Your Employees will also need your Business ID which will be proviede after Registration.</p> 
-    <p>Use a strong unique code. Dont lose this code, your employees must provide this code when creating an Employee Account.</p>
-
-    <div class="register">
-        <label class='label_form' for="business_code">Verification Code</label>
-        <input class="text_input" type="text" name="business_code" id="business_code" required value="">
-    </div>
-    <div class="register">
-        <label class='label_form' for="button_register"></label>
-        <input class="clickable_form" type="submit" id="button_register" value="Register">
-    </div>
-</form>
+</div>
 <?php require_once '../view/footer.php'; ?>

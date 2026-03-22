@@ -12,8 +12,23 @@
             <?php else : ?>
                 <?php foreach ($requests as $request) : ?>
                     <div class="card mb-3 bg-custom-gold">
+
+                    <div class="card-header fs-4 row">
+                        <form action="user_manager/index.php" method="POST" class="d-inline-block align-top col-auto">
+                            <input type="hidden" name="action" value="view_user">
+                            <input type="hidden" name="user_id" value="<?php echo $request->getUserId(); ?>">
+
+                            <button type="submit" style="border: none; background: none; padding: 0;">
+                                <img src="<?php echo $request->getUserImage(); ?>"
+                                    class="me-2 mb-2 img-thumbnail"
+                                    style="width:100px; height:100px; object-fit:cover;">
+                            </button>
+                        </form>
+                        <p class="col mt-4 fs-4"><?php echo $request->getUserName() ?></p>
+                    </div>
+
                         <div class="card-body">
-                            <h5 class="card-title fs-1"><?php echo $request->getTitle(); ?></h5>
+                            <h5 class="card-title fs-2 mb-4">Title: <?php echo $request->getTitle(); ?></h5>
 
                             <?php if (!empty($request->getImages())) : ?>
                                 <div class="mb-2">
@@ -24,6 +39,8 @@
                             <?php endif; ?>
 
                             <p class="card-text fs-2"><?php echo $request->getBody(); ?></p>
+
+                            <hr>
 
                             <p class="fs-3"><strong>Request Status:</strong>
                                 <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>

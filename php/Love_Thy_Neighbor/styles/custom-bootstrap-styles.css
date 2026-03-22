@@ -20,6 +20,13 @@
   background-color: #cfca2e !important; 
 }
 
+.bg-custom-red {
+  background-color: #b51500 !important;
+}
+
+
+
+
 /* text colors */
 .text-custom-black {
   color: #000000 !important;

@@ -1,22 +1,56 @@
 <?php require_once '../view/header.php'; ?>
 
-<h1 class="text-center mt-4 mb-3">Please Log in</h1>
+<div class="container my-5">
 
-   <?php  echo $errorMessage ?>
-<form method="POST" action="user_manager/index.php" class="text-center">
-   <input type="hidden" name="action" value="validate_login"> 
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-9">
 
-    <div class="mb-3">
-        <label class='form-label fs-4'>Email: </label> 
-        <input class="form-control form-control-lg mx-auto w-50" type="email" name="email" id="email" value="">
+            <div class="card shadow">
+                <div class="card-header bg-custom-blue text-custom-white text-center">
+                    <h4 class="mb-0">Please Log In</h4>
+                </div>
+
+                <div class="card-body bg-custom-light-yellow">
+
+                    <!-- Error Message -->
+                    <?php if (!empty($errorMessage)) { ?>
+                        <div class="alert alert-danger text-center">
+                            <?= $errorMessage ?>
+                        </div>
+                    <?php } ?>
+
+                    <form method="POST" action="user_manager/index.php">
+                        <input type="hidden" name="action" value="validate_login">
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   name="email"
+                                   class="form-control form-control-lg border-2 border-black"
+                                   placeholder="Enter your email"
+                                   required>
+                        </div>
+
+                        <div class="mb-4 fs-4">
+                            <label class="form-label">Password</label>
+                            <input type="password"
+                                   name="password"
+                                   class="form-control form-control-lg border-2 border-black"
+                                   placeholder="Enter your password"
+                                   required>
+                        </div>
+
+                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 fs-4 mt-5">
+                            Login
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="mb-4">
-        <label class='form-label fs-4'>Password: </label> 
-        <input class="form-control form-control-lg mx-auto w-50" type="password" name="password" id="password" value="">
-    </div>
-    <div class="mb-5 mt-5">
-        <label></label>
-        <input class="btn btn-lg bg-custom-white mx-auto w-50" type="submit" value="Login">
-    </div>
-</form>
+
+</div>
 <?php require_once '../view/footer.php'; ?>

@@ -58,6 +58,14 @@
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Requests"; ?>
                 </div>
+
+                <div class="card-header text-center fs-4 bg-custom-black">
+                    <form action="request_manager/index.php" method="POST">
+                        <input type="hidden" name="action" value="make_request">
+                        <input type="submit" class="btn bg-custom-white w-100 mt-2 fs-4" value="Create Request">
+                    </form>
+                </div>
+
                 <div class="card-body bg-custom-blue">
 
                     <?php if (empty($requests)) : ?>

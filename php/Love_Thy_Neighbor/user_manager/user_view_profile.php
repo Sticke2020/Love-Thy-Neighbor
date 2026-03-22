@@ -108,7 +108,7 @@
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Feedback"; ?>
                 </div>
-                <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
+                <div class="card-header text-center fs-4 bg-custom-black">
                     <form action="feedback_manager/index.php" method="POST">
                         <input type="hidden" name="action" value="leave_feedback">
                         <input type="hidden" name="sender_id" value="<?php echo $_SESSION['userId'] ?>">

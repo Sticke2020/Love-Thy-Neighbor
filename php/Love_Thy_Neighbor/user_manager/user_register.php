@@ -2,58 +2,86 @@
  require_once '../view/header.php'; 
 ?> 
 
-<h1>Register User</h1>
-<form action="user_manager/index.php" method="post">
-<input type="hidden" name="action" value="add_user" /> 
-    <p>All fields are Required.</p>
-  <div class="register">
-      <label class='label_form' for="first_name">First Name</label>
-      <input class="text_input" type="text" name="first_name" id="first_name"
-          required value="">
-  </div>
-  <div class="register">
-      <label  class='label_form'for="last_name">Last Name</label>
-      <input class="text_input" type="text" name="last_name" id="last_name"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="city">City</label>
-      <input class="text_input" type="text" name="city" id="city"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="state">State</label>
-      <input class="text_input" type="text" name="state" id="state"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="zip">Zip Code</label>
-      <input class="text_input" type="text" name="zip" id="zip"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="phone">Phone</label>
-      <input class="text_input" type="text" name="phone" id="phone"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="email">Email</label>
-      <input class="text_input" type="text" name="email" id="email"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="user_name">UserName</label>
-      <input class="text_input" type="text" name="user_name" id="user_name"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="password">Password</label>
-      <input class="text_input" type="text" name="password" id="password"
-          required value="">
-  </div>
-  <div class="register">
-      <label class='label_form' for="button_register"></label>
-      <input class="clickable_form" type="submit" id="button_register" value="Register">
-  </div>
-</form>
+<div class="container my-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-header bg-custom-blue text-white">
+                    <h4 class="mb-0">Register User</h4>
+                </div>
+
+                <div class="card-body bg-custom-light-yellow">
+                    <p class="fs-3">All fields are required</p>
+
+                    <form action="user_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="add_user">
+
+                        <!-- Name -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3 fs-4">
+                                <label class="form-label text-black">First Name</label>
+                                <input type="text" name="first_name" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3 fs-4">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" name="last_name" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">City</label>
+                                <input type="text" name="city" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">State</label>
+                                <input type="text" name="state" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3 fs-4">
+                                <label class="form-label">Zip Code</label>
+                                <input type="text" name="zip" class="form-control form-control-lg border-2 border-black" required>
+                            </div>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <!-- Account -->
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="user_name" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <div class="mb-3 fs-4">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control form-control-lg border-2 border-black" required>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 fs-4 mt-5">
+                            Register
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 <?php require_once '../view/footer.php'; ?>
