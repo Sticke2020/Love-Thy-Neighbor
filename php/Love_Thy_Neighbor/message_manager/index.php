@@ -29,6 +29,7 @@ switch ($action) {
      case 'messages': 
           $userId = filter_input(INPUT_POST, 'user_id');
           $messages = MessageDB::getMessagesByUserId($userId);
+          $sentMessages = MessageDB::getSentMessagesByUserId($userId);
           $userNames = UserDB::getUserNames();
 
           include('../message_manager/messages.php');
@@ -39,40 +40,80 @@ switch ($action) {
           $messageId = filter_input(INPUT_POST,'message_id');
           $messages = MessageDB::getMessagesByUserId($userId);
           $messageContent = MessageDB::getMessageByMessageId($messageId);
+          $sentMessages = MessageDB::getSentMessagesByUserId($userId);
           $userNames = UserDB::getUserNames();
 
           include('../message_manager/messages.php');
           break;
 
+     case 'message_user':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $user = UserDB::getUserById($userId);
+          include('../message_manager/message_create.php');
+          break;
+
      case 'send_message':
           $recipientUserName = filter_input(INPUT_POST, 'recipient_username');
-          $messageBody = filter_input(INPUT_POST, 'message_body');
-          $senderId = filter_input(INPUT_POST, 'user_id');
+          $messageBody = null;
+          $userId = null;
+          $senderId = null;
+          $sentMessages = null;
+
+          if (isset($recipientUserName)) {
+               $recipientUserName = filter_input(INPUT_POST, 'recipient_username');
+               $messageBody = filter_input(INPUT_POST, 'message_body');
+               $senderId = filter_input(INPUT_POST, 'user_id');
+               $sentMessages = MessageDB::getSentMessagesByUserId($senderId);
           
 
-          if ($messageBody == null || $recipientUserName == null) {
-               $errorMessage = "Invalid data. Check all fields and try again.";
-               include('../errors/error.php');
-          }
-          else if (!UserDB::userNameExists($recipientUserName)) {
-               $errorMessage = "Username is invalid, Username must be spelled exactly correct, Please try again";
-               include('../errors/error.php');
-          }
-          else {
-               $recipent = UserDB::getUserByUserName($recipientUserName);
-               $message = new Message();
-               
-               $message->setBody($messageBody);
-               $message->setSenderId($senderId);
-               $message->setReceiverId($recipent->getId());
-               MessageDB::createMessage($message);
-          }
+               if ($messageBody == null || $recipientUserName == null) {
+                    $errorMessage = "Invalid data. Check all fields and try again.";
+                    include('../errors/error.php');
+               }
+               else if (!UserDB::userNameExists($recipientUserName)) {
+                    $errorMessage = "Username is invalid, Username must be spelled exactly correct, Please try again";
+                    include('../errors/error.php');
+               }
+               else {
+                    $recipent = UserDB::getUserByUserName($recipientUserName);
+                    $message = new Message();
+                    
+                    $message->setBody($messageBody);
+                    $message->setSenderId($senderId);
+                    $message->setReceiverId($recipent->getId());
+                    MessageDB::createMessage($message);
 
-          $userId = $senderId;
-          $messages = MessageDB::getMessagesByUserId($userId);
-          $userNames = UserDB::getUserNames();
+                    $userId = $senderId;
+                    $messages = MessageDB::getMessagesByUserId($userId);
+                    $userNames = UserDB::getUserNames();
 
-          include('../message_manager/messages.php');
+                    include('../message_manager/messages.php');
+               }
+          }
+          else if (!isset($recipientUserName)) {
+               $messageBody = filter_input(INPUT_POST, 'message_body');
+               $senderId = $_SESSION['userId'];
+               $userId = filter_input(INPUT_POST, 'user_id');
+
+               if ($messageBody == null) {
+                    $errorMessage = "Invalid data. Check all fields and try again.";
+                    include('../errors/error.php');
+               }
+               else {
+                     $message = new Message();
+                    
+                    $message->setBody($messageBody);
+                    $message->setSenderId($senderId);
+                    $message->setReceiverId($userId);
+                    MessageDB::createMessage($message);
+
+                    $messages = MessageDB::getMessagesByUserId($userId);
+                    $sentMessages = MessageDB::getSentMessagesByUserId($userId);
+                    $userNames = UserDB::getUserNames();
+
+                    include('../message_manager/messages.php');
+               }
+          }
           break;
 
      default:

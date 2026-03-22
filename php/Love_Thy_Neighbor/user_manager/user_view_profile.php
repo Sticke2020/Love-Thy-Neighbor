@@ -36,6 +36,16 @@
                 <?php } ?>
             <?php } ?>
         </div>
+
+        <!--Messages Button-->
+        <div class="col">
+            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+                <input type="hidden" name="action" value="message_user">
+                <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3" type="submit">Message <?php echo $user->getUserName() ?></button> 
+            </form>
+        </div>
+
     </div>
 </div>
 

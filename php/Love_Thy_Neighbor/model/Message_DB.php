@@ -31,7 +31,8 @@ public static function getMessagesByUserId($userId) {
     $query = 'SELECT m.*, u.username 
                 FROM message m 
                 JOIN user u ON m.sender_id = u.id
-                WHERE receiver_id = :userId';
+                WHERE receiver_id = :userId
+                ORDER BY date_created DESC';
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userId', $userId);
@@ -44,6 +45,35 @@ public static function getMessagesByUserId($userId) {
         $message->setSenderId($row['sender_id']);
         $message->setSender($row['username']);
         $message->setReceiverId($row['receiver_id']);
+        $message->setBody($row['body']);
+        $message->setDateCreated($row['date_created']);
+        $message->setIsRead($row['is_read']);
+        
+        $messages[] = $message;
+    }
+    return $messages;
+}
+
+public static function getSentMessagesByUserId($userId) {
+    $db = Database::getDB();
+
+    $query = 'SELECT m.*, u.username 
+                FROM message m 
+                JOIN user u ON m.receiver_id = u.id
+                WHERE sender_id = :userId
+                ORDER BY date_created DESC';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+
+    $messages = array();
+    foreach ($statement as $row) {
+        $message = new Message();
+        $message->setID($row['id']);
+        $message->setSenderId($row['sender_id']);
+        $message->setReceiverId($row['receiver_id']);
+        $message->setReceiver($row['username']);
         $message->setBody($row['body']);
         $message->setDateCreated($row['date_created']);
         $message->setIsRead($row['is_read']);
