@@ -110,7 +110,7 @@ switch ($action) {
           $requestId = filter_input(INPUT_POST, 'request_id');
           $title = filter_input(INPUT_POST, 'title');
           $body = filter_input(INPUT_POST, 'body');
-          
+
           try{
           $db = DataBase::getDB();
           $db->beginTransaction();

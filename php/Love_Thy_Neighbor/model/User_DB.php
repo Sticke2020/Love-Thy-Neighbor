@@ -52,6 +52,47 @@ public static function getUsers() {
     return $users;
 }
 
+public static function getUserNames() {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM user';
+
+    $statement = $db->prepare($query);
+    $statement->execute();
+
+    $users = array();
+    foreach ($statement as $row) {
+        $user = new User();
+        $user->setUserName($row['username']);
+
+        $users[] = $user;
+    }
+    return $users;
+}
+
+public static function getUserIdByRequestId($requestId) {
+    $db = DataBase::getDB();
+
+    $query = 'SELECT * FROM request WHERE id = :requestId';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':requestId', $requestId);
+        $statement->execute();
+        $request = $statement->fetch();
+        $statement->closeCursor();
+
+        $user = new User();
+
+        if ($request == false) {
+            $user->setId(null);
+        }
+        else {
+            $user->setId($request['user_id']);
+        }
+        
+    return $user;
+}
+
 public static function getUserByEmailAndPassword($email, $password) {
     $db = DataBase::getDB();
 
@@ -71,7 +112,7 @@ public static function getUserByEmailAndPassword($email, $password) {
         }
 
         if (password_verify($password, $user['password'])) {
-            $selectedUser->setID($user['id']);
+            $selectedUser->setId($user['id']);
         }
         else {
             $selectedUser->setId(null);

@@ -1,7 +1,7 @@
 <?php
 
 class Message {
-    private $id, $senderId, $receiverId, $body, $dateCreated, $isRead;
+    private $id, $senderId, $sender, $receiverId, $body, $dateCreated, $isRead;
 
     public function __construct() {}
    
@@ -11,12 +11,24 @@ class Message {
         return $this->id;
     } 
 
+    public function setId($value) {
+        return $this->id = $value;
+    }
+
     public function getSenderId() {
         return $this->senderId;
     }
 
     public function setSenderId($value) {
         return $this->senderId = $value;
+    }
+
+    public function getSender() {
+        return $this->sender;
+    }
+
+    public function setSender($value) {
+        return $this->sender = $value;
     }
 
     public function getReceiverId() {

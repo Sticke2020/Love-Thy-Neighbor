@@ -34,6 +34,16 @@
                 <?php } ?>
             <?php } ?>
         </div>
+
+        <!--Messages Button-->
+        <div class="col">
+            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+                <input type="hidden" name="action" value="messages">
+                <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3" type="submit">Messages</button> 
+            </form>
+        </div>
+
     </div>
 </div>
 
@@ -77,19 +87,19 @@
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="delete_request">
                                             <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-danger btn-sm" type="submit">Delete Request</button>
+                                            <button class="btn btn-danger btn-lg" type="submit">Delete Request</button>
                                         </form>
 
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="mark_request_fulfilled">
                                             <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-success btn-sm" type="submit">Mark Fulfilled</button>
+                                            <button class="btn btn-success btn-lg" type="submit">Mark Fulfilled</button>
                                         </form>
 
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="edit_request">
                                             <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-primary btn-sm" type="submit">Edit Request</button>
+                                            <button class="btn btn-primary btn-lg" type="submit">Edit Request</button>
                                         </form>
                                     </div>
 

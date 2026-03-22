@@ -40,6 +40,28 @@
                                 <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                             </p>
 
+                             <!-- Action Buttons -->
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <form action="admin_manager/index.php" method="POST">
+                                            <input type="hidden" name="action" value="delete_request">
+                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                            <button class="btn btn-danger btn-lg" type="submit">Delete Request</button>
+                                        </form>
+
+                                        <form action="admin_manager/index.php" method="POST">
+                                            <input type="hidden" name="action" value="mark_request_fulfilled">
+                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                            <button class="btn btn-success btn-lg" type="submit">Mark Fulfilled</button>
+                                        </form>
+
+                                        <form action="admin_manager/index.php" method="POST">
+                                            <input type="hidden" name="action" value="edit_request">
+                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                            <button class="btn btn-primary btn-lg" type="submit">Edit Request</button>
+                                        </form>
+                                    </div>
+
+
                             <p class="fs-4"><strong>Date Created:</strong>
                                  <?php echo $request->getDateCreated(); ?> 
                                     <strong>Date Updated:</strong> <?php echo $request->getDateUpdated(); ?>

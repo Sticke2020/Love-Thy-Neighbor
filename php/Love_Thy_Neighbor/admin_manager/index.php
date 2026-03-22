@@ -40,6 +40,8 @@ switch ($action) {
           include('../admin_manager/admin_dashboard.php');
           break;
 
+/**********  USERS  *********************************************/
+
      case 'search_users':
           $users = UserDB::getUsers();
           include('../admin_manager/admin_users.php');
@@ -54,18 +56,126 @@ switch ($action) {
      case 'view_user':
           break;
 
+
+     case 'edit_user':
+
+          break;
+
+
+
+/************  REQUESTS  *******************************************/
+
      case 'requests':
           $requests = RequestDB::getRequests();
           include('../admin_manager/admin_requests.php');
+          break;
+
+     case 'edit_request':
+          $requestId = filter_input(INPUT_POST, 'request_id');
+          $request = RequestDB::getRequestById($requestId);
+
+          include('admin_request_edit.php');
+          break;
+
+     case 'update_request':
+          $requestId = filter_input(INPUT_POST, 'request_id');
+          $user = UserDB::getUserIdByRequestId($requestId);
+          $userId = $user->getId();
+          $title = filter_input(INPUT_POST, 'title');
+          $body = filter_input(INPUT_POST, 'body');
+
+          try{
+          $db = DataBase::getDB();
+          $db->beginTransaction();
+
+          RequestDB::updateRequest($requestId, $title, $body);
+
+          if (!empty($_POST['delete_images'])) {
+               foreach ($_POST['delete_images'] as $imageId) {
+                    ImageDB::deleteImageFromImageServer($imageId, null);
+                    ImageDB::deleteRequestImageTableEntry($imageId);
+                    ImageDB::deleteImageById($imageId);
+               }
+          }
+
+          ImageDB::uploadRequestImages($requestId, $userId);
+
+          $db->commit();
+          }
+          catch (Exception $e) {
+               $db->rollBack();
+          }
+
+          include('admin_dashboard.php');
+          break;
+
+     case 'delete_request':
+          $requestId = filter_input(INPUT_POST, 'request_id');
+
+          try {
+               $db = DataBase::getDB();
+               $db->beginTransaction();
+
+               $images = ImageDB::getImagesByRequestId($requestId);
+
+               foreach ($images as $image) {
+                    $imageId = $image->getId();
+
+                    ImageDB::deleteImageFromImageServer($imageId, null);
+                    ImageDB::deleteRequestImageTableEntry($imageId);
+                    ImageDB::deleteImageById($imageId);
+               }
+
+               RequestDB::deleteRequest($requestId);
+
+               $db->commit();
+
+          } catch (Exception $e) {
+               $db->rollBack();
+               error_log($e->getMessage());
+          }
+          
+          include('admin_dashboard.php');
+          break;
+
+     case 'make_request':
+          $userId = $_SESSION['userId'];
+          include('admin_request_create.php');
+          break;
+
+     case 'create_request':
+          $request = new Request();
+
+          $request->setTitle(filter_input(INPUT_POST, 'title'));
+          $request->setBody(filter_input(INPUT_POST, 'body'));
+          $request->setUserId(filter_input(INPUT_POST, 'user_id'));
+          $request->setRequestStatusTypeId(1);
+
+          $userId = filter_input(INPUT_POST, 'user_id');
+
+          try {
+               $db = DataBase::getDB();
+               $db->beginTransaction();
+
+               $requestId = RequestDB::createRequest($request);
+
+               ImageDB::uploadRequestImages($requestId, $userId);
+
+               $db->commit();
+          }
+          catch (PDOException $e) {
+               $db->rollBack();
+               echo "Transaction failed: " . $e->getMessage();
+          }
+
+          $requests = RequestDB::getRequests();
+          include('requests.php');
           break;
 
      case 'requests_by_user_id':
 
           break;
 
-     case 'edit_user':
-
-          break;
 
      default:
           // Borrowed this code from Andy
