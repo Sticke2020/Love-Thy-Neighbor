@@ -11,9 +11,10 @@
         </div>
 
         <div class="card-body">
-            <form action="user_manager/index.php" method="post">
+            <form action="report_manager/index.php" method="post">
                 <input type="hidden" name="action" value="create_report">
-
+                <input type="hidden" name="user_id" value="<?php echo $_SESSION['userId'] ?>">
+                <!-- Report Type Select, Post Id -->
                 <div class="mb-3">
                     <label class="form-label">Report Type</label>
                     <select name="report_type_id" class="form-select">
@@ -28,10 +29,14 @@
                     </select>
                 </div>
 
-                
+                <!-- Report Description, Post Description -->
+                <div class="mb-3">
+                    <label for="report_body" class="form-label">Description</label>
+                    <textarea name="report_body" class="form-control" rows="5" required placeholder="Write your report here."></textarea>
+                </div>
 
                 <button type="submit" class="btn btn-success w-100">
-                    Save Changes
+                    Send Report
                 </button>
             </form>
         </div>

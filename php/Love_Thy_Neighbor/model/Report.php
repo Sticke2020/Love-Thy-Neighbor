@@ -11,6 +11,10 @@ public function __construct() {}
         return $this->id;
     } 
 
+    public function setId($value) {
+        return $this->id = $value;
+    }
+
     public function getReportTypeId() {
         return $this->reportTypeId;
     }

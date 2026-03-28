@@ -23,8 +23,25 @@ if ( $action == NULL) {
 switch ($action) {
 
     case 'file_report':
-          include('../report_manager/report_create.php');
-          break;
+            $reportTypes = ReportDB::getReportTypes();
+
+            include('../report_manager/report_create.php');
+            break;
+
+    case 'create_report':
+            $reportTypeId = filter_input(INPUT_POST, 'report_type_id');
+            $reportBody = filter_input(INPUT_POST, 'report_body');
+            $userId = filter_input(INPUT_POST, 'user_id');
+
+            $report = new Report();
+            $report->setReportTypeId($reportTypeId);
+            $report->setBody($reportBody);
+            $report->setUserId($userId);
+
+            ReportDB::createReport($report);
+
+            include('../report_manager/report_created.php');
+            break;
 
     default:
           // Borrowed this code from Andy

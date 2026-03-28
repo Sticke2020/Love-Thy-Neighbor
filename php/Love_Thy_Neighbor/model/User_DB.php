@@ -33,7 +33,7 @@ public static function getUsers() {
     $users = array();
     foreach ($statement as $row) {
         $user = new User();
-        $user->setID($row['id']);
+        $user->setId($row['id']);
         $user->setUserTypeId($row['user_type_id']);
         $user->setFirstName($row['first_name']);
         $user->setLastName($row['last_name']);
