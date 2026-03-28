@@ -8,6 +8,8 @@ $suffix;
 require_once('../model/Database.php');
 require_once('../model/User.php');
 require_once('../model/User_DB.php');
+require_once('../model/Log.php');
+require_once('../model/Log_DB.php');
 require_once('../model/BusinessUser.php');
 require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
@@ -146,7 +148,10 @@ switch ($action) {
                                    $_SESSION['businessUser'] = $businessUser;
                               }
                               $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
-                         include('user_dashboard.php');
+
+                              $log = new Log($ID, 5);
+                              LogDB::createLog($log);
+                              include('user_dashboard.php');
                          }
                     } 
                     else{

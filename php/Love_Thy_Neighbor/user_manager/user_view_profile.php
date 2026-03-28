@@ -68,7 +68,7 @@
                         <?php foreach ($requests as $request) : ?>
                             <div class="card mb-3 bg-custom-gold">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $request->getTitle(); ?></h5>
+                                    <h5 class="card-title fs-4"><?php echo $request->getTitle(); ?></h5>
 
                                     <?php if (!empty($request->getImages())) : ?>
                                         <div class="mb-2">
@@ -78,9 +78,9 @@
                                         </div>
                                     <?php endif; ?>
 
-                                    <p class="card-text"><?php echo $request->getBody(); ?></p>
+                                    <p class="card-text fs-4"><?php echo $request->getBody(); ?></p>
 
-                                    <p><strong>Request Status:</strong>
+                                    <p class="fs-4"><strong>Request Status:</strong>
                                         <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                                     </p>
 
@@ -89,7 +89,7 @@
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="fulfill_request">
                                             <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-success btn-sm" type="submit">Fulfill Request</button>
+                                            <button class="btn btn-success btn-lg" type="submit">Fulfill Request</button>
                                         </form>
 
                                     </div>

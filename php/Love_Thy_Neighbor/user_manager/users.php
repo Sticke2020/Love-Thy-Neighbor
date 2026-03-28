@@ -1,16 +1,16 @@
 <?php require_once ('../view/user_header.php'); ?>
 
 
-<div class="container mt-4">
+<div class="container-fluid mt-4 w-100">
     <div class="card shadow">
-        <div class="card-header bg-dark text-white">
-            <h4 class="mb-0">Users</h4>
+        <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
+            <h3 class="mb-0">Users</h3>
         </div>
 
-        <div class="card-body">
+        <div class="card-body bg-custom-blue">
             <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
-                    <thead class="table-dark">
+                <table class="table table-custom table-hover align-middle">
+                    <thead class="table-custom fs-4">
                         <tr>
                             <th>Username</th>
                             <th>First Name</th>
@@ -25,7 +25,7 @@
                     <tbody>
                         <?php foreach ($users as $user) : ?>
                             <?php if ($user->getUserTypeId() == 3) : ?>
-                                <tr>
+                                <tr class="fs-3">
                                     <td><?php echo htmlspecialchars($user->getUserName()); ?></td>
                                     <td><?php echo htmlspecialchars($user->getFirstName()); ?></td>
                                     <td><?php echo htmlspecialchars($user->getLastName()); ?></td>
@@ -39,7 +39,7 @@
                                             <form action="user_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="view_user">
                                                 <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
-                                                <button class="btn btn-sm btn-primary">View</button>
+                                                <button class="btn btn-lg btn-primary">View</button>
                                             </form>
 
                                         </div>

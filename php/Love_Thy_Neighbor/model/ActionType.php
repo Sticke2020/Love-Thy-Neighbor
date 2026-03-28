@@ -1,6 +1,6 @@
 <?php
 
-class ReportType {
+class ActionType {
     private $id, $description;
 
     public function __construct() {}

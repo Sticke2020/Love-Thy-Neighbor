@@ -9,10 +9,10 @@
     </p>
 
     <div class="card border-primary mb-4">
-        <div class="card-header fs-4">
+        <div class="card-header fs-4 bg-custom-blue text-custom-white">
             Create a New Request
         </div>
-        <div class="card-body">
+        <div class="card-body bg-custom-light-yellow">
             <form action="request_manager/index.php" method="POST" enctype="multipart/form-data">
 
                 <input type="hidden" name="action" value="create_request">
@@ -38,7 +38,7 @@
 
                 <!-- Submit Button -->
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary fs-5">Create Request</button>
+                    <button type="submit" class="btn btn-lg bg-custom-black text-custom-white fs-5">Create Request</button>
                 </div>
 
             </form>
