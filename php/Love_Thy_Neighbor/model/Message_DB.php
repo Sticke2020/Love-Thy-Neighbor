@@ -108,5 +108,18 @@ public static function getMessageByMessageId($messageId) {
     return $message;
 }
 
+public static function messageIsRead($messageId) {
+    $db = DataBase::getDB();
+
+    $query = 'UPDATE message
+                SET is_read = 1
+                WHERE id = :messageId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':messageId', $messageId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 
 }

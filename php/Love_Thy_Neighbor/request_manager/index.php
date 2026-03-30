@@ -8,6 +8,8 @@ require_once('../model/Image_DB.php');
 require_once('../model/Request.php');
 require_once('../model/Request_DB.php');
 require_once('../model/Utility.php');
+require_once('../model/Message.php');
+require_once('../model/Message_DB.php');
 
 
 if(session_status() === PHP_SESSION_NONE) {
@@ -166,7 +168,20 @@ switch ($action) {
           break;
 
      case 'fulfill_request':
+          $requestTitle = filter_input(INPUT_POST, 'request_title');
+          $receiverId = filter_input(INPUT_POST, 'receiver_id');
+          $userId = $_SESSION['userId'];
+          $user = UserDB::getUserById($userId);
+          $userName = $user->getUserName();
+          $body = "$userName wants to fulfull your request ($requestTitle). Send them a message if you are interested in having them
+                              fulfill your request. Remember to mark your request as fulfilled after it has been fulfilled.";
+          $message = new Message();
+          $message->setBody($body);
+          $message->setSenderId($userId);
+          $message->setReceiverId($receiverId);
 
+          MessageDB::createMessage($message);
+          include('fulfill_request.php');
           break;
 
 

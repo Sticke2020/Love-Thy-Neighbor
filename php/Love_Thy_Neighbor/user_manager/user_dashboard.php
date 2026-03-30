@@ -40,7 +40,8 @@
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
-                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3" type="submit">Check Your Messages</button> 
+                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3"
+                    id="inbox_button_blink" type="submit">Check Your Messages</button> 
             </form>
         </div>
 

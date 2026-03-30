@@ -88,7 +88,8 @@
                                     <div class="d-flex gap-2 flex-wrap">
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="fulfill_request">
-                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                            <input type="hidden" name="request_title" value="<?php echo $request->getTitle(); ?>">
+                                            <input type="hidden" name="receiver_id" value="<?php echo $userId ?>"> 
                                             <button class="btn btn-success btn-lg" type="submit">Fulfill Request</button>
                                         </form>
 

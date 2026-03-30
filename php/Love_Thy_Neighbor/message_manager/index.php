@@ -38,10 +38,15 @@ switch ($action) {
      case 'message_content':
           $userId = filter_input(INPUT_POST, 'user_id');
           $messageId = filter_input(INPUT_POST,'message_id');
+          $message = MessageDB::getMessageByMessageId($messageId);
           $messages = MessageDB::getMessagesByUserId($userId);
           $messageContent = MessageDB::getMessageByMessageId($messageId);
           $sentMessages = MessageDB::getSentMessagesByUserId($userId);
           $userNames = UserDB::getUserNames();
+
+          if (!$message->getIsRead()) {
+               MessageDB::messageIsRead($messageId);
+          }
 
           include('../message_manager/messages.php');
           break;
@@ -77,10 +82,10 @@ switch ($action) {
                else {
                     $recipent = UserDB::getUserByUserName($recipientUserName);
                     $message = new Message();
-                    
                     $message->setBody($messageBody);
                     $message->setSenderId($senderId);
                     $message->setReceiverId($recipent->getId());
+                    $message->setIsRead(0);
                     MessageDB::createMessage($message);
 
                     $userId = $senderId;

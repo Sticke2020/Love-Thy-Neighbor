@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/custom-bootstrap-styles.css">
     <link rel="stylesheet" type="text/css" href="styles/header.css">
+    <link rel="stylesheet" type="text/css" href="styles/fx.css">
     
 </head>
 
