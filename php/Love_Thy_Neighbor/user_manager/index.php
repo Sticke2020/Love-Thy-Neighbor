@@ -148,6 +148,7 @@ switch ($action) {
                                    $_SESSION['businessUser'] = $businessUser;
                               }
                               $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
+                              $unreadMessages = MessageDB::hasUnreadMessages($ID);
 
                               $log = new Log($ID, 5);
                               LogDB::createLog($log);

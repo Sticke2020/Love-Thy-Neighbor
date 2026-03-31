@@ -83,7 +83,7 @@ CREATE TABLE `message` (
   `sender_id` integer NOT NULL,
   `receiver_id` integer NOT NULL,
   `body` text,
-  `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create report table
@@ -155,7 +155,7 @@ CREATE TABLE `message_user` (
   `user_id` int NOT NULL,
   `folder` ENUM('inbox', 'outbox'),
   `is_read` bool,
-  `is_deleted` bool,
+  `is_deleted` bool
 );
 
 

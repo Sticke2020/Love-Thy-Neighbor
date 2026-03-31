@@ -1,7 +1,7 @@
 <?php
 
 class Message {
-    private $id, $senderId, $sender, $receiverId, $receiver, $body, $dateCreated, $isRead;
+    private $id, $senderId, $sender, $receiverId, $receiver, $body, $dateCreated, $folder, $isRead, $isDeleted;
 
     public function __construct() {}
    
@@ -63,11 +63,27 @@ class Message {
         return $this->dateCreated = $value;
     }
 
+    public function getFolder() {
+        return $this->folder;
+    }
+
+    public function setFolder($value) {
+        return $this->folder = $value;
+    }
+
     public function getIsRead() {
         return $this->isRead;
     }
 
     public function setIsRead($value) {
         return $this->isRead = $value;
+    }
+
+    public function getIsDeleted() {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted($value) {
+        return $this->isDeleted = $value;
     }
 }

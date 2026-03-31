@@ -11,6 +11,8 @@ require_once('../model/Business_DB.php');
 require_once('../model/BusinessUser.php');
 require_once('../model/Feedback.php');
 require_once('../model/Feedback_DB.php');
+require_once('../model/Message.php');
+require_once('../model/Message_DB.php');
 require_once('../model/Utility.php');
 
 class Utility {
@@ -20,6 +22,7 @@ class Utility {
         $requests = RequestDB::getRequestsByUserId($user->getId());
         $profilePic = ImageDB::getImageById($user->getProfileImageId());
         $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
+        $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
         $business = null;
 
         if (isset($_SESSION['businessUser'])) {

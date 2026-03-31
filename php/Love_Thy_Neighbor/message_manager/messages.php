@@ -31,7 +31,7 @@
                     <h4 class="mb-0">Inbox</h4>
                 </div>
                 <div class="card-body message-list bg-custom-light-yellow">
-                    <?php foreach ($messages as $message) : ?>
+                    <?php foreach ($inbox as $message) : ?>
                     <form action="message_manager/index.php" method="POST">
                         <input type="hidden" name="action" value="message_content">
                         <input type="hidden" name="message_id" value="<?php echo $message->getId() ?>">
@@ -50,7 +50,7 @@
                     <h4 class="mb-0">Outbox</h4>
                 </div>
                 <div class="card-body message-list bg-custom-light-yellow">
-                    <?php foreach ($sentMessages as $sent) : ?>
+                    <?php foreach ($outbox as $sent) : ?>
                     <form action="message_manager/index.php" method="POST">
                         <input type="hidden" name="action" value="message_content">
                         <input type="hidden" name="message_id" value="<?php echo $sent->getId() ?>">
@@ -86,6 +86,8 @@
                     ?>
                         <form action="message_manager/index.php" method="POST" class="text-end">
                             <input type="hidden" name="action" value="delete_message">
+                            <input type="hidden" name="user_id" value="<?php echo $userId ?>">
+                            <input type="hidden" name="message_id" value="<?php echo $messageId ?>">
                             <button type="submit" name="send_message" class="btn btn-lg bg-custom-red text-custom-white">Delete Message</button>
                         </form>
                     <?php

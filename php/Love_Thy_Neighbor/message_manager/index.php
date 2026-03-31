@@ -28,8 +28,8 @@ switch ($action) {
 
      case 'messages': 
           $userId = filter_input(INPUT_POST, 'user_id');
-          $messages = MessageDB::getMessagesByUserId($userId);
-          $sentMessages = MessageDB::getSentMessagesByUserId($userId);
+          $inbox = MessageDB::getInboxMessagesByUserId($userId);
+          $outbox = MessageDB::getOutboxMessagesByUserId($userId);
           $userNames = UserDB::getUserNames();
 
           include('../message_manager/messages.php');
@@ -38,10 +38,10 @@ switch ($action) {
      case 'message_content':
           $userId = filter_input(INPUT_POST, 'user_id');
           $messageId = filter_input(INPUT_POST,'message_id');
-          $message = MessageDB::getMessageByMessageId($messageId);
-          $messages = MessageDB::getMessagesByUserId($userId);
-          $messageContent = MessageDB::getMessageByMessageId($messageId);
-          $sentMessages = MessageDB::getSentMessagesByUserId($userId);
+          $message = MessageDB::getMessageByMessageId($messageId, $userId);
+          $inbox = MessageDB::getInboxMessagesByUserId($userId);
+          $messageContent = MessageDB::getMessageByMessageId($messageId, $userId);
+          $outbox = MessageDB::getOutboxMessagesByUserId($userId);
           $userNames = UserDB::getUserNames();
 
           if (!$message->getIsRead()) {
@@ -68,7 +68,7 @@ switch ($action) {
                $recipientUserName = filter_input(INPUT_POST, 'recipient_username');
                $messageBody = filter_input(INPUT_POST, 'message_body');
                $senderId = filter_input(INPUT_POST, 'user_id');
-               $sentMessages = MessageDB::getSentMessagesByUserId($senderId);
+               $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
           
 
                if ($messageBody == null || $recipientUserName == null) {
@@ -88,8 +88,8 @@ switch ($action) {
                     $message->setIsRead(0);
                     MessageDB::createMessage($message);
 
-                    $userId = $senderId;
-                    $messages = MessageDB::getMessagesByUserId($userId);
+                    $inbox = MessageDB::getInboxMessagesByUserId($senderId);
+                    $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
                     $userNames = UserDB::getUserNames();
 
                     include('../message_manager/messages.php');
@@ -98,27 +98,42 @@ switch ($action) {
           else if (!isset($recipientUserName)) {
                $messageBody = filter_input(INPUT_POST, 'message_body');
                $senderId = $_SESSION['userId'];
-               $userId = filter_input(INPUT_POST, 'user_id');
+               $receiverId = filter_input(INPUT_POST, 'user_id');
 
                if ($messageBody == null) {
                     $errorMessage = "Invalid data. Check all fields and try again.";
                     include('../errors/error.php');
                }
                else {
-                     $message = new Message();
+                    $message = new Message();
                     
                     $message->setBody($messageBody);
                     $message->setSenderId($senderId);
-                    $message->setReceiverId($userId);
+                    $message->setReceiverId($receiverId);
                     MessageDB::createMessage($message);
 
-                    $messages = MessageDB::getMessagesByUserId($userId);
-                    $sentMessages = MessageDB::getSentMessagesByUserId($userId);
+                    $inbox = MessageDB::getInboxMessagesByUserId($senderId);
+                    $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
                     $userNames = UserDB::getUserNames();
 
                     include('../message_manager/messages.php');
                }
           }
+          break;
+
+     case 'delete_message':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $messageId = filter_input(INPUT_POST,'message_id');
+
+          MessageDB::softDeleteMessage($userId, $messageId);
+
+          $message = MessageDB::getMessageByMessageId($messageId, $userId);
+          $inbox = MessageDB::getInboxMessagesByUserId($userId);
+          
+          $outbox = MessageDB::getOutboxMessagesByUserId($userId);
+          $userNames = UserDB::getUserNames();
+
+          include('../message_manager/messages.php');
           break;
 
      default:
