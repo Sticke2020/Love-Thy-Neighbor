@@ -88,7 +88,7 @@
                             <input type="hidden" name="action" value="delete_message">
                             <input type="hidden" name="user_id" value="<?php echo $userId ?>">
                             <input type="hidden" name="message_id" value="<?php echo $messageId ?>">
-                            <button type="submit" name="send_message" class="btn btn-lg bg-custom-red text-custom-white">Delete Message</button>
+                            <button type="submit" name="delete_message" class="btn btn-lg bg-custom-red text-custom-white">Delete Message</button>
                         </form>
                     <?php
                     } else {

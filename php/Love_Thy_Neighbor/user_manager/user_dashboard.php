@@ -102,12 +102,12 @@
                                         <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                                     </p>
 
-                                    <!-- Action Buttons -->
+                                    <!--Buttons-->
                                     <div class="d-flex gap-2 flex-wrap">
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="delete_request">
                                             <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-danger btn-lg" type="submit">Delete Request</button>
+                                            <button class="btn bg-custom-red btn-lg text-custom-white" type="submit">Delete Request</button>
                                         </form>
 
                                         <form action="request_manager/index.php" method="POST">

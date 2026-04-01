@@ -38,6 +38,7 @@ switch ($action) {
      case 'message_content':
           $userId = filter_input(INPUT_POST, 'user_id');
           $messageId = filter_input(INPUT_POST,'message_id');
+          $folder = filter_input(INPUT_POST, 'folder');
           $message = MessageDB::getMessageByMessageId($messageId, $userId);
           $inbox = MessageDB::getInboxMessagesByUserId($userId);
           $messageContent = MessageDB::getMessageByMessageId($messageId, $userId);

@@ -126,6 +126,10 @@ public static function getMessageByMessageId($messageId, $userId) {
     $statement->execute();
     $row = $statement->fetch();
 
+    if (!$row) {
+        return null; 
+    }
+
     $message = new Message();
     $message->setId($row['id']);
     $message->setSenderId($row['sender_id']);
