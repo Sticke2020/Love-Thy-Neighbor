@@ -1,11 +1,18 @@
 <?php require_once ('../view/admin_header.php'); ?>
 <section>
 
-<fieldset class="m-2">
+<fieldset class="m-2 text-center">
     <form action="admin_manager/index.php" method="POST">
         <label id="search">Search Users By UserName:</label>
         <input class='text_input' type="text" name="search_username">
         <input type="hidden" name="action" value="search_users_by_username" /> 
+        <input class='clickable' type="submit" value="Search"><br>
+    </form>
+
+    <form action="admin_manager/index.php" method="POST">
+        <label id="search">Search Users By LastName:</label>
+        <input class='text_input' type="text" name="search_lastname">
+        <input type="hidden" name="action" value="search_users_by_lastname" /> 
         <input class='clickable' type="submit" value="Search"><br>
     </form>
 </fieldset>
@@ -27,6 +34,7 @@
                             <th>Username</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Email<th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
@@ -37,10 +45,11 @@
                         ?>
                         <tr>
                             <td><?php echo $id; ?></td>
-                            <td><?php echo $user->getUserTypeId(); ?></td>
+                            <td><?php echo $user->getUserTypes(); ?></td>
                             <td><?php echo htmlspecialchars($user->getUserName()); ?></td>
                             <td><?php echo htmlspecialchars($user->getFirstName()); ?></td>
                             <td><?php echo htmlspecialchars($user->getLastName()); ?></td>
+                            <td><?php echo htmlspecialchars($user->getEmail()); ?></td>
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">

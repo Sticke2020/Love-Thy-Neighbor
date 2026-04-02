@@ -1,7 +1,11 @@
 
 /* background colors */
 .bg-custom-blue {
-  background-color: #0606ad !important; 
+  background-color: #2A82D1 !important; 
+}
+
+.bg-custom-light-blue {
+  background-color: #2AD6FD !important;
 }
 
 .bg-custom-white {
@@ -21,9 +25,25 @@
 }
 
 .bg-custom-red {
-  background-color: #b51500 !important;
+  background-color: #CA3A31 !important;
 }
 
+.bg-custom-green {
+  background-color: #1DB36E !important;
+}
+
+.bg-custom-grey {
+  background-color: #457B9D !important;
+}
+
+
+
+/* border style */
+.custom-border-inset {
+  border-style: inset !important;
+  border-width: 4px !important;
+  border-color: #faffc1 !important;
+}
 
 
 

@@ -87,8 +87,15 @@ switch ($action) {
                     $message->setSenderId($senderId);
                     $message->setReceiverId($recipent->getId());
                     $message->setIsRead(0);
-                    MessageDB::createMessage($message);
 
+                    try {
+                         MessageDB::createMessage($message);
+                    }
+                    catch (Exception $e) {
+                         $error = "Something went wrong while sending your message. Please try again at another time.";
+                         include('../errors/error.php');
+                    }
+                    $userId = $senderId;
                     $inbox = MessageDB::getInboxMessagesByUserId($senderId);
                     $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
                     $userNames = UserDB::getUserNames();
@@ -111,8 +118,16 @@ switch ($action) {
                     $message->setBody($messageBody);
                     $message->setSenderId($senderId);
                     $message->setReceiverId($receiverId);
-                    MessageDB::createMessage($message);
 
+                    try {
+                         MessageDB::createMessage($message);
+                    }
+                    catch (Exception $e) {
+                         $error = "Something went wrong while sending your message. Please try again at another time.";
+                         include('../errors/error.php');
+                    }
+
+                    $userId = $senderId;
                     $inbox = MessageDB::getInboxMessagesByUserId($senderId);
                     $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
                     $userNames = UserDB::getUserNames();

@@ -17,6 +17,7 @@ require_once('../model/Utility.php');
 
 class Utility {
 
+    // This gathers the variables and objects needed by the user dashboard
     public static  function returnToDashboard() {
         $user = UserDB::getUserById($_SESSION['userId']);
         $requests = RequestDB::getRequestsByUserId($user->getId());

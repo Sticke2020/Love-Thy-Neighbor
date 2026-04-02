@@ -2,7 +2,6 @@
 <?php require_once ('../view/user_header.php'); ?>
 
 
-
 <div class="container-fluid px-0 mb-3">
     <div class="row align-items-start">
 
@@ -41,7 +40,7 @@
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
-                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3"
+                <button class="btn text-custom-white btn-lg border-3"
                     id="inbox_button_blink" type="submit">Check Your Messages</button> 
             </form>
         </div>
@@ -58,7 +57,6 @@
 
     </div>
 </div>
-
 
 
 <div class="container-fluid mt-3 px-0">
@@ -84,47 +82,78 @@
                         <p class="text-muted text-custom-white fs-4">No requests found.</p>
                     <?php else : ?>
                         <?php foreach ($requests as $request) : ?>
-                            <div class="card mb-3 bg-custom-gold">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo $request->getTitle(); ?></h5>
+                            <?php if ($request->getRequestStatusTypeId() == 1) : ?>
+                                <div class="card mb-3 bg-custom-gold border custom-border-inset">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $request->getTitle(); ?></h5>
 
-                                    <?php if (!empty($request->getImages())) : ?>
-                                        <div class="mb-2">
-                                            <?php foreach ($request->getImages() as $image): ?>
-                                                <img src="<?php echo $image->getFileUrl(); ?>" width="200" class="me-2 mb-2 img-thumbnail">
-                                            <?php endforeach; ?>
+                                        <?php if (!empty($request->getImages())) : ?>
+                                            <div class="mb-2">
+                                                <?php foreach ($request->getImages() as $image): ?>
+                                                    <img src="<?php echo $image->getFileUrl(); ?>" width="200" class="me-2 mb-2 img-thumbnail">
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <p class="card-text"><?php echo $request->getBody(); ?></p>
+
+                                        <p><strong>Request Status:</strong>
+                                            <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
+                                        </p>
+
+                                        <!--Buttons-->
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="delete_request">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-red btn-lg text-custom-white" type="submit">Delete Request</button>
+                                            </form>
+
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="mark_request_fulfilled">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-green text-custom-white btn-lg" type="submit">Mark Fulfilled</button>
+                                            </form>
+
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="edit_request">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-grey text-custom-white btn-lg" type="submit">Edit Request</button>
+                                            </form>
                                         </div>
-                                    <?php endif; ?>
 
-                                    <p class="card-text"><?php echo $request->getBody(); ?></p>
-
-                                    <p><strong>Request Status:</strong>
-                                        <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
-                                    </p>
-
-                                    <!--Buttons-->
-                                    <div class="d-flex gap-2 flex-wrap">
-                                        <form action="request_manager/index.php" method="POST">
-                                            <input type="hidden" name="action" value="delete_request">
-                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn bg-custom-red btn-lg text-custom-white" type="submit">Delete Request</button>
-                                        </form>
-
-                                        <form action="request_manager/index.php" method="POST">
-                                            <input type="hidden" name="action" value="mark_request_fulfilled">
-                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-success btn-lg" type="submit">Mark Fulfilled</button>
-                                        </form>
-
-                                        <form action="request_manager/index.php" method="POST">
-                                            <input type="hidden" name="action" value="edit_request">
-                                            <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
-                                            <button class="btn btn-primary btn-lg" type="submit">Edit Request</button>
-                                        </form>
                                     </div>
-
                                 </div>
-                            </div>
+                            <?php else : ?>
+                                <div class="card mb-3 bg-custom-gold border custom-border-inset">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $request->getTitle(); ?></h5>
+
+                                        <?php if (!empty($request->getImages())) : ?>
+                                            <div class="mb-2">
+                                                <?php foreach ($request->getImages() as $image): ?>
+                                                    <img src="<?php echo $image->getFileUrl(); ?>" width="200" class="me-2 mb-2 img-thumbnail">
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <p class="card-text"><?php echo $request->getBody(); ?></p>
+
+                                        <p><strong>Request Status:</strong>
+                                            <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
+                                        </p>
+
+                                        <!--Buttons-->
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="delete_request">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-red btn-lg text-custom-white" type="submit">Delete Request</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
@@ -142,7 +171,7 @@
                         <p class="text-muted text-custom-white fs-4">No Feedback found.</p>
                     <?php else : ?>
                         <?php foreach ($feedback as $comment) : ?>
-                            <div class="card mb-3 bg-custom-gold">
+                            <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                 <div class="card-body">
                                     <h5 class="card-title fs-4">From: <?php echo $comment->getSender(); ?></h5>
 

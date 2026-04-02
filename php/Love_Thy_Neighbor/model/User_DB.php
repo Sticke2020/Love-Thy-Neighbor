@@ -211,6 +211,50 @@ public static function searchUsersByUserName($userName) {
     return $userArray;
 }
 
+public static function searchUsersByLastName($lastName) {
+    $db = DataBase::getDB();
+
+    if ($lastName != '') {	
+        $lastName = '%'.$lastName.'%';
+        $query = 'SELECT * FROM user WHERE last_name like :lastName ORDER BY id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':lastName', $lastName);
+        $statement->execute();
+        $users = $statement->fetchAll();
+        $statement->closeCursor();
+    }
+    else {
+        $query = 'SELECT * FROM user
+                        ORDER BY id';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $users = $statement->fetchAll();
+        $statement->closeCursor();
+    }
+
+    $userArray = array();
+    foreach ($users as $row) {
+        $user = new User();
+        $user->setID($row['id']);
+        $user->setUserTypeId($row['user_type_id']);
+        $user->setFirstName($row['first_name']);
+        $user->setLastName($row['last_name']);
+        $user->setCity($row['city']);
+        $user->setState($row['state']);
+        $user->setZip($row['zip']);
+        $user->setEmail($row['email_address']);
+        $user->setPhone($row['phone']);
+        $user->setUserName($row['username']);
+        $user->setPassword($row['password']);
+        $user->setProfileImageId($row['profile_image_id']);
+        $user->setDateCreated($row['date_created']);
+        $user->setDateUpdated($row['date_updated']);
+
+        $userArray[] = $user;
+    }
+    return $userArray;
+}
+
 public static function getUserById($ID) {
     $db = DataBase::getDB();
 

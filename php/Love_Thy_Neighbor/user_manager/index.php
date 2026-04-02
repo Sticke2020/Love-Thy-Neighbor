@@ -184,7 +184,7 @@ switch ($action) {
                $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
                $user->getUserName() == null) {
 
-               $errorMessage = "Invalid user data. Check all fields and try again.";
+               $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
           }
           else if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
@@ -261,7 +261,7 @@ switch ($action) {
                $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
                $user->getUserName() == null) {
 
-               $errorMessage = "Invalid user data. Check all fields and try again.";
+               $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
           }
 
@@ -354,7 +354,7 @@ switch ($action) {
                $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
                $user->getUserName() == null) {
 
-               $errorMessage = "Invalid user data. Check all fields and try again.";
+               $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
           }
 
@@ -362,7 +362,7 @@ switch ($action) {
                $business->getCity() == null || $business->getState() == null || $business->getZip() == null ||
                $business->getDescription() == null || $business->getVerificationCode() == null) {
 
-               $errorMessage = "Invalid Business data. Check all fields and try again.";
+               $error = "Invalid Business data. Check all fields and try again.";
                include('../errors/error.php');
           }
 
@@ -512,7 +512,7 @@ switch ($action) {
                     $suffix = substr($phoneNumbersOnly, 6 , 4);
 
                     $user->setPhone($areaCode . "-" . $prefix . "-" . $suffix);
-                    $errorMessage = "";
+                    $errormessage = "";
                     UserDB::updateUser($user);
                
                     include('../view/updates.php');

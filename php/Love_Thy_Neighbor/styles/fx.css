@@ -3,16 +3,20 @@
 /* Animating the inbox/messages button */
 @keyframes blink {
     0% {
-        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(30, 153, 80, 0.7);
+        background-color: #2A82D1;
+        border-color: #ffffff;
     }
-    50% {
-        opacity: .8;
-        padding: 1em;
+    80% {
+        box-shadow: 0 0 0 10px rgba(30, 153, 80, 0);
+        background-color: #07AC34;
+        border-color: #8EEE5D;
     }
     100% {
-        opacity:1;
+        background-color: #2A82D1;
+        border-color: #ffffff;
     }
 }
 #inbox_button_blink {
-    animation: blink 3s linear infinite;
+    animation: blink 4s linear infinite;
 }

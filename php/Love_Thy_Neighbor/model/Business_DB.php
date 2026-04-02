@@ -168,6 +168,10 @@ public static function getBusinessUserByUserId($userId) {
     $user = $statement->fetch();
     $statement->closeCursor();
 
+    if (!$user) {
+        return null;
+    }
+
     $businessUser = new BusinessUser();
         $businessUser->setUserId($user['user_id']);
         $businessUser->setBusinessId($user['business_id']);

@@ -7,37 +7,46 @@ class MessageDB {
 public static function createMessage($message) {
     $db = Database::getDB();
 
-    $senderId = $message->getSenderId();
-    $receiverId = $message->getReceiverId();
-    $body = $message->getBody();
+    try {
+        $db->beginTransaction();
 
-    $query = 'INSERT INTO message
-                (sender_id, receiver_id, body)
-                VALUES
-                (:senderId, :receiverId, :body)';
+        $senderId = $message->getSenderId();
+        $receiverId = $message->getReceiverId();
+        $body = $message->getBody();
 
-    $statement = $db->prepare($query);
-    $statement->bindValue(':senderId', $senderId);
-    $statement->bindValue(':receiverId', $receiverId);
-    $statement->bindValue(':body', $body);
-    $statement->execute();
+        $query = 'INSERT INTO message
+                    (sender_id, receiver_id, body)
+                    VALUES
+                    (:senderId, :receiverId, :body)';
 
-    $messageId = $db->lastInsertId();
-    
-    $query2 = "INSERT INTO message_user (message_id, user_id, folder, is_read, is_deleted)
-               VALUES (:messageId, :userId, 'outbox', TRUE, FALSE)";
-    $stmt2 = $db->prepare($query2);
-    $stmt2->bindValue(':messageId', $messageId);
-    $stmt2->bindValue(':userId', $senderId);
-    $stmt2->execute();
+        $statement = $db->prepare($query);
+        $statement->bindValue(':senderId', $senderId);
+        $statement->bindValue(':receiverId', $receiverId);
+        $statement->bindValue(':body', $body);
+        $statement->execute();
 
-    $query3 = "INSERT INTO message_user (message_id, user_id, folder, is_read, is_deleted)
-               VALUES (:messageId, :userId, 'inbox', FALSE, FALSE)";
-    $stmt3 = $db->prepare($query3);
-    $stmt3->bindValue(':messageId', $messageId);
-    $stmt3->bindValue(':userId', $receiverId);
-    $stmt3->execute();
+        $messageId = $db->lastInsertId();
+        
+        $query2 = "INSERT INTO message_user (message_id, user_id, folder, is_read, is_deleted)
+                VALUES (:messageId, :userId, 'outbox', TRUE, FALSE)";
+        $statement2 = $db->prepare($query2);
+        $statement2->bindValue(':messageId', $messageId);
+        $statement2->bindValue(':userId', $senderId);
+        $statement2->execute();
 
+        $query3 = "INSERT INTO message_user (message_id, user_id, folder, is_read, is_deleted)
+                VALUES (:messageId, :userId, 'inbox', FALSE, FALSE)";
+        $statement3 = $db->prepare($query3);
+        $statement3->bindValue(':messageId', $messageId);
+        $statement3->bindValue(':userId', $receiverId);
+        $statement3->execute();
+
+        $db->commit();
+    }
+    catch (Exception $e) {
+        $db->rollBack();
+        throw new Exception("Failed to create New message");
+    }
 }
 
 public static function getInboxMessagesByUserId($userId) {

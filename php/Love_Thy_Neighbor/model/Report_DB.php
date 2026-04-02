@@ -9,7 +9,9 @@ class ReportDB {
 public static function getReports() {
     $db = DataBase::getDB();
 
-    $query = 'SELECT * FROM report';
+    $query = 'SELECT report.* , username 
+                FROM report
+                LEFT JOIN user on user.id = report.user_id';
 
     $statement = $db->prepare($query);
     $statement->execute();
@@ -20,6 +22,7 @@ public static function getReports() {
         $report->setId($row['id']);
         $report->setReportTypeId($row['report_type_id']);
         $report->setUserId($row['user_id']);
+        $report->setUserName($row['username']);
         $report->setBody($row['body']);
         $report->setDateCreated($row['date_created']);
 

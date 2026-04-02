@@ -184,6 +184,13 @@ switch ($action) {
           include('fulfill_request.php');
           break;
 
+     case 'mark_request_fulfilled':
+          $requestId = filter_input(INPUT_POST, 'request_id');
+          RequestDB::markRequestFulfilled($requestId);
+
+          Utility::returnToDashboard();
+          break;
+
 
      default:
           // Borrowed this code from Andy

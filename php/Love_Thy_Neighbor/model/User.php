@@ -20,6 +20,11 @@ class User {
 
     public function __construct() {}
 
+    public function getUserTypes() {
+        $types = [1 => "Admin", 2 => "Moderator", 3 => "User"];
+        return $types[$this->getUserTypeId()] ?? "unknown";
+    }
+
     // Getters and Setters
 
     public function getId() {

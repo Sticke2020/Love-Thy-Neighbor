@@ -9,32 +9,32 @@ public static function getRequests() {
     $db = DataBase::getDB();
 
     $query = 'SELECT 
-    r.id AS request_id, 
-    r.user_id, 
-    u.username,
-    r.title, 
-    r.body, 
-    r.request_status_type_id,
-    r.date_created, 
-    r.date_updated, 
-    ri.id AS request_image_id, 
-    ri_img.file_name AS request_file_name,
-    ri_img.file_url AS request_file_url,
-    ui.id AS user_image_id,
-    ui.file_name AS user_file_name,
-    ui.file_url AS user_file_url
-FROM request r
-LEFT JOIN request_image ri ON r.id = ri.request_id
-LEFT JOIN image ri_img ON ri.image_id = ri_img.id
-LEFT JOIN user u ON u.id = r.user_id
--- Get ONE user image not linked to the request
-LEFT JOIN image ui ON ui.user_id = r.user_id 
-    AND ui.id NOT IN (
-        SELECT image_id 
-        FROM request_image 
-        WHERE request_id = r.id
-    )
-ORDER BY r.date_created DESC';
+                r.id AS request_id, 
+                r.user_id, 
+                u.username,
+                r.title, 
+                r.body, 
+                r.request_status_type_id,
+                r.date_created, 
+                r.date_updated, 
+                ri.id AS request_image_id, 
+                ri_img.file_name AS request_file_name,
+                ri_img.file_url AS request_file_url,
+                ui.id AS user_image_id,
+                ui.file_name AS user_file_name,
+                ui.file_url AS user_file_url
+            FROM request r
+            LEFT JOIN request_image ri ON r.id = ri.request_id
+            LEFT JOIN image ri_img ON ri.image_id = ri_img.id
+            LEFT JOIN user u ON u.id = r.user_id
+            -- Get ONE user image not linked to the request
+            LEFT JOIN image ui ON ui.user_id = r.user_id 
+                AND ui.id NOT IN (
+                    SELECT image_id 
+                    FROM request_image 
+                    WHERE request_id = r.id
+                )
+            ORDER BY r.date_created DESC';
 
     $statement = $db->prepare($query);
     $statement->execute();
@@ -201,6 +201,20 @@ public static function updateRequest($requestId, $title, $body) {
     $statement->bindValue(':requestId', $requestId);
     $statement->bindValue(':title', $title);
     $statement->bindValue(':body', $body);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function markRequestFulfilled($requestId) {
+    $db = DataBase::getDB();
+
+    $query = 'UPDATE request
+                SET
+                    request_status_type_id = 2
+                WHERE id = :requestId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':requestId', $requestId);
     $statement->execute();
     $statement->closeCursor();
 }

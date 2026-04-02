@@ -1,5 +1,5 @@
 
-<?php require_once ('../view/user_header.php'); ?>
+<?php require_once ('../view/admin_header.php'); ?>
 
 
 <div class="container-fluid px-0 mb-3">

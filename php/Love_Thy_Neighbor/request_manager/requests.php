@@ -11,9 +11,9 @@
                 <p class="text-muted">No requests found.</p>
             <?php else : ?>
                 <?php foreach ($requests as $request) : ?>
-                    <div class="card mb-3 bg-custom-gold">
+                    <div class="card mb-3 bg-custom-gold border custom-border-inset">
 
-                    <div class="card-header fs-4 row">
+                    <div class="card-header fs-4 row m-3">
                         <form action="user_manager/index.php" method="POST" class="d-inline-block align-top col-auto">
                             <input type="hidden" name="action" value="view_user">
                             <input type="hidden" name="user_id" value="<?php echo $request->getUserId(); ?>">
