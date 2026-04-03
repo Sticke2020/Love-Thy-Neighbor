@@ -40,6 +40,10 @@ switch ($action) {
           include('requests.php');
           break;
 
+     case 'requests_by_user_id':
+          
+          break;
+
      case 'fulfilled_requests':
           $requestsAll = RequestDB::getRequests();
           $requests = array();

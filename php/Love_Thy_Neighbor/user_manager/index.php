@@ -10,6 +10,8 @@ require_once('../model/User.php');
 require_once('../model/User_DB.php');
 require_once('../model/Log.php');
 require_once('../model/Log_DB.php');
+require_once('../model/Report.php');
+require_once('../model/Report_DB.php');
 require_once('../model/BusinessUser.php');
 require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
@@ -133,6 +135,10 @@ switch ($action) {
 
                          if ($user->getUserTypeId() == 1) {
                               $_SESSION['user'] = $user;
+                              $profilePic = ImageDB::getImageById($user->getProfileImageId());
+                              $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
+                              $reports = ReportDB::getReports();
+
                               include('../admin_manager/admin_dashboard.php');
                          }
                          else if ($user->getUserTypeId() != 1) {
@@ -445,9 +451,32 @@ switch ($action) {
           break;
 
      case 'edit_user':
-          $user = UserDB::getUserById($_SESSION['userId']);
-          include("user_edit_info.php");
-          break;
+          if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+               $user = UserDB::getUserById(filter_input(INPUT_POST, 'user_id'));
+               $businessUser = BusinessDB::getBusinessUserByUserId($user->getId());
+
+               if (BusinessDB::isBusinessUser($user->getId())) {
+                    $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
+
+                    if ($businessUser->getIsAdmin() == 1) {
+                         include("user_edit_business.php");
+                         break;
+                    }
+                    else {
+                         include("user_edit_info.php");
+                         break;
+                    }
+               }
+               else {
+                    include("user_edit_info.php");
+                    break;
+               }
+          }
+          else {
+               $user = UserDB::getUserById($_SESSION['userId']);
+               include("user_edit_info.php");
+               break;
+          }
 
      case 'edit_business':
           $user = UserDB::getUserById($_SESSION['userId']);

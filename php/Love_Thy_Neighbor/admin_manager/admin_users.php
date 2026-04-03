@@ -54,13 +54,13 @@
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
 
-                                    <form action="admin_manager/index.php" method="POST">
+                                    <form action="user_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="view_user">
                                         <input type="hidden" name="user_id" value="<?php echo $id; ?>">
                                         <button class="btn btn-sm btn-primary">View</button>
                                     </form>
 
-                                    <form action="admin_manager/index.php" method="POST">
+                                    <form action="user_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="edit_user">
                                         <input type="hidden" name="user_id" value="<?php echo $id; ?>">
                                         <button class="btn btn-sm btn-warning">Edit</button>

@@ -11,7 +11,8 @@ public static function getReports() {
 
     $query = 'SELECT report.* , username 
                 FROM report
-                LEFT JOIN user on user.id = report.user_id';
+                LEFT JOIN user on user.id = report.user_id
+                ORDER BY id DESC';
 
     $statement = $db->prepare($query);
     $statement->execute();
@@ -67,6 +68,36 @@ public static function getReportTypes() {
         $reportTypes[] = $reportType;
     }
     return $reportTypes;
+}
+
+public static function searchReportsByUserName($userName) {
+    $db = DataBase::getDB();
+	
+    $userName = '%'.$userName.'%';
+    $query = 'SELECT report.*, username
+                FROM report 
+                LEFT JOIN user on user.id = report.user_id
+                WHERE username like :userName 
+                ORDER BY id DESC';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userName', $userName);
+    $statement->execute();
+    $reports = $statement->fetchAll();
+    $statement->closeCursor();
+
+    $reportsArray = array();
+    foreach ($reports as $row) {
+        $report = new Report();
+        $report->setId($row['id']);
+        $report->setReportTypeId($row['report_type_id']);
+        $report->setUserId($row['user_id']);
+        $report->setUserName($row['username']);
+        $report->setBody($row['body']);
+        $report->setDateCreated($row['date_created']);
+
+        $reportsArray[] = $report;
+    }
+    return $reportsArray;
 }
 
 }

@@ -45,6 +45,10 @@ public static function getBusinessById($businessId) {
     $row = $statement->fetch();
     $statement->closeCursor();
 
+    if (!$row) {
+        return null;
+    }
+
     $business = new Business();
         $business->setId($row['id']);
         $business->setName($row['name']);

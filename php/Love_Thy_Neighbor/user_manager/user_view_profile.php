@@ -1,5 +1,10 @@
 
-<?php require_once ('../view/user_header.php'); ?>
+<?php 
+if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+    require_once ('../view/admin_header.php');
+} else {
+    require_once ('../view/user_header.php');
+} ?>
 
 
 <div class="container-fluid px-0 mb-3">
@@ -90,7 +95,26 @@
                                             <input type="hidden" name="receiver_id" value="<?php echo $userId ?>"> 
                                             <button class="btn btn-success btn-lg" type="submit">Fulfill Request</button>
                                         </form>
+                                        
+                                        <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) : ?>
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="delete_request">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-red btn-lg text-custom-white" type="submit">Delete Request</button>
+                                            </form>
 
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="mark_request_fulfilled">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-green text-custom-white btn-lg" type="submit">Mark Fulfilled</button>
+                                            </form>
+
+                                            <form action="request_manager/index.php" method="POST">
+                                                <input type="hidden" name="action" value="edit_request">
+                                                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                                                <button class="btn bg-custom-grey text-custom-white btn-lg" type="submit">Edit Request</button>
+                                            </form>
+                                        <?php endif; ?>
                                     </div>
 
                                 </div>

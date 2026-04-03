@@ -49,11 +49,20 @@
 </div>
 
 
+<fieldset class="m-2 text-center">
+    <form action="admin_manager/index.php" method="POST">
+        <label id="search">Search Reports By UserName:</label>
+        <input class='text_input' type="text" name="search_username">
+        <input type="hidden" name="action" value="search_reports_by_username" /> 
+        <input class='clickable' type="submit" value="Search"><br>
+    </form>
+</fieldset>
+
 <div class="container-fluid mt-3 px-0">
     <div class="row">
         <div class="col">
 
-            <!--User Feedback-->
+            <!--User Reports-->
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     Reports

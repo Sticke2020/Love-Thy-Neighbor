@@ -66,7 +66,7 @@ switch ($action) {
           $users = UserDB::searchUsersByLastName($lastName);
           include('../admin_manager/admin_users.php');
           break;
-
+/*
      case 'view_user':
           $userId = filter_input(INPUT_POST, 'user_id');
           $user = UserDB::getUserById($userId);
@@ -84,7 +84,7 @@ switch ($action) {
           include('../admin_manager/admin_view_user_profile.php');
           break;
 
-
+*/
      case 'edit_user':
           $user = UserDB::getUserById(filter_input(INPUT_POST, 'user_id'));
           $businessUser = BusinessDB::getBusinessUserByUserId($user->getId());
@@ -102,7 +102,7 @@ switch ($action) {
 
 
 
-/************  REQUESTS  *******************************************/
+/************  REQUESTS  ******************************************
 
      case 'requests':
           $requests = RequestDB::getRequests();
@@ -147,7 +147,7 @@ switch ($action) {
 
           include('admin_dashboard.php');
           break;
-
+*/
      case 'delete_request':
           $requestId = filter_input(INPUT_POST, 'request_id');
 
@@ -212,7 +212,139 @@ switch ($action) {
           break;
 
      case 'requests_by_user_id':
+          
+          break;
 
+/*******************  MESSAGES  *****************************************/
+    /* case 'messages':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $inbox = MessageDB::getInboxMessagesByUserId($userId);
+          $outbox = MessageDB::getOutboxMessagesByUserId($userId);
+          $userNames = UserDB::getUserNames();
+
+          include('../admin_manager/admin_messages.php');
+          break;
+
+     case 'message_content':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $messageId = filter_input(INPUT_POST,'message_id');
+          $folder = filter_input(INPUT_POST, 'folder');
+          $message = MessageDB::getMessageByMessageId($messageId, $userId);
+          $inbox = MessageDB::getInboxMessagesByUserId($userId);
+          $messageContent = MessageDB::getMessageByMessageId($messageId, $userId);
+          $outbox = MessageDB::getOutboxMessagesByUserId($userId);
+          $userNames = UserDB::getUserNames();
+
+          if (!$message->getIsRead()) {
+               MessageDB::messageIsRead($messageId);
+          }
+
+          include('../admin_manager/admin_messages.php');
+          break;
+
+     case 'send_message':
+          $recipientUserName = filter_input(INPUT_POST, 'recipient_username');
+          $messageBody = null;
+          $userId = null;
+          $senderId = null;
+          $sentMessages = null;
+
+          if (isset($recipientUserName)) {
+               $recipientUserName = filter_input(INPUT_POST, 'recipient_username');
+               $messageBody = filter_input(INPUT_POST, 'message_body');
+               $senderId = filter_input(INPUT_POST, 'user_id');
+               $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
+          
+
+               if ($messageBody == null || $recipientUserName == null) {
+                    $errorMessage = "Invalid data. Check all fields and try again.";
+                    include('../errors/error.php');
+               }
+               else if (!UserDB::userNameExists($recipientUserName)) {
+                    $errorMessage = "Username is invalid, Username must be spelled exactly correct, Please try again";
+                    include('../errors/error.php');
+               }
+               else {
+                    $recipent = UserDB::getUserByUserName($recipientUserName);
+                    $message = new Message();
+                    $message->setBody($messageBody);
+                    $message->setSenderId($senderId);
+                    $message->setReceiverId($recipent->getId());
+                    $message->setIsRead(0);
+
+                    try {
+                         MessageDB::createMessage($message);
+                    }
+                    catch (Exception $e) {
+                         $error = "Something went wrong while sending your message. Please try again at another time.";
+                         include('../errors/error.php');
+                    }
+                    $userId = $senderId;
+                    $inbox = MessageDB::getInboxMessagesByUserId($senderId);
+                    $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
+                    $userNames = UserDB::getUserNames();
+
+                    include('../admin_manager/admin_messages.php');
+               }
+          }
+          else if (!isset($recipientUserName)) {
+               $messageBody = filter_input(INPUT_POST, 'message_body');
+               $senderId = $_SESSION['userId'];
+               $receiverId = filter_input(INPUT_POST, 'user_id');
+
+               if ($messageBody == null) {
+                    $errorMessage = "Invalid data. Check all fields and try again.";
+                    include('../errors/error.php');
+               }
+               else {
+                    $message = new Message();
+                    
+                    $message->setBody($messageBody);
+                    $message->setSenderId($senderId);
+                    $message->setReceiverId($receiverId);
+
+                    try {
+                         MessageDB::createMessage($message);
+                    }
+                    catch (Exception $e) {
+                         $error = "Something went wrong while sending your message. Please try again at another time.";
+                         include('../errors/error.php');
+                    }
+
+                    $userId = $senderId;
+                    $inbox = MessageDB::getInboxMessagesByUserId($senderId);
+                    $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
+                    $userNames = UserDB::getUserNames();
+
+                    include('../admin_manager/admin_messages.php');
+               }
+          }
+          break;
+
+     case 'delete_message':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $messageId = filter_input(INPUT_POST,'message_id');
+
+          MessageDB::softDeleteMessage($userId, $messageId);
+
+          $message = MessageDB::getMessageByMessageId($messageId, $userId);
+          $inbox = MessageDB::getInboxMessagesByUserId($userId);
+          
+          $outbox = MessageDB::getOutboxMessagesByUserId($userId);
+          $userNames = UserDB::getUserNames();
+
+          include('../admin_manager/admin_messages.php');
+          break;
+
+/*******************  REPORTS  *****************************************/
+     case 'search_reports_by_username':
+          $userName = filter_input(INPUT_POST, 'search_username');
+          $reports = ReportDB::searchReportsByUserName($userName);
+          $user = UserDB::getUserById($_SESSION['userId']);
+          $profilePic = ImageDB::getImageById($user->getProfileImageId());
+          $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
+
+          include('../admin_manager/admin_dashboard.php');
           break;
 
 

@@ -40,7 +40,7 @@
                 </li>
 
                 <li class="nav-item fs-4">
-                    <a class="nav-link text-custom-white" href="admin_manager?action=requests">Requests</a>
+                    <a class="nav-link text-custom-white" href="request_manager?action=requests">Requests</a>
                 </li>
 
                 <li class="nav-item fs-4">

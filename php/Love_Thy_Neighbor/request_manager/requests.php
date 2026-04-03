@@ -1,5 +1,21 @@
 
-<?php require_once ('../view/request_header.php'); ?>
+<?php 
+if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+    require_once ('../view/admin_header.php');
+} else {
+    require_once ('../view/user_header.php');
+} ?>
+
+<?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) : ?>
+    <fieldset class="m-2">
+        <form action="request_manager/index.php" method="POST">
+            <label id="search">Search Requests By User Id:</label>
+            <input class='text_input' type="text" name="requests_by_user_id">
+            <input type="hidden" name="action" value="requests_by_user_id" /> 
+            <input type="submit" value="Search"><br>
+        </form>
+    </fieldset>
+<?php endif; ?>
 
 <div class="container-fluid mt-3 px-0">
     <div class="card">
