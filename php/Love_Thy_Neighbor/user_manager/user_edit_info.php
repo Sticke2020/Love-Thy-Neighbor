@@ -17,7 +17,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <form action="user_manager/index.php" method="post">
                 <input type="hidden" name="action" value="update_user">
 
-                <?php if ($user->getUserTypeId() != 3){ ?>
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1){ ?>
                     <div class="mb-3">
                         <label class="form-label">User ID</label>
                         <input class="form-control" name="user_id"

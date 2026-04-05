@@ -337,15 +337,6 @@ switch ($action) {
           break;
 
 /*******************  REPORTS  *****************************************/
-     case 'search_reports_by_username':
-          $userName = filter_input(INPUT_POST, 'search_username');
-          $reports = ReportDB::searchReportsByUserName($userName);
-          $user = UserDB::getUserById($_SESSION['userId']);
-          $profilePic = ImageDB::getImageById($user->getProfileImageId());
-          $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
-
-          include('../admin_manager/admin_dashboard.php');
-          break;
 
 
      default:

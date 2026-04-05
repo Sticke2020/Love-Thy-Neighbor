@@ -9,6 +9,7 @@ require_once('../model/Database.php');
 require_once('../model/Business.php');
 require_once('../model/Business_DB.php');
 require_once('../model/BusinessUser.php');
+require_once('../model/Utility.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
@@ -83,6 +84,14 @@ switch ($action) {
             include('../view/updates.php');
         }
         break;
+
+        case 'remove_employee':
+            $employeeId = filter_input(INPUT_POST, 'employee_id');
+            $businessId = filter_input(INPUT_POST, 'business_id');
+            BusinessDB::removeEmployeeFromBusiness($employeeId, $businessId);
+
+            Utility::returnToDashboard();
+            break;
 
     default:
           // Borrowed this code from Andy

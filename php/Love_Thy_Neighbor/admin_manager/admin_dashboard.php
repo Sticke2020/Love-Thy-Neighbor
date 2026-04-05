@@ -25,7 +25,7 @@
             <h1 class="mt-2">Site Admin</h1>      
         </div>
 
-        <!--Messages Button-->
+        <!--Messages Button blinks if there are unread messages-->
         <?php if ($unreadMessages == true) { ?>
         <div class="col">
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
@@ -48,9 +48,9 @@
     </div>
 </div>
 
-
+<!--  Search reports by username  -->
 <fieldset class="m-2 text-center">
-    <form action="admin_manager/index.php" method="POST">
+    <form action="report_manager/index.php" method="POST">
         <label id="search">Search Reports By UserName:</label>
         <input class='text_input' type="text" name="search_username">
         <input type="hidden" name="action" value="search_reports_by_username" /> 

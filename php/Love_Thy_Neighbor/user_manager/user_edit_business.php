@@ -26,7 +26,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     <form action="user_manager/index.php" method="post">
                         <input type="hidden" name="action" value="update_user">
 
-                        <?php if ($user->getUserTypeId() != 3){ ?>
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1){ ?>
                             <div class="mb-3">
                                 <label class="form-label">User ID</label>
                                 <input class="form-control" name="user_id"
@@ -114,6 +114,12 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                         <input type="hidden" name="business_id" value="<?= $business->getId(); ?>">
 
                         <div class="mb-3">
+                            <label class="form-label">Business Id</label>
+                            <input class="form-control" 
+                                   value="<?= htmlspecialchars($business->getId()); ?>" readonly disabled>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Business Name</label>
                             <input class="form-control" name="business_name"
                                    value="<?= htmlspecialchars($business->getName()); ?>">
@@ -168,6 +174,36 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     </form>
                 </div>
             </div>
+
+            <!-- ================= Registered Business Users ================= -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Edit Registered Employees</h4>
+                </div>
+
+                <div class="card-body">
+                    <?php foreach ($employees as $employee) : ?>
+                    <form action="business_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="remove_employee">
+                        <input type="hidden" name="employee_id" value="<?php echo $employee->getUserId() ?>">
+                        <input type="hidden" name="business_id" value="<?php echo $employee->getBusinessId() ?>">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Name</label>
+                                <input class="form-control" name="employee_name"
+                                       value="<?= htmlspecialchars($employee->getFullName()); ?>">
+                            </div>
+
+                            <button type="submit" class="btn btn-lg bg-custom-red text-custom-white w-100">
+                                Remove As Employee
+                            </button>
+                        </div>
+                    </form>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+         
 
             <!-- ================= PASSWORD ================= -->
             <div class="card">

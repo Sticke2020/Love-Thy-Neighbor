@@ -184,6 +184,51 @@ public static function getBusinessUserByUserId($userId) {
     return $businessUser;
 }
 
+public static function getBusinessEmployeesByBusinessId($businessId) {
+    $db = DataBase::getDB();
+
+    $query = "SELECT bu.*, CONCAT(u.first_name, ' ', u.last_name) AS 'fullname'
+                FROM business_user bu
+                JOIN user u on bu.user_id = u.id
+                WHERE bu.business_id = :businessId";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':businessId', $businessId);
+    $statement->execute();
+    $businessUsers = $statement->fetchall();
+    $statement->closeCursor();
+
+    if (!$businessUsers) {
+        return null;
+    }
+
+    $employees = array();
+    foreach ($businessUsers as $user) {
+        $businessUser = new BusinessUser();
+        $businessUser->setUserId($user['user_id']);
+        $businessUser->setBusinessId($user['business_id']);
+        $businessUser->setIsAdmin($user['is_admin']);
+        $businessUser->setFullName($user['fullname']);
+
+        $employees[] = $businessUser;
+    }
+    return $employees;
+}
+
+public static function removeEmployeeFromBusiness($employeeId, $businessId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM business_user
+                WHERE user_id = :employeeId
+                AND business_id = :businessId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':employeeId', $employeeId);
+    $statement->bindValue(':businessId', $businessId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 public static function updateBusiness($business) {
     $id = $business->getId();
     $name = $business->getName();

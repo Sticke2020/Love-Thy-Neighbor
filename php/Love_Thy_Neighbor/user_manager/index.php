@@ -450,6 +450,7 @@ switch ($action) {
           }
           break;
 
+     /* edit_user navigates to user_edit and business_edit when Admin logged in */
      case 'edit_user':
           if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                $user = UserDB::getUserById(filter_input(INPUT_POST, 'user_id'));
@@ -481,6 +482,7 @@ switch ($action) {
      case 'edit_business':
           $user = UserDB::getUserById($_SESSION['userId']);
           $business = BusinessDB::getBusinessById($_SESSION['businessUser']->getBusinessId());
+          $employees = BusinessDB::getBusinessEmployeesByBusinessId($business->getId());
           include("user_edit_business.php");
           break;
 

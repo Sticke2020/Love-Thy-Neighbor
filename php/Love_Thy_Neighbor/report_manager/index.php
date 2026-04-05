@@ -3,6 +3,12 @@
 require_once('../model/Database.php');
 require_once('../model/Report.php');
 require_once('../model/Report_DB.php');
+require_once('../model/User.php');
+require_once('../model/User_DB.php');
+require_once('../model/Image.php');
+require_once('../model/Image_DB.php');
+require_once('../model/Message.php');
+require_once('../model/Message_DB.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
@@ -42,6 +48,16 @@ switch ($action) {
 
             include('../report_manager/report_created.php');
             break;
+
+    case 'search_reports_by_username':
+          $userName = filter_input(INPUT_POST, 'search_username');
+          $reports = ReportDB::searchReportsByUserName($userName);
+          $user = UserDB::getUserById($_SESSION['userId']);
+          $profilePic = ImageDB::getImageById($user->getProfileImageId());
+          $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
+
+          include('../admin_manager/admin_dashboard.php');
+          break;
 
     default:
           // Borrowed this code from Andy
