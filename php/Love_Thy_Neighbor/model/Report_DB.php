@@ -100,4 +100,16 @@ public static function searchReportsByUserName($userName) {
     return $reportsArray;
 }
 
+public static function deleteReports($userId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM report
+            WHERE user_id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 }

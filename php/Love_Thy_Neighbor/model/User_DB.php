@@ -429,6 +429,18 @@ public static function updatePassword($userId, $hashedPassword) {
     $statement->closeCursor();
 }
 
+public static function deleteUser($userId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM user
+                WHERE id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 /*  REMOVE THIS METHOD BEFORE FINAL PRODUCTION ********************************************
 public static function hashPasswordsInDB() {
     $db = DataBase::getDB(); 

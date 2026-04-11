@@ -194,5 +194,47 @@ public static function softDeleteMessage($userId, $messageId) {
     $statement->closeCursor();
 }
 
+public static function deleteMessagesByMessageId($messageId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM message_user
+            WHERE message_id = :messageId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':messageId', $messageId);
+    $statement->execute();
+    $statement->closeCursor();
+
+    $query2 = 'DELETE FROM message
+            WHERE id = :messageId';
+
+    $statement = $db->prepare($query2);
+    $statement->bindValue(':messageId', $messageId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+public static function getMessageIdsByUserId($userId) {
+    $db = DataBase::getDB();
+
+     $query = "SELECT *
+                FROM message
+                WHERE sender_id = :userId
+                OR receiver_id = :userId";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+
+    $messageIds = array();
+    foreach ($statement as $row) {
+        $message = new Message();
+        $message->setID($row['id']);
+        
+        $messageIds[] = $message;
+    }
+    return $messageIds;
+}
+
 
 }

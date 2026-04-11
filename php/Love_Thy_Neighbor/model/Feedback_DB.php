@@ -77,4 +77,25 @@ public static function createFeedback($feedback) {
     $statement->closeCursor();
 }
 
+// Deletes all feedback left and received by the user
+public static function deleteFeedbackByUserId($userId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM feedback
+                WHERE target_user_id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $statement->closeCursor();
+
+    $query2 = 'DELETE FROM feedback
+                WHERE author_id = :userId';
+
+    $statement = $db->prepare($query2);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 }

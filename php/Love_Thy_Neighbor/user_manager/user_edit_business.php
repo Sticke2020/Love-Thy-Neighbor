@@ -16,7 +16,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     <div class="row justify-content-center">
         <div class="col-md-10">
 
-            <!-- ================= USER INFO ================= -->
+            <!---------------- USER INFO ----------------->
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Edit User Info</h4>
@@ -102,7 +102,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 </div>
             </div>
 
-            <!-- ================= BUSINESS INFO ================= -->
+            <!------------------ BUSINESS INFO ---------------->
             <div class="card mb-4">
                 <div class="card-header bg-warning">
                     <h4 class="mb-0">Edit Business Info</h4>
@@ -175,7 +175,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 </div>
             </div>
 
-            <!-- ================= Registered Business Users ================= -->
+            <!-------------------- Registered Business Users -------------------->
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Edit Registered Employees</h4>
@@ -205,8 +205,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             </div>
          
 
-            <!-- ================= PASSWORD ================= -->
-            <div class="card">
+            <!---------------------- PASSWORD -------------------->
+            <div class="card mb-4">
                 <div class="card-header bg-danger text-white">
                     <h4 class="mb-0">Change Password</h4>
                 </div>
@@ -237,9 +237,32 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 </div>
             </div>
 
+
+            <!---------------------- DELETE ACCOUNT --------------------->
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Delete Your Account</h4>
+                </div>
+
+                <div class="card-body">
+                    <form action="user_manager/index.php" method="post">
+                        <input type="hidden" name="action" value="delete_account">
+                        <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+
+                        <div class="mb-3">
+                            <label class="form-label">Enter Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100">
+                            Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
-
 </div>
 
 <?php require_once '../view/footer.php'; ?>

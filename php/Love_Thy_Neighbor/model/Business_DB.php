@@ -264,4 +264,16 @@ public static function updateBusiness($business) {
     $statement->closeCursor();
 }
 
+public static function deleteBusiness($businessId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM business
+                WHERE id = :businessId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':businessId', $businessId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 }

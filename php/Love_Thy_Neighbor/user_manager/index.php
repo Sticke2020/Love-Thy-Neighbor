@@ -460,6 +460,7 @@ switch ($action) {
                     $business = BusinessDB::getBusinessById($businessUser->getBusinessId());
 
                     if ($businessUser->getIsAdmin() == 1) {
+                         $employees = BusinessDB::getBusinessEmployeesByBusinessId($business->getId());
                          include("user_edit_business.php");
                          break;
                     }
@@ -575,6 +576,22 @@ switch ($action) {
                $error = "Your current password is incorrect";
                     include('../errors/error.php');
           }
+          break;
+
+
+
+     case 'delete_account':
+          $userId = filter_input(INPUT_POST, 'user_id');
+          $password = filter_input(INPUT_POST, 'password');
+
+          if (UserDB::confirmUserPassword($userId, $password)) {
+               Utility::deleteAccount($userId);
+          }
+          else {
+               $error = "Your current password is incorrect";
+                    include('../errors/error.php');
+          }
+          
           break;
 
      default:

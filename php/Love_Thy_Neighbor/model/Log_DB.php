@@ -26,6 +26,18 @@ public static function getLogs() {
     $db = DataBase::getDB();
 }
 
+public static function deleteLogs($userId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM log
+            WHERE user_id = :userId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 public static function getActionType() {
 
 }

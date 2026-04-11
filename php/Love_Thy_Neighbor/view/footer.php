@@ -1,5 +1,5 @@
 <footer>
-    <p class="copyright">
+    <p class="copyright text-center mt-3">
         &copy; <?php echo date("Y"); ?>, (Matthew Feagin, Love Thy Neighbor)
     </p>
     
