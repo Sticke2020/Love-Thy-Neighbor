@@ -102,6 +102,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         <div class="card-body">
             <form action="user_manager/index.php" method="post">
                 <input type="hidden" name="action" value="change_password">
+                <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
 
                 <div class="mb-3">
                     <label class="form-label">Current Password</label>

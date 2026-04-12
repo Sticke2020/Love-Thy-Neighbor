@@ -13,6 +13,8 @@ require_once('../model/Feedback.php');
 require_once('../model/Feedback_DB.php');
 require_once('../model/Message.php');
 require_once('../model/Message_DB.php');
+require_once('../model/Report.php');
+require_once('../model/Report_DB.php');
 require_once('../model/Utility.php');
 
 class Utility {
@@ -33,98 +35,107 @@ class Utility {
         include('../user_manager/user_dashboard.php');
     }
 
-public static function deleteAccount($userId) {
-    $userId = $userId;
-    $user = UserDB::getUserById($userId);
-    $requests = RequestDB::getRequestsByUserId($userId);
-    $profilePic = ImageDB::getImageById($user->getProfileImageId());
-    $feedback = FeedbackDB::getFeedbackByUserId($userId);
-    $messageIds = MessageDB::getMessageIdsByUserId($userId);
-    $business = null;
-    $businessUser = null;
-    $employees = null;
+    public static  function adminReturnToDashboard() {
+        $user = UserDB::getUserById($_SESSION['userId']);
+        $profilePic = ImageDB::getImageById($user->getProfileImageId());
+        $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
+        $reports = ReportDB::getReports();
 
-
-    if ($feedback) {
-        FeedbackDB::deleteFeedbackByUserId($userId);
+        include('../admin_manager/admin_dashboard.php');
     }
 
-    if ($requests) {
-        foreach ($requests as $request) {
-            $requestId = $request->getId();
+    public static function deleteAccount($userId) {
+        $userId = $userId;
+        $user = UserDB::getUserById($userId);
+        $requests = RequestDB::getRequestsByUserId($userId);
+        $profilePic = ImageDB::getImageById($user->getProfileImageId());
+        $feedback = FeedbackDB::getFeedbackByUserId($userId);
+        $messageIds = MessageDB::getMessageIdsByUserId($userId);
+        $business = null;
+        $businessUser = null;
+        $employees = null;
 
-            $images = ImageDB::getImagesByRequestId($requestId);
 
-            foreach ($images as $image) {
-                    $imageId = $image->getId();
+        if ($feedback) {
+            FeedbackDB::deleteFeedbackByUserId($userId);
+        }
 
-                    try {
-                        ImageDB::deleteImageFromImageServer($imageId, null);
-                    }
-                    catch (Exception $e) {
-                        error_log($e->getMessage());
-                    }
-                    ImageDB::deleteRequestImageTableEntry($imageId);
-                    ImageDB::deleteImageById($imageId);
+        if ($requests) {
+            foreach ($requests as $request) {
+                $requestId = $request->getId();
+
+                $images = ImageDB::getImagesByRequestId($requestId);
+
+                foreach ($images as $image) {
+                        $imageId = $image->getId();
+
+                        try {
+                            ImageDB::deleteImageFromImageServer($imageId, null);
+                        }
+                        catch (Exception $e) {
+                            error_log($e->getMessage());
+                        }
+                        ImageDB::deleteRequestImageTableEntry($imageId);
+                        ImageDB::deleteImageById($imageId);
+                }
+
+                RequestDB::deleteRequest($requestId);
             }
-
-            RequestDB::deleteRequest($requestId);
         }
-    }
 
-    if ($profilePic) {
-        $imageId = $profilePic->getId();
+        if ($profilePic) {
+            $imageId = $profilePic->getId();
 
-        try {
-            ImageDB::deleteImageFromImageServer($imageId, $profilePic);
+            try {
+                ImageDB::deleteImageFromImageServer($imageId, $profilePic);
+            }
+            catch (Exception $e) {
+                error_log($e->getMessage());
+            }
+            userDB::setUserProfilePic($userId, null);
+            ImageDB::deleteImageById($imageId);
         }
-        catch (Exception $e) {
-            error_log($e->getMessage());
+
+
+        if (isset($_SESSION['businessUser'])) {
+            $businessUser = BusinessDB::getBusinessUserByUserId($userId);
+            
+            if ($businessUser->getIsAdmin()) {
+                $employees = BusinessDB::getBusinessEmployeesByBusinessId($businessUser->getBusinessId());
+
+                foreach ($employees as $employee) {
+                    BusinessDB::removeEmployeeFromBusiness($employee->getUserId(), $employee->getBusinessId());
+                }
+
+                BusinessDB::deleteBusiness($businessUser->getBusinessId());
+            }
+            else {
+                BusinessDB::removeEmployeeFromBusiness($userId, $businessUser->getBusinessId());
+            }
         }
-        userDB::setUserProfilePic($userId, null);
-        ImageDB::deleteImageById($imageId);
-    }
 
+        if ($messageIds) {
+            foreach ($messageIds as $message) {
+                MessageDB::deleteMessagesByMessageId($message->getId());
+            }
+        }
 
-    if (isset($_SESSION['businessUser'])) {
-        $businessUser = BusinessDB::getBusinessUserByUserId($userId);
+        ReportDB::deleteReports($userId);
+        LogDB::deleteLogs($userId);
         
-        if ($businessUser->getIsAdmin()) {
-            $employees = BusinessDB::getBusinessEmployeesByBusinessId($businessUser->getBusinessId());
 
-            foreach ($employees as $employee) {
-                BusinessDB::removeEmployeeFromBusiness($employee->getUserId(), $employee->getBusinessId());
-            }
+        $_SESSION = array();
+        session_destroy();
+        $lifetime = 60 * 60 * 24 * -14;
+        setcookie('userSession', '', $lifetime, '/');
+        $errorMessage = '';
+        include('user_login.php');
 
-            BusinessDB::deleteBusiness($businessUser->getBusinessId());
+        if ($user) {
+            UserDB::deleteUser($userId);
         }
-        else {
-            BusinessDB::removeEmployeeFromBusiness($userId, $businessUser->getBusinessId());
-        }
-    }
-
-    if ($messageIds) {
-        foreach ($messageIds as $message) {
-            MessageDB::deleteMessagesByMessageId($message->getId());
-        }
-    }
-
-    ReportDB::deleteReports($userId);
-    LogDB::deleteLogs($userId);
-    
-
-    $_SESSION = array();
-    session_destroy();
-    $lifetime = 60 * 60 * 24 * -14;
-    setcookie('userSession', '', $lifetime, '/');
-    $errorMessage = '';
-    include('user_login.php');
-
-    if ($user) {
-        UserDB::deleteUser($userId);
-    }
-    
-    exit;
+        
+        exit;
 }
 
 

@@ -100,6 +100,37 @@ public static function searchReportsByUserName($userName) {
     return $reportsArray;
 }
 
+public static function searchReportsByTypeId($typeId) {
+    $db = DataBase::getDB();
+	
+    $typeId = '%'.$typeId.'%';
+    $query = 'SELECT report.*, username
+                FROM report 
+                LEFT JOIN user on user.id = report.user_id
+                WHERE report_type_id like :typeId
+                ORDER BY id DESC';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':typeId', $typeId);
+    $statement->execute();
+    $reports = $statement->fetchAll();
+    $statement->closeCursor();
+
+    $reportsArray = array();
+    foreach ($reports as $row) {
+        $report = new Report();
+        $report->setId($row['id']);
+        $report->setReportTypeId($row['report_type_id']);
+        $report->setUserId($row['user_id']);
+        $report->setUserName($row['username']);
+        $report->setBody($row['body']);
+        $report->setDateCreated($row['date_created']);
+
+        $reportsArray[] = $report;
+    }
+    return $reportsArray;
+}
+
+// Deletes user reports when user profile is deleted
 public static function deleteReports($userId) {
     $db = DataBase::getDB();
 
@@ -108,6 +139,19 @@ public static function deleteReports($userId) {
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userId', $userId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+// For admin or moderator to delete reports 
+public static function deleteReportByReportId($reportId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM report
+            WHERE id = :reportId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':reportId', $reportId);
     $statement->execute();
     $statement->closeCursor();
 }

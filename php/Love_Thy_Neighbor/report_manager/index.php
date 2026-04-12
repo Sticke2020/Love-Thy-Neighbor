@@ -50,19 +50,36 @@ switch ($action) {
             break;
 
     case 'search_reports_by_username':
-          $userName = filter_input(INPUT_POST, 'search_username');
-          $reports = ReportDB::searchReportsByUserName($userName);
-          $user = UserDB::getUserById($_SESSION['userId']);
-          $profilePic = ImageDB::getImageById($user->getProfileImageId());
-          $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
+            $userName = filter_input(INPUT_POST, 'search_username');
+            $reports = ReportDB::searchReportsByUserName($userName);
+            $user = UserDB::getUserById($_SESSION['userId']);
+            $profilePic = ImageDB::getImageById($user->getProfileImageId());
+            $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
 
-          include('../admin_manager/admin_dashboard.php');
-          break;
+            include('../admin_manager/admin_dashboard.php');
+            break;
+
+    case 'search_reports_by_type_id':
+            $typeId = filter_input(INPUT_POST, 'search_report_id');
+            $reports = ReportDB::searchReportsByTypeId($typeId);
+            $user = UserDB::getUserById($_SESSION['userId']);
+            $profilePic = ImageDB::getImageById($user->getProfileImageId());
+            $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
+
+            include('../admin_manager/admin_dashboard.php');
+            break;
+
+    case 'delete_report':
+            $reportId = filter_input(INPUT_POST, 'report_id');
+            ReportDB::deleteReportByReportId($reportId);
+
+            Utility::adminReturnToDashboard();
+            break;
 
     default:
           // Borrowed this code from Andy
           // very helpful for debugging.
-          // Show this is an unhandled $controllerChoice
+          // Show this is an unhandled $action
           // Show generic else page
           require_once '../view/header.php'; 
           echo "<h1>Not yet implimented... </h1>";

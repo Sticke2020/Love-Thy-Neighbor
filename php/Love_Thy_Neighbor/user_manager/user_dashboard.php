@@ -5,7 +5,7 @@
 <div class="container-fluid px-0 mb-3">
     <div class="row align-items-start">
 
-        <!--User Profile Image-->
+        <!--------- User Profile Image ---------------------------------->
         <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
 
             <?php if ($profilePic == null) { ?>
@@ -21,20 +21,23 @@
 
         </div> 
 
-        <!--User Profile Data such as Name and Business-->
+        <!------------ User Profile Data such as Name and Business ------>
         <div class="col">
             <h1 class="mt-1"><?php echo $user->getUserName()?></h1>
             <?php if ($business == null) { ?>
             <?php } else { ?>
                 <?php if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin()) { ?>
-                    <h1 class="mt-2">Representative of <?php echo $business->getName()?></h1>
+                    <h1 class="mt-3">Representative of <?php echo $business->getName()?></h1>
                 <?php } else { ?>
-                    <h1 class="mt-2">Employee of <?php echo $business->getName()?></h1>
+                    <h1 class="mt-3">Employee of <?php echo $business->getName()?></h1>
                 <?php } ?>
             <?php } ?>
+            <h3 class="mt-3">City: <?php echo $user->getCity() ?></h3>
+            <h3 class="mt-2">State: <?php echo $user->getState() ?></h3>
+            <h3 class="mt-2">Zip: <?php echo $user->getZip() ?></h3>
         </div>
 
-        <!--Messages Button-->
+        <!---------------------------- Messages Button ------------------>
         <?php if ($unreadMessages == true) { ?>
         <div class="col">
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
@@ -63,7 +66,7 @@
     <div class="row">
         <div class="col" style="max-width: 50%;">
 
-            <!-- User Requests Card -->
+            <!----------------------- User Requests Card ---------------->
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Requests"; ?>
@@ -143,7 +146,7 @@
                                             <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                                         </p>
 
-                                        <!--Buttons-->
+                                        <!------------ Buttons ------------------->
                                         <div class="d-flex gap-2 flex-wrap">
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="delete_request">
@@ -161,7 +164,7 @@
         </div>
 
         <div class="col">
-            <!--User Feedback-->
+            <!---------------------- User Feedback ----------------------->
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Feedback"; ?>

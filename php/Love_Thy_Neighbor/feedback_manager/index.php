@@ -48,8 +48,21 @@ switch ($action) {
           }
           else {
                FeedbackDB::createFeedback($feedback);
-               Utility::returnToDashboard();
+
+               if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+                    Utility::adminReturnToDashboard();
+               } else {
+                    Utility::returnToDashboard();
+               }
+               
           }
+          break;
+
+          // Only admin can delete feedback right no
+     case 'delete_feedback':
+          $feedbackId = filter_input(INPUT_POST, 'feedback_id');
+          FeedbackDB::deleteFeedbackById($feedbackId);
+          Utility::adminReturnToDashboard();
           break;
 
 

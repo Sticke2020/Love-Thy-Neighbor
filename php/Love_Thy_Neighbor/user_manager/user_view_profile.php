@@ -34,11 +34,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <?php if ($business == null) { ?>
             <?php } else { ?>
                 <?php if ($businessUser->getIsAdmin() == 1) { ?>
-                    <h1 class="mt-2">Representative of <?php echo $business->getName()?></h1>
+                    <h2 class="mt-3">Representative of <?php echo $business->getName()?></h2>
                 <?php } else { ?>
-                    <h1 class="mt-2">Employee of <?php echo $business->getName()?></h1>
+                    <h1 class="mt-3">Employee of <?php echo $business->getName()?></h1>
                 <?php } ?>
             <?php } ?>
+            <h3 class="mt-3">City: <?php echo $user->getCity() ?></h3>
+            <h3 class="mt-2">State: <?php echo $user->getState() ?></h3>
+            <h3 class="mt-2">Zip: <?php echo $user->getZip() ?></h3>
         </div>
 
         <!--Messages Button-->
@@ -163,6 +166,13 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                     <p class="fs-5"><strong>Date Created:</strong>
                                         <?php echo $comment->getDateCreated(); ?>
                                     </p>
+                                    <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) : ?>
+                                        <form action="feedback_manager/index.php" method="POST">
+                                            <input type="hidden" name="action" value="delete_feedback">
+                                            <input type="hidden" name="feedback_id" value="<?php echo $comment->getId() ?>">
+                                            <button type="submit" class="btn btn-lg bg-custom-red text-custom-white">Delete Feedback</button>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>

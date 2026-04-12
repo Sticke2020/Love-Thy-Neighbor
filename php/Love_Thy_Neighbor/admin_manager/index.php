@@ -41,11 +41,7 @@ switch ($action) {
 
 *****************************************************************/
      case 'home':
-          $user = UserDB::getUserById($_SESSION['userId']);
-          $profilePic = ImageDB::getImageById($user->getProfileImageId());
-          $unreadMessages = MessageDB::hasUnreadMessages($user->getId());
-          $reports = ReportDB::getReports();
-          include('../admin_manager/admin_dashboard.php');
+          Utility::adminReturnToDashboard();
           break;
 
 /**********  USERS  *********************************************/
@@ -64,6 +60,12 @@ switch ($action) {
      case 'search_users_by_lastname':
           $lastName = filter_input(INPUT_POST, 'search_lastname');
           $users = UserDB::searchUsersByLastName($lastName);
+          include('../admin_manager/admin_users.php');
+          break;
+
+     case 'search_users_by_id':
+          $id = filter_input(INPUT_POST, 'search_id');
+          $users = UserDB::searchUsersById($id);
           include('../admin_manager/admin_users.php');
           break;
 /*

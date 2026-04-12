@@ -98,4 +98,16 @@ public static function deleteFeedbackByUserId($userId) {
     $statement->closeCursor();
 }
 
+public static function deleteFeedbackById($feedbackId) {
+    $db = DataBase::getDB();
+
+    $query = 'DELETE FROM feedback
+                WHERE id = :feedbackId';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':feedbackId', $feedbackId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 }

@@ -62,9 +62,13 @@ switch ($action) {
         catch (Exception $e) {
             $db->rollBack();
             echo "Transaction failed: " . $e->getMessage();
-          }
+        }
         
-        Utility::returnToDashboard();
+        if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+            Utility::adminReturnToDashboard();
+        } else {
+            Utility::returnToDashboard();
+        } 
         break;
 
     case 'delete_image':

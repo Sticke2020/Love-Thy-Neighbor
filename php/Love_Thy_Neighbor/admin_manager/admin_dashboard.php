@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<!--  Search reports by username  -->
+<!--------  Search reports ---------->
 <fieldset class="m-2 text-center">
     <form action="report_manager/index.php" method="POST">
         <label id="search">Search Reports By UserName:</label>
@@ -57,12 +57,20 @@
         <input class='clickable' type="submit" value="Search"><br>
     </form>
 </fieldset>
+<fieldset class="m-2 text-center">
+    <form action="report_manager/index.php" method="POST">
+        <label id="search">Search Reports Report TypeId:</label>
+        <input class='text_input' type="text" name="search_report_id">
+        <input type="hidden" name="action" value="search_reports_by_type_id" /> 
+        <input class='clickable' type="submit" value="Search"><br>
+    </form>
+</fieldset>
 
 <div class="container-fluid mt-3 px-0">
     <div class="row">
         <div class="col">
 
-            <!--User Reports-->
+            <!------------------ User Reports ---------------->
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     Reports
@@ -82,6 +90,12 @@
                                     <p class="fs-5"><strong>Date Created:</strong>
                                         <?php echo $report->getDateCreated(); ?>
                                     </p>
+                                    <form action="report_manager/index.php" method="POST">
+                                        <input type="hidden" name="action" value="delete_report" />
+                                        <input type="hidden" name="report_id" value="<?php echo $report->getId() ?>">
+                                        <button class="btn text-custom-white btn-lg bg-custom-red border-3"
+                                            type="submit">Delete Report</button>
+                                    </form>
                                 </div>
                             </div>
                         <?php endforeach; ?>

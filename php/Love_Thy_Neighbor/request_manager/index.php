@@ -139,7 +139,11 @@ switch ($action) {
                $db->rollBack();
           }
 
-          Utility::returnToDashboard();
+          if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+               Utility::adminReturnToDashboard();
+          } else {
+               Utility::returnToDashboard();
+          }
           break;
 
      case 'delete_request':
@@ -168,7 +172,11 @@ switch ($action) {
                error_log($e->getMessage());
           }
           
-          Utility::returnToDashboard();
+          if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+               Utility::adminReturnToDashboard();
+          } else {
+               Utility::returnToDashboard();
+          }
           break;
 
      case 'fulfill_request':
@@ -192,7 +200,11 @@ switch ($action) {
           $requestId = filter_input(INPUT_POST, 'request_id');
           RequestDB::markRequestFulfilled($requestId);
 
-          Utility::returnToDashboard();
+          if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+               Utility::adminReturnToDashboard();
+          } else {
+               Utility::returnToDashboard();
+          }
           break;
 
 

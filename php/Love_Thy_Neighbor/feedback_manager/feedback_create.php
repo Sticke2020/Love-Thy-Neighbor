@@ -1,4 +1,9 @@
-<?php require_once ('../view/user_header.php'); ?>
+<?php 
+if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+    require_once ('../view/admin_header.php');
+} else {
+    require_once ('../view/user_header.php');
+} ?>
 
 <h1 class="mt-2 text-center">Leave Feedback</h1>
 

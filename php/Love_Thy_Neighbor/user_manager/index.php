@@ -557,14 +557,15 @@ switch ($action) {
           break;
 
      case 'change_password':
+          $userId = filter_input(INPUT_POST, 'user_id');
           $password = filter_input(INPUT_POST, 'current_password');
           $newPassword = filter_input(INPUT_POST, 'new_password');
           $newPasswordConfirmed = filter_input(INPUT_POST, 'new_password_confirmed');
 
-          if (UserDB::confirmUserPassword($_SESSION['userId'], $password)) {
+          if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                if ($newPassword === $newPasswordConfirmed && $newPassword != null) {
                     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                    UserDB::updatePassword($_SESSION['userId'], $hashedPassword);
+                    UserDB::updatePassword($userId, $hashedPassword);
                     include('../view/updates.php');
                }
                else {
@@ -572,6 +573,17 @@ switch ($action) {
                     include('../errors/error.php');
                }
           }
+          else if (UserDB::confirmUserPassword($_SESSION['userId'], $password)) {
+               if ($newPassword === $newPasswordConfirmed && $newPassword != null) {
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    UserDB::updatePassword($userId, $hashedPassword);
+                    include('../view/updates.php');
+               }
+               else {
+                    $error = "Your new password entries do not match";
+                    include('../errors/error.php');
+               }
+          } 
           else {
                $error = "Your current password is incorrect";
                     include('../errors/error.php');
@@ -584,7 +596,10 @@ switch ($action) {
           $userId = filter_input(INPUT_POST, 'user_id');
           $password = filter_input(INPUT_POST, 'password');
 
-          if (UserDB::confirmUserPassword($userId, $password)) {
+          if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
+               Utility::deleteAccount($userId);
+          }
+          else if (UserDB::confirmUserPassword($userId, $password)) {
                Utility::deleteAccount($userId);
           }
           else {

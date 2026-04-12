@@ -17,7 +17,6 @@
                             <th>Last Name</th>
                             <th>City</th>
                             <th>State</th>
-                            <th>zip</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
@@ -31,7 +30,6 @@
                                     <td><?php echo htmlspecialchars($user->getLastName()); ?></td>
                                     <td><?php echo htmlspecialchars($user->getCity()); ?></td>
                                     <td><?php echo htmlspecialchars($user->getState()); ?></td>
-                                    <td><?php echo htmlspecialchars($user->getZip()); ?></td>
 
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
