@@ -1,10 +1,5 @@
 <?php
 
-$phoneNumbersOnly;
-$areaCode;
-$prefix;
-$suffix;
-
 require_once('../model/Database.php');
 require_once('../model/User.php');
 require_once('../model/User_DB.php');
@@ -23,13 +18,18 @@ require_once('../model/Image.php');
 require_once('../model/Image_DB.php');
 require_once('../model/Utility.php');
 
+// Variables for formatting and validating phone numbers
+$phoneNumbersOnly;
+$areaCode;
+$prefix;
+$suffix;
+
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
     session_name('userSession');
     session_set_cookie_params($lifetime, '/');
     session_start();
 }
-
 
 // Get the data from either the GET or POST collection.
 $action = filter_input(INPUT_POST, 'action');
@@ -101,6 +101,7 @@ switch ($action) {
           break;
 
      case 'validate_login':
+          // Destroys existing session before starting a new one
           session_destroy();
           $_SESSION = array();
           session_start();
@@ -108,17 +109,17 @@ switch ($action) {
           $email = filter_input(INPUT_POST, 'email');
           $password = filter_input(INPUT_POST, 'password');
 
-          if ($email == null || $password == null) {
+          if (!$email || !$password) {
                $errorMessage = "Please enter a valid email and password";
                include('user_login.php');
           } 
           else {
                $user = UserDB::getUserByEmailAndPassword($email,$password);
-               if($user->getId() == false || $user->getId() == null) {
+               if(!$user || !$user->getId()) {
                     $errorMessage = "Incorrect email or password";
                     include('user_login.php');
                }
-               else if ($user != false && $user != null) {
+               else if ($user && $user->getId()) {
                     $ID = $user->getId();
                     if($ID > 0) {
                          $user = UserDB::getUserById($ID);
@@ -169,7 +170,7 @@ switch ($action) {
           $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
           $user = new User();
 
-          $user->setUserTypeId(3);
+          $user->setUserTypeId(3); // 3 = standard user, 2 = moderator, 1 = admin
           $user->setFirstName(filter_input(INPUT_POST, 'first_name'));
           $user->setLastName(filter_input(INPUT_POST, 'last_name'));
           $user->setCity(filter_input(INPUT_POST, 'city'));
@@ -181,9 +182,9 @@ switch ($action) {
           $user->setPassword($hashedPassword);
           $user->setAccountType(filter_input(INPUT_POST, 'account_type'));
 
-          if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
-               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
-               $user->getUserName() == null) {
+          if (!$user->getFirstName() || !$user->getLastName() || !$user->getCity() || !$user->getState() ||
+               !$user->getZip() || !$user->getPhone() || !$user->getEmail() || !$user->getPassword() ||
+               !$user->getUserName()) {
 
                $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
@@ -242,7 +243,7 @@ switch ($action) {
           $businessUser = new BusinessUser();
           $business = new Business();
 
-          $user->setUserTypeId(3);
+          $user->setUserTypeId(3);  // 3 = standard user, 2 = moderator, 1 = admin
           $user->setFirstName(filter_input(INPUT_POST, 'first_name'));
           $user->setLastName(filter_input(INPUT_POST, 'last_name'));
           $user->setCity(filter_input(INPUT_POST, 'city'));
@@ -258,9 +259,9 @@ switch ($action) {
           $verificationCode = (filter_input(INPUT_POST, 'business_code'));
           $business = BusinessDB::getBusinessById($businessId);
 
-          if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
-               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
-               $user->getUserName() == null) {
+          if (!$user->getFirstName() || !$user->getLastName() || !$user->getCity() || !$user->getState() ||
+               !$user->getZip() || !$user->getPhone() || !$user->getEmail() || !$user->getPassword() ||
+               !$user->getUserName()) {
 
                $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
@@ -305,7 +306,7 @@ switch ($action) {
                               "Invalid phone number";
                include('../errors/error.php');
           }
-          else if ($businessId == null || $verificationCode == null) {
+          else if (!$businessId || !$verificationCode) {
                $error = "You must enter a Business ID and Verification Code";
                include('../errors/error.php');
           }
@@ -330,7 +331,7 @@ switch ($action) {
           $businessUser = new BusinessUser();
           $business = new Business();
 
-          $user->setUserTypeId(3);
+          $user->setUserTypeId(3);  // 3 = standard user, 2 = moderator, 1 = admin
           $user->setFirstName(filter_input(INPUT_POST, 'first_name'));
           $user->setLastName(filter_input(INPUT_POST, 'last_name'));
           $user->setCity(filter_input(INPUT_POST, 'city'));
@@ -351,17 +352,17 @@ switch ($action) {
           $business->setDescription(filter_input(INPUT_POST, 'business_description'));
           $business->setVerificationCode(filter_input(INPUT_POST, 'business_code'));
 
-          if ($user->getFirstName() == null || $user->getLastName() == null || $user->getCity() == null || $user->getState() == null ||
-               $user->getZip() == null || $user->getPhone() == null || $user->getEmail() == null || $user->getPassword() == null ||
-               $user->getUserName() == null) {
+          if (!$user->getFirstName() || !$user->getLastName() || !$user->getCity() || !$user->getState() ||
+               !$user->getZip() || !$user->getPhone() || !$user->getEmail() || !$user->getPassword() ||
+               !$user->getUserName()) {
 
                $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
           }
 
-          if ($business->getName() == null || $business->getPhone() == null || $business->getAddress() == null ||
-               $business->getCity() == null || $business->getState() == null || $business->getZip() == null ||
-               $business->getDescription() == null || $business->getVerificationCode() == null) {
+          if (!$business->getName() || !$business->getPhone() || !$business->getAddress() ||
+               !$business->getCity() || !$business->getState() || !$business->getZip() ||
+               !$business->getDescription() || !$business->getVerificationCode()) {
 
                $error = "Invalid Business data. Check all fields and try again.";
                include('../errors/error.php');
@@ -496,10 +497,10 @@ switch ($action) {
           $user->setPhone(filter_input(INPUT_POST, 'phone'));
           $user->setUserName(filter_input(INPUT_POST, 'user_name'));
 
-          if ($user->getID() == null || $user->getUserTypeId() == null || $user->getFirstName() == null ||
-               $user->getLastName() == null || $user->getCity() == null || $user->getState() == null || 
-               $user->getZip() == null || $user->getEmail() == null || $user->getPhone() == null ||
-               $user->getUserName() == null) {
+          if (!$user->getID() || !$user->getUserTypeId() || !$user->getFirstName() ||
+               !$user->getLastName() || !$user->getCity() || !$user->getState() || 
+               !$user->getZip() || !$user->getEmail() || !$user->getPhone() ||
+               !$user->getUserName()) {
           $error = "Invalid customer data. Check all fields and try again.";
           include('../errors/error.php');
           }
@@ -585,8 +586,6 @@ switch ($action) {
           }
           break;
 
-
-
      case 'delete_account':
           $userId = filter_input(INPUT_POST, 'user_id');
           $password = filter_input(INPUT_POST, 'password');
@@ -601,7 +600,6 @@ switch ($action) {
                $error = "Your current password is incorrect";
                     include('../errors/error.php');
           }
-          
           break;
 
      default:

@@ -19,7 +19,7 @@
                     <form action="user_manager/index.php" method="post">
                         <input type="hidden" name="action" value="add_user_business">
 
-                        <!-- USER INFO -->
+                        <!------------- USER INFO ------------>
                         <h5 class="mt-3 fs-3 mt-5">User Information</h5>
                         <hr>
 
@@ -72,7 +72,7 @@
                             <input type="password" name="password" class="form-control form-control-lg border-2 border-black" required>
                         </div>
 
-                        <!-- BUSINESS INFO -->
+                        <!--------------- BUSINESS INFO ---------->
                         <h5 class="mt-4 fs-3 mt-5">Business Information</h5>
                         <hr>
 
@@ -113,7 +113,7 @@
                             <textarea name="business_description" class="form-control form-control-lg border-2 border-black" rows="3" required></textarea>
                         </div>
 
-                        <!-- VERIFICATION -->
+                        <!------------------ VERIFICATION ---------------->
                         <h5 class="mt-4 fs-3 mt-5">Verification Setup</h5>
                         <hr>
 
@@ -126,7 +126,6 @@
                             <input type="text" name="business_code" class="form-control form-control-lg border-2 border-black" required>
                         </div>
 
-                        <!-- SUBMIT -->
                         <button type="submit" class="btn btn-lg bg-custom-black text-custom-white fs-4 w-100 mt-5">
                             Register Business
                         </button>

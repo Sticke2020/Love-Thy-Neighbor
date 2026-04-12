@@ -15,18 +15,19 @@ class User {
             $dateCreated,
             $dateUpdated,
             $profileImageId,
-            $accountType;
+            $accountType; // accountType used for forwarding to correct registration form
 
 
     public function __construct() {}
 
+    // Associative array that returns the string for userTypes
+    // number = key, string = value
     public function getUserTypes() {
         $types = [1 => "Admin", 2 => "Moderator", 3 => "User"];
         return $types[$this->getUserTypeId()] ?? "unknown";
     }
 
     // Getters and Setters
-
     public function getId() {
         return $this->id;
     } 

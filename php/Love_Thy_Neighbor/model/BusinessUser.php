@@ -3,6 +3,7 @@
 class BusinessUser {
     private $userId, $fullName, $businessId, $isAdmin; 
 
+    public function __construct() {}
 
     // Getters and Setters
     public function getUserId() {

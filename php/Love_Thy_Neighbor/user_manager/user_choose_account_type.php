@@ -17,7 +17,7 @@
                     <p class="fs-3">
                         Select the type of account you want to create.
                     </p>
-
+                    <!------------ Account Type Choices ------------>
                     <ul class="fs-4 m-4">
                         <li><strong>Personal Account:</strong> For individual users</li>
                         <li><strong>Employee Account:</strong> For users linked to an existing business</li>
@@ -27,7 +27,7 @@
                     <form action="user_manager/index.php" method="post">
                         <input type="hidden" name="action" value="register_account">
 
-                        <!-- Radio Options -->
+                        <!--------------- Radio Button Options ------------>
                         <div class="list-group mb-4">
 
                             <label class="list-group-item d-flex align-items-center fs-4 bg-custom-light-yellow">
@@ -66,7 +66,6 @@
 
                         </div>
 
-                        <!-- Submit -->
                         <button type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 fs-4">
                             Next
                         </button>

@@ -18,25 +18,25 @@
                 <input type="hidden" name="action" value="create_request">
                 <input type="hidden" name="user_id" value="<?php echo $userId ?>">
 
-                <!-- Title / Headline -->
+                <!---------- Title / Headline ---------->
                 <div class="mb-3">
                     <label for="title" class="form-label fs-4">Title / Headline</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title / Headline" required>
                 </div>
 
-                <!-- Description -->
+                <!----------- Description ------------->
                 <div class="mb-3">
                     <label for="body" class="form-label fs-4">Description</label>
                     <textarea class="form-control" id="body" name="body" rows="6" placeholder="Enter a description or explanation" required></textarea>
                 </div>
 
-                <!-- Upload Images -->
+                <!---------------- Upload Images ----------->
                 <div class="mb-3">
                     <label for="images" class="form-label fs-4">Upload Images</label>
                     <input class="form-control" type="file" id="images" name="images[]" accept="image/*" multiple>
                 </div>
 
-                <!-- Submit Button -->
+                <!----------------- Submit Button ------------->
                 <div class="mb-3">
                     <button type="submit" class="btn btn-lg bg-custom-black text-custom-white fs-5">Create Request</button>
                 </div>
@@ -46,7 +46,5 @@
     </div>
 
 </div>
-
-
 
 <?php require_once ('../view/footer.php'); ?>

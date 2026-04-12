@@ -4,7 +4,6 @@
 
 <div class="container my-4">
 
-    <!-- Edit User -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0">File A Report</h4>
@@ -14,7 +13,7 @@
             <form action="report_manager/index.php" method="post">
                 <input type="hidden" name="action" value="create_report">
                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['userId'] ?>">
-                <!-- Report Type Select, Post Id -->
+                <!------------- Report Type Select -------------->
                 <div class="mb-3">
                     <label class="form-label">Report Type</label>
                     <select name="report_type_id" class="form-select">
@@ -29,7 +28,7 @@
                     </select>
                 </div>
 
-                <!-- Report Description, Post Description -->
+                <!------------------ Report Description ---------->
                 <div class="mb-3">
                     <label for="report_body" class="form-label">Description</label>
                     <textarea name="report_body" class="form-control" rows="5" required placeholder="Write your report here."></textarea>

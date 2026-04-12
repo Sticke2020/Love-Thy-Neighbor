@@ -12,11 +12,9 @@ class Business {
             $verificationCode,
             $dateCreated;
 
-
     public function __construct() {}
 
     // Getters and Setters
-
     public function getId() {
         return $this->id;
     } 

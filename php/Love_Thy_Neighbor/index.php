@@ -4,8 +4,6 @@ require_once("model/User.php");
 require_once("model/User_DB.php");
 require_once("model/BusinessUser.php");
 
-
-
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
     session_name('userSession');

@@ -27,7 +27,7 @@ public static function getRequests() {
             LEFT JOIN request_image ri ON r.id = ri.request_id
             LEFT JOIN image ri_img ON ri.image_id = ri_img.id
             LEFT JOIN user u ON u.id = r.user_id
-            -- Get ONE user image not linked to the request
+            -- Gets one user image not linked to the request
             LEFT JOIN image ui ON ui.user_id = r.user_id 
                 AND ui.id NOT IN (
                     SELECT image_id 
@@ -41,9 +41,11 @@ public static function getRequests() {
 
     $requests = array();
     foreach ($statement as $row) {
-
+        // ensures that requests arent duplicated since the sql will return duplicate requests
+        // that contain different images since 1 request can have multiple images
         $requestId = $row['request_id'];
 
+        // if the requestId is not a request object create the request otherwise dont
         if (!isset($requests[$requestId])) {
             $request = new Request();
             $request->setId($row['request_id']);
@@ -59,7 +61,7 @@ public static function getRequests() {
             $requests[$requestId] = $request;
         }
 
-        // need to check for duplicates before adding to array
+        // need to check for duplicates before adding images to array
             $request = $requests[$requestId];
             $existingImageIds = array();
             $imagesAdded = $requests[$requestId]->getImages();
@@ -68,6 +70,7 @@ public static function getRequests() {
                 $existingImageIds[] = $img->getId(); // add each image's ID to the array
             }
 
+        // Adds the image to the request if the image is not already in the array of images for the request
         if (!empty($row['request_image_id']) && !in_array($row['request_image_id'], $existingImageIds)) {
             $image = new Image();
             $image->setId($row['request_image_id']);
@@ -205,6 +208,7 @@ public static function updateRequest($requestId, $title, $body) {
     $statement->closeCursor();
 }
 
+// 2 = fulfilled, 1 = unfulfilled
 public static function markRequestFulfilled($requestId) {
     $db = DataBase::getDB();
 

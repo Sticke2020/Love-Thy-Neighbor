@@ -70,29 +70,6 @@ public static function getUserNames() {
     return $users;
 }
 
-public static function getUserIdByRequestId($requestId) {
-    $db = DataBase::getDB();
-
-    $query = 'SELECT * FROM request WHERE id = :requestId';
-
-        $statement = $db->prepare($query);
-        $statement->bindValue(':requestId', $requestId);
-        $statement->execute();
-        $request = $statement->fetch();
-        $statement->closeCursor();
-
-        $user = new User();
-
-        if ($request == false) {
-            $user->setId(null);
-        }
-        else {
-            $user->setId($request['user_id']);
-        }
-        
-    return $user;
-}
-
 public static function getUserByEmailAndPassword($email, $password) {
     $db = DataBase::getDB();
 
@@ -172,7 +149,9 @@ public static function searchUsersByUserName($userName) {
 
     if ($userName != '') {	
         $userName = '%'.$userName.'%';
+
         $query = 'SELECT * FROM user WHERE username like :userName ORDER BY id';
+
         $statement = $db->prepare($query);
         $statement->bindValue(':userName', $userName);
         $statement->execute();
@@ -180,8 +159,8 @@ public static function searchUsersByUserName($userName) {
         $statement->closeCursor();
     }
     else {
-        $query = 'SELECT * FROM user
-                        ORDER BY id';
+        $query = 'SELECT * FROM user ORDER BY id';
+
         $statement = $db->prepare($query);
         $statement->execute();
         $users = $statement->fetchAll();
@@ -216,7 +195,9 @@ public static function searchUsersByLastName($lastName) {
 
     if ($lastName != '') {	
         $lastName = '%'.$lastName.'%';
+
         $query = 'SELECT * FROM user WHERE last_name like :lastName ORDER BY id';
+
         $statement = $db->prepare($query);
         $statement->bindValue(':lastName', $lastName);
         $statement->execute();
@@ -224,8 +205,8 @@ public static function searchUsersByLastName($lastName) {
         $statement->closeCursor();
     }
     else {
-        $query = 'SELECT * FROM user
-                        ORDER BY id';
+        $query = 'SELECT * FROM user ORDER BY id';
+
         $statement = $db->prepare($query);
         $statement->execute();
         $users = $statement->fetchAll();
@@ -260,7 +241,9 @@ public static function searchUsersById($id) {
 
     if ($id != '') {	
         $id = '%'.$id.'%';
+
         $query = 'SELECT * FROM user WHERE id like :id ORDER BY id';
+
         $statement = $db->prepare($query);
         $statement->bindValue(':id', $id);
         $statement->execute();
@@ -326,12 +309,15 @@ public static function getUserById($ID) {
     return $selectedUser;
 }
 
+// $excludedId is to avoid conflicts with email address when a user updates their info
+// or changes their email address so their current email isnt flagged as in use and is ignored
 public static function emailAddressExists($email, $excludeId = null) {
     $db = DataBase::getDB();
 
     if ($excludeId) {
         $query = 'SELECT COUNT(*) FROM user
                     WHERE email_address = :email AND id != :id';
+
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
         $statement->bindValue(':id', $excludeId);
@@ -339,6 +325,7 @@ public static function emailAddressExists($email, $excludeId = null) {
     else {
         $query = 'SELECT COUNT(*) FROM user 
                 WHERE email_address = :email';
+
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
     }
@@ -350,6 +337,8 @@ public static function emailAddressExists($email, $excludeId = null) {
     return $count;
 }
 
+// $excludedId avoids conflicts with unique usernames when user updates info
+// so their current username isnt flagged as already in use
 public static function userNameExists($userName, $excludeId = null) {
     $db = DataBase::getDB();
 
@@ -487,11 +476,13 @@ public static function deleteUser($userId) {
 
 
 // method is used to hash passwords in the DB when the DB is reset/rebuilt
+// and the passwords in the DB are in plain text
 public static function hashPasswordsInDB() {
     $db = DataBase::getDB(); 
     
     $query = 'SELECT id, password
     FROM user';
+
     $statement = $db->prepare($query);
     $statement->execute();
 
@@ -519,6 +510,5 @@ public static function hashPasswordsInDB() {
         $statement->execute();
     }
 }
-
 
 }

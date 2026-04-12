@@ -10,7 +10,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 <div class="container-fluid px-0 mb-3">
     <div class="row align-items-start">
 
-        <!--User Profile Image-->
+        <!------User Profile Image--------->
         <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
 
             <?php if ($profilePic == null) { ?>
@@ -44,7 +44,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <h3 class="mt-2">Zip: <?php echo $user->getZip() ?></h3>
         </div>
 
-        <!--Messages Button-->
+        <!----------------Messages Button------------->
         <div class="col">
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="message_user">
@@ -56,12 +56,11 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     </div>
 </div>
 
-
 <div class="container-fluid mt-3 px-0">
     <div class="row">
         <div class="col" style="max-width: 50%;">
 
-            <!-- User Requests Card -->
+            <!----------------- User Requests Card ------------->
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Requests"; ?>
@@ -90,7 +89,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                         <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                                     </p>
 
-                                    <!-- Action Buttons -->
+                                    <!----------- Buttons --------------->
                                     <div class="d-flex gap-2 flex-wrap">
                                         <form action="request_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="fulfill_request">
@@ -129,7 +128,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
 
         <div class="col">
-            <!--User Feedback-->
+            <!-----------------User Feedback------------------>
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     <?php echo $user->getUserName() . "'s Feedback"; ?>
@@ -183,7 +182,5 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
     </div>
 </div>
-
-
 
 <?php require_once ('../view/footer.php'); ?>

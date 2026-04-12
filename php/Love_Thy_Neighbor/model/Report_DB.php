@@ -59,7 +59,7 @@ public static function getReportTypes() {
     $statement = $db->prepare($query);
     $statement->execute();
 
-     $reportTypes = array();
+    $reportTypes = array();
     foreach ($statement as $row) {
         $reportType = new ReportType();
         $reportType->setId($row['id']);
@@ -79,6 +79,7 @@ public static function searchReportsByUserName($userName) {
                 LEFT JOIN user on user.id = report.user_id
                 WHERE username like :userName 
                 ORDER BY id DESC';
+
     $statement = $db->prepare($query);
     $statement->bindValue(':userName', $userName);
     $statement->execute();
@@ -109,6 +110,7 @@ public static function searchReportsByTypeId($typeId) {
                 LEFT JOIN user on user.id = report.user_id
                 WHERE report_type_id like :typeId
                 ORDER BY id DESC';
+
     $statement = $db->prepare($query);
     $statement->bindValue(':typeId', $typeId);
     $statement->execute();

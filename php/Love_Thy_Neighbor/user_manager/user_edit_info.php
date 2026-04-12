@@ -126,29 +126,28 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
     </div>
 
-
     <!------------------------- DELETE ACCOUNT -------------------->
-            <div class="card">
-                <div class="card-header bg-danger text-white">
-                    <h4 class="mb-0">Delete Your Account</h4>
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">Delete Your Account</h4>
+        </div>
+
+        <div class="card-body">
+            <form action="user_manager/index.php" method="post">
+                <input type="hidden" name="action" value="delete_account">
+                <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+
+                <div class="mb-3">
+                    <label class="form-label">Enter Password</label>
+                    <input type="password" class="form-control" name="password">
                 </div>
 
-                <div class="card-body">
-                    <form action="user_manager/index.php" method="post">
-                        <input type="hidden" name="action" value="delete_account">
-                        <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
-
-                        <div class="mb-3">
-                            <label class="form-label">Enter Password</label>
-                            <input type="password" class="form-control" name="password">
-                        </div>
-
-                        <button type="submit" class="btn btn-danger w-100">
-                            Delete Account
-                        </button>
-                    </form>
-                </div>
-            </div>
+                <button type="submit" class="btn btn-danger w-100">
+                    Delete Account
+                </button>
+            </form>
+        </div>
+    </div>
 
 </div>
 

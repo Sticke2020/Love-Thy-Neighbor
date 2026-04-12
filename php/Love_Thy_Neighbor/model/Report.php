@@ -5,6 +5,9 @@ class Report {
 
 public function __construct() {}
 
+    // This is an associative array
+    // returns the string value for the report type number
+    // the number is the key the string is the value
     public function getReportTypes() {
         $types = [
             1 => "Harassment Or Bullying",
@@ -23,7 +26,6 @@ public function __construct() {}
     }
 
     // Getters and Setters
-
     public function getId() {
         return $this->id;
     } 

@@ -12,7 +12,7 @@
 
                 <div class="card-body bg-custom-light-yellow">
 
-                    <!-- Error Message -->
+                    <!------------ Error Message -------------->
                     <?php if (!empty($errorMessage)) { ?>
                         <div class="alert alert-danger text-center">
                             <?= $errorMessage ?>

@@ -1,7 +1,6 @@
 <?php
 require_once("Business.php");
 
-
 class BusinessDB {
 
 public static function createBusiness($business) {
@@ -99,46 +98,6 @@ public static function createBusinessUser($userId, $businessId, $isAdmin) {
     $statement->closeCursor();
 }  
 
-/*******************************************************************************************************
-public static function getBusinessByUserId($userId) {
-    $db = DataBase::getDB();
-
-    $query = 'SELECT business_id FROM business_user
-            WHERE user_id = :userId';
-
-    $statement = $db->prepare($query);
-    $statement->bindValue(':userId', $userId);
-    $statement->execute();
-    $businessId = $statement->fetchColumn(0);
-    $statement->closeCursor();
-
-    $businessId = $businessId;
-    
-    $query = 'SELECT * FROM business
-            WHERE id = :businessId';
-
-    $statement = $db->prepare($query);
-    $statement->bindValue(':businessId', $businessId);
-    $statement->execute();
-
-    foreach ($statement as $row) {
-        $business = new Business();
-        $business->setId($row['id']);
-        $business->setName($row['name']);
-        $business->setPhone($row['phone']);
-        $business->setAddress($row['address']);
-        $business->setCity($row['city']);
-        $business->setState($row['state']);
-        $business->setZip($row['zip']);
-        $business->setDescription($row['description']);
-    }
-
-    $statement->closeCursor();
-
-    return $business;
-}
-*************************************************************************************************************/
-
 // Checks to see if a user is also a business user
 public static function isBusinessUser($userId) {
     $businessUser = false;
@@ -177,9 +136,9 @@ public static function getBusinessUserByUserId($userId) {
     }
 
     $businessUser = new BusinessUser();
-        $businessUser->setUserId($user['user_id']);
-        $businessUser->setBusinessId($user['business_id']);
-        $businessUser->setIsAdmin($user['is_admin']);
+    $businessUser->setUserId($user['user_id']);
+    $businessUser->setBusinessId($user['business_id']);
+    $businessUser->setIsAdmin($user['is_admin']);
 
     return $businessUser;
 }

@@ -1,12 +1,11 @@
 <?php require_once ('../view/user_header.php'); ?>
 
-
 <div class="container-fluid mt-4 w-100">
     <div class="card shadow">
         <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
             <h3 class="mb-0">Users</h3>
         </div>
-
+        <!-------------------------- Users Table --------------------->
         <div class="card-body bg-custom-blue">
             <div class="table-responsive">
                 <table class="table table-custom table-hover align-middle">

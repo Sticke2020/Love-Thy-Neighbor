@@ -18,7 +18,7 @@
                     <form action="user_manager/index.php" method="post">
                         <input type="hidden" name="action" value="add_user_employee">
 
-                        <!-- Name -->
+                        <!--------------- User Info----------->
                         <div class="row">
                             <div class="col-md-6 mb-3 fs-4">
                                 <label class="form-label">First Name</label>
@@ -31,7 +31,6 @@
                             </div>
                         </div>
 
-                        <!-- Location -->
                         <div class="row">
                             <div class="col-md-4 mb-3 fs-4">
                                 <label class="form-label">City</label>
@@ -49,7 +48,6 @@
                             </div>
                         </div>
 
-                        <!-- Contact -->
                         <div class="mb-3 fs-4">
                             <label class="form-label">Phone</label>
                             <input type="text" name="phone" class="form-control form-control-lg border-2 border-black" required>
@@ -60,7 +58,6 @@
                             <input type="email" name="email" class="form-control form-control-lg border-2 border-black" required>
                         </div>
 
-                        <!-- Account -->
                         <div class="mb-3 fs-4">
                             <label class="form-label">Username</label>
                             <input type="text" name="user_name" class="form-control form-control-lg border-2 border-black" required>
@@ -71,9 +68,7 @@
                             <input type="password" name="password" class="form-control form-control-lg border-2 border-black" required>
                         </div>
 
-                        <!-- Business Info -->
-                        <hr>
-
+                        <!--------------- Business Info ----------------->
                         <p class="fs-3">
                             Enter the Business ID and Verification Code provided by your employer.
                         </p>
@@ -88,7 +83,6 @@
                             <input type="text" name="business_code" class="form-control form-control-lg border-2 border-black" required>
                         </div>
 
-                        <!-- Submit -->
                         <button type="submit" class="btn btn-lg bg-custom-black text-custom-white fs-4 w-100 mt-5">
                             Register Employee
                         </button>

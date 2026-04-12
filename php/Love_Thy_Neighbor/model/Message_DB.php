@@ -1,7 +1,6 @@
 <?php
 require_once("Message.php");
 
-
 class MessageDB {
 
 public static function createMessage($message) {
@@ -25,7 +24,7 @@ public static function createMessage($message) {
         $statement->bindValue(':body', $body);
         $statement->execute();
 
-        $messageId = $db->lastInsertId();
+        $messageId = $db->lastInsertId();  // retrieves the Id assigned to the last message created 
         
         $query2 = "INSERT INTO message_user (message_id, user_id, folder, is_read, is_deleted)
                 VALUES (:messageId, :userId, 'outbox', TRUE, FALSE)";
@@ -175,7 +174,6 @@ public static function hasUnreadMessages($userId) {
             return $isValid;
         }
     }
-
     return $isValid;
 }
 
@@ -235,6 +233,5 @@ public static function getMessageIdsByUserId($userId) {
     }
     return $messageIds;
 }
-
 
 }

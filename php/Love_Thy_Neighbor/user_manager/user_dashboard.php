@@ -24,6 +24,7 @@
         <!------------ User Profile Data such as Name and Business ------>
         <div class="col">
             <h1 class="mt-1"><?php echo $user->getUserName()?></h1>
+
             <?php if ($business == null) { ?>
             <?php } else { ?>
                 <?php if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin()) { ?>
@@ -32,6 +33,7 @@
                     <h2 class="mt-3">Employee of <?php echo $business->getName()?></h2>
                 <?php } ?>
             <?php } ?>
+
             <h3 class="mt-3">City: <?php echo $user->getCity() ?></h3>
             <h3 class="mt-2">State: <?php echo $user->getState() ?></h3>
             <h3 class="mt-2">Zip: <?php echo $user->getZip() ?></h3>
@@ -57,7 +59,6 @@
             </form>
         </div>
         <?php } ?>
-
     </div>
 </div>
 
@@ -85,7 +86,9 @@
                         <p class="text-muted text-custom-white fs-4">No requests found.</p>
                     <?php else : ?>
                         <?php foreach ($requests as $request) : ?>
-                            <?php if ($request->getRequestStatusTypeId() == 1) : ?>
+                            <?php if ($request->getRequestStatusTypeId() == 1) : ?> 
+
+                                <!--------- Unfulfilled Requests --------------->
                                 <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $request->getTitle(); ?></h5>
@@ -104,7 +107,7 @@
                                             <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                                         </p>
 
-                                        <!--Buttons-->
+                                        <!-----------Buttons------------->
                                         <div class="d-flex gap-2 flex-wrap">
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="delete_request">
@@ -128,6 +131,8 @@
                                     </div>
                                 </div>
                             <?php else : ?>
+
+                                <!--------- fulfilled Requests --------------->
                                 <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $request->getTitle(); ?></h5>

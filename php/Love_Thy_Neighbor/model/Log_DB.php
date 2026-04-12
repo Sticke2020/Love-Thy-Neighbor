@@ -22,10 +22,6 @@ public static function createLog($log) {
     $statement->closeCursor();
 }
 
-public static function getLogs() {
-    $db = DataBase::getDB();
-}
-
 public static function deleteLogs($userId) {
     $db = DataBase::getDB();
 
@@ -36,10 +32,6 @@ public static function deleteLogs($userId) {
     $statement->bindValue(':userId', $userId);
     $statement->execute();
     $statement->closeCursor();
-}
-
-public static function getActionType() {
-
 }
 
 }

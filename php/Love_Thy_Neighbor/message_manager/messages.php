@@ -5,7 +5,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/user_header.php');
 } ?>
 
-
 <div class="container my-4">
     <h2 class="mb-4">Messages</h2>
 

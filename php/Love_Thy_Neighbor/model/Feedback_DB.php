@@ -3,29 +3,6 @@ require_once("Feedback.php");
 
 
 class FeedbackDB {
-/*
-public static function getFeedback() {
-    $db = DataBase::getDB();
-
-    $query = 'SELECT * FROM feedback';
-
-    $statement = $db->prepare($query);
-    $statement->execute();
-
-    $feedbackAll = array();
-    foreach ($statement as $row) {
-        $feedback = new Feedback();
-        $feedback->setID($row['id']);
-        $feedback->setSenderId($row['author_id']);
-        $feedback->setReceiverId($row['target_user_id']);
-        $feedback->setComment($row['comment']);
-        $feedback->setDateCreated($row['date_created']);
-
-        $feedbackAll[] = $feedback;
-    }
-    return $feedbackAll;
-}
-*/
 
 public static function getFeedbackByUserId($userId) {
     $db = DataBase::getDB();

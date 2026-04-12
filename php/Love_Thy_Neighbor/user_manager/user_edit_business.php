@@ -10,7 +10,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 /** @var Business $business */  // <-- docblock to tell view $business is a Business object
 ?> 
 
-
 <div class="container my-4">
 
     <div class="row justify-content-center">
@@ -204,7 +203,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 </div>
             </div>
          
-
             <!---------------------- PASSWORD -------------------->
             <div class="card mb-4">
                 <div class="card-header bg-danger text-white">
@@ -237,7 +235,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     </form>
                 </div>
             </div>
-
 
             <!---------------------- DELETE ACCOUNT --------------------->
             <div class="card">

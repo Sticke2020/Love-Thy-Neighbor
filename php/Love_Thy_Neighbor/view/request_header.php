@@ -13,7 +13,7 @@
 <body>
 <main>
 
-<!-- Title Row -->
+<!-------------------- Title Row --------------------->
 <div class="container-fluid text-center py-3 bg-custom-light-yellow shadow-sm">
     <a class="text-decoration-none text-dark fw-bold fs-1"
        href="user_manager?action=home">
@@ -21,16 +21,16 @@
     </a>
 </div>
 
-<!-- Navbar Row -->
+<!------------------- Navbar Row -------------------------->
 <nav class="navbar navbar-expand-lg navbar-dark bg-custom-black border-top">
     <div class="container justify-content-center">
 
-        <!-- Mobile Toggle -->
+        <!------------------ Mobile Toggle ------------------->
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation -->
+        <!------------------ Navigation ----------------------->
         <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
 
             <ul class="navbar-nav gap-5">

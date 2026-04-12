@@ -9,7 +9,6 @@ class Log {
     }
 
     // Getters and Setters
-
     public function getId() {
         return $this->id;
     } 

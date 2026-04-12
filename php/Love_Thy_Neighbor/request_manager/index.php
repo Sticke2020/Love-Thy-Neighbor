@@ -11,7 +11,6 @@ require_once('../model/Utility.php');
 require_once('../model/Message.php');
 require_once('../model/Message_DB.php');
 
-
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
     session_name('userSession');
@@ -28,20 +27,10 @@ if ( $action == NULL) {
 }
 
 switch ($action) {
-/*******test to see if this is ever used *****************************************************************
-
-     case 'user_requests':
-          $requests = RequestDB::getRequestsByUserId($_SESSION['userId']);
-          break;
-
-**********************************************************************************************************/  
+  
      case 'requests':
           $requests = RequestDB::getRequests();
           include('requests.php');
-          break;
-
-     case 'requests_by_user_id':
-          
           break;
 
      case 'fulfilled_requests':
@@ -77,7 +66,6 @@ switch ($action) {
 
      case 'create_request':
           $request = new Request();
-
           $request->setTitle(filter_input(INPUT_POST, 'title'));
           $request->setBody(filter_input(INPUT_POST, 'body'));
           $request->setUserId(filter_input(INPUT_POST, 'user_id'));
@@ -185,8 +173,10 @@ switch ($action) {
           $userId = $_SESSION['userId'];
           $user = UserDB::getUserById($userId);
           $userName = $user->getUserName();
-          $body = "$userName wants to fulfull your request ($requestTitle). Send them a message if you are interested in having them
-                              fulfill your request. Remember to mark your request as fulfilled after it has been fulfilled.";
+          $body = "$userName wants to fulfull your request ($requestTitle). 
+                              Send them a message if you are interested in having them
+                              fulfill your request. Remember to mark your request as fulfilled
+                               after it has been fulfilled.";
           $message = new Message();
           $message->setBody($body);
           $message->setSenderId($userId);
@@ -206,7 +196,6 @@ switch ($action) {
                Utility::returnToDashboard();
           }
           break;
-
 
      default:
           // Borrowed this code from Andy
