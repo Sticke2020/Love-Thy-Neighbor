@@ -1,5 +1,6 @@
 <?php
 
+require_once('../model/Database.php');
 require_once('../model/User_DB.php');
 require_once('../model/User.php');
 require_once('../model/Request.php');
@@ -19,7 +20,7 @@ require_once('../model/Utility.php');
 
 class Utility {
 
-    // This gathers the variables and objects needed by the user dashboard
+    /* This gathers the variables and objects needed by the user dashboard */
     public static  function returnToDashboard() {
         $user = UserDB::getUserById($_SESSION['userId']);
         $requests = RequestDB::getRequestsByUserId($user->getId());
@@ -35,6 +36,7 @@ class Utility {
         include('../user_manager/user_dashboard.php');
     }
 
+    /* This gathers the variables and objects needed by the admin dashboard */
     public static  function adminReturnToDashboard() {
         $user = UserDB::getUserById($_SESSION['userId']);
         $profilePic = ImageDB::getImageById($user->getProfileImageId());

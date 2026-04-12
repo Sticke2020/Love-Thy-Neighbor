@@ -485,7 +485,8 @@ public static function deleteUser($userId) {
     $statement->closeCursor();
 }
 
-/*  REMOVE THIS METHOD BEFORE FINAL PRODUCTION ********************************************
+
+// method is used to hash passwords in the DB when the DB is reset/rebuilt
 public static function hashPasswordsInDB() {
     $db = DataBase::getDB(); 
     
@@ -518,7 +519,6 @@ public static function hashPasswordsInDB() {
         $statement->execute();
     }
 }
-***********************************************************************************************/
 
 
 }

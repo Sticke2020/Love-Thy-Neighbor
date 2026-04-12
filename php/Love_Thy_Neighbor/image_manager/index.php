@@ -71,9 +71,6 @@ switch ($action) {
         } 
         break;
 
-    case 'delete_image':
-        break;
-
     default:
           // Borrowed this code from Andy
           // very helpful for debugging.

@@ -41,12 +41,7 @@ if ( $action == NULL) {
 }
 
 switch ($action) { 
-/*  REMOVE THIS CASE BEFORE FINAL PRODUCTION ******************
-     case 'hash_passwords':
-          UserDB::hashPasswordsInDB();
-          break;
 
-*****************************************************************/
      case 'home':
           Utility::returnToDashboard();
           break;

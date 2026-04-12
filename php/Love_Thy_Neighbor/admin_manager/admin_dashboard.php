@@ -3,7 +3,7 @@
 <div class="container-fluid px-0 mb-3">
     <div class="row align-items-start">
 
-        <!--User Profile Image-->
+        <!-------------- Admin Profile Image ---------------->
         <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
 
             <?php if ($profilePic == null) { ?>
@@ -19,13 +19,13 @@
 
         </div> 
 
-        <!--User Profile Data such as Name and Business-->
+        <!------------------ Admin Profile Data ----------------->
         <div class="col">
             <h1 class="mt-1"><?php echo $user->getUserName()?></h1>
             <h1 class="mt-2">Site Admin</h1>      
         </div>
 
-        <!--Messages Button blinks if there are unread messages-->
+        <!-- ---------Messages Button blinks if there are unread messages -------->
         <?php if ($unreadMessages == true) { ?>
         <div class="col">
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
@@ -36,7 +36,7 @@
             </form>
         </div>
         <?php } else { ?>
-        <div class="col">
+        <div class="col"> <!-------------- No unread messages button is solid no blinking ------->
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<!--------  Search reports ---------->
+<!--------------------- Search reports ------------------------->
 <fieldset class="m-2 text-center">
     <form action="report_manager/index.php" method="POST">
         <label id="search">Search Reports By UserName:</label>
@@ -66,11 +66,11 @@
     </form>
 </fieldset>
 
+
+<!------------------------------------- User Reports ------------------------------->
 <div class="container-fluid mt-3 px-0">
     <div class="row">
         <div class="col">
-
-            <!------------------ User Reports ---------------->
             <div class="card">
                 <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
                     Reports
@@ -105,5 +105,15 @@
         </div>
     </div>
 </div>
+
+<fieldset class="w-25">
+<p class="mt-3 fs-5">This button will hash the passwords in the DB if the DB was reset and the passwords are plain text</p>
+<div class="mt-1">
+    <form method="POST" action="admin_manager/index.php">
+        <input type="hidden" name="action" value="hash_passwords">
+        <input type="submit" class="btn btn-lg bg-custom-black text-custom-white" value="Hash Passwords">
+    </form>
+</div>
+</fieldset>
 
 <?php require_once ('../view/footer.php'); ?>

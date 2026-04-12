@@ -32,14 +32,7 @@ if (isset($_SESSION['userId'])) {
 
 <?php require_once $header; ?>
 
-<h1><?php echo $sessionDetails ?></h1><br>
-<h1><?php echo $messageWelcome ?></h1><br>
-
-// REMOVE THIS CODE BEFORE FINISHED ////////////////////////////
-<form method="POST" action="user_manager/index.php">
-    <input type="hidden" name="action" value="hash_passwords">
-    <input type="submit" value="Hash Passwords">
-</form>
-///////////////////////////////////////////////////////////////
+<h1 class="text-center mt-3"><?php echo $sessionDetails ?></h1><br>
+<h1 class="text-center"><?php echo $messageWelcome ?></h1><br>
 
 <?php require_once 'view/footer.php'; ?>

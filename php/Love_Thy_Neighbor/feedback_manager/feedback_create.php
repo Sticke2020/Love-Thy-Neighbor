@@ -20,7 +20,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <input type="hidden" name="sender_id" value="<?php echo $senderId ?>">
                 <input type="hidden" name="receiver_id" value="<?php echo $receiverId ?>">
 
-                <!-- Feedback -->
+                <!--------------- Feedback -------------->
                 <div class="mb-3">
                     <label for="body" class="form-label fs-4">Feedback</label>
                     <textarea class="form-control" id="body" name="comment" rows="6" placeholder="Enter your Feedback here" required></textarea>
@@ -35,7 +35,5 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     </div>
 
 </div>
-
-
 
 <?php require_once ('../view/footer.php'); ?>

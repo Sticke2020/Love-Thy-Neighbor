@@ -23,9 +23,6 @@ if ( $action == NULL) {
 
 switch ($action) {
 
-    case 'create_log':
-            
-            break;
 
     default:
           // Borrowed this code from Andy

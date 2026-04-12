@@ -1,4 +1,3 @@
-
 <?php 
 if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/admin_header.php');
@@ -7,34 +6,18 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 } ?>
 
 
- <style>
-        .message-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .message-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-        }
-        .message-item:hover {
-            background-color: #f8f9fa;
-        }
-        .message-item strong {
-            display: block;
-        }
-        
-    </style>
-
 <div class="container my-4">
     <h2 class="mb-4">Messages</h2>
 
     <div class="row">
-        <!-- Left Panel: Inbox -->
+        <!---------------------- Inbox ----------------------->
         <div class="col-md-4">
+
             <div class="card">
                 <div class="card-header bg-custom-blue text-custom-white">
                     <h4 class="mb-0">Inbox</h4>
                 </div>
+
                 <div class="card-body message-list bg-custom-light-yellow">
                     <?php foreach ($inbox as $message) : ?>
                     <form action="message_manager/index.php" method="POST">
@@ -48,12 +31,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     </form>
                     <?php endforeach; ?>
                 </div>
-            </div>
 
+            </div>
+            <!---------------------- Outbox ----------------------->
             <div class="card mt-2">
                 <div class="card-header bg-custom-blue text-custom-white">
                     <h4 class="mb-0">Outbox</h4>
                 </div>
+
                 <div class="card-body message-list bg-custom-light-yellow">
                     <?php foreach ($outbox as $sent) : ?>
                     <form action="message_manager/index.php" method="POST">
@@ -67,17 +52,19 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     </form>
                     <?php endforeach; ?>
                 </div>
+
             </div>
 
         </div>
 
-        <!-- Right Panel: Message Content & Compose -->
+        <!------------------ Message Content and New Message ------------>
         <div class="col-md-8">
+
             <div class="card mb-2">
                 <div class="card-header bg-custom-blue text-custom-white">
                     <h4 class="mb-0">Message Content</h4>
                 </div>
-                <!-- Message Content -->
+                <!-------------- Message Content ---------------->
                 <div class="card-body bg-custom-light-yellow fs-4">
                     <?php
                     if (isset($messageContent)) {
@@ -101,13 +88,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     }
                     ?>
                 </div>
-            </div>
 
+            </div>
             <div class="card mb-2">
+
                 <div class="card-header bg-custom-blue text-custom-white">
                     <h4 class="mb-0">Compose New Message</h4>
                 </div>
-                <!-- Compose New Message -->
+                <!---------- Compose New Message -------------->
                 <div class="card-body bg-custom-light-yellow fs-4">
             
                     <form action="message_manager/index.php" method="POST" class="text-end">
@@ -124,11 +112,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                     <option value="<?php echo htmlspecialchars($userName->getUserName()); ?>">
                                 <?php endforeach; ?>
                             </datalist>
+
                         </div>
+
                         <div class="mb-3 text-start">
                             <label for="messageBody" class="form-label">Message</label>
                             <textarea name="message_body" id="messageBody" class="form-control form-control-lg" rows="5" required></textarea>
                         </div>
+
                         <button type="submit" name="send_message" class="btn btn-lg btn-success">Send Message</button>
                     </form>
 
@@ -137,8 +128,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
     </div>
 
-
 </div>
-
 
 <?php require_once ('../view/footer.php'); ?>

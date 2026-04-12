@@ -1,4 +1,3 @@
-
 <?php 
 if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/admin_header.php');
@@ -14,7 +13,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <div class="card-header bg-primary text-white">
                 Compose New Message
             </div>
-            <!-- Compose New Message -->
+            <!------------------- Compose New Message ------------------>
             <div class="card-body">
         
                 <form action="message_manager/index.php" method="POST">
@@ -32,6 +31,5 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
     </div>
 </div>
-
 
 <?php require_once ('../view/footer.php'); ?>

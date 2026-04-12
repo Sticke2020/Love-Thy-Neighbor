@@ -12,7 +12,21 @@ main {
     border: 4px solid #faffc1;
 }
 
-
+/************ For Messages ***************/
+.message-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.message-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+.message-item:hover {
+    background-color: #f8f9fa;
+}
+.message-item strong {
+    display: block;
+}
 
 /*
 header h1 {

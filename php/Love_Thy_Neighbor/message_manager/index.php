@@ -7,8 +7,6 @@ require_once('../model/BusinessUser.php');
 require_once('../model/User_DB.php');
 require_once('../model/User.php');
 
-
-
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;
     session_name('userSession');
@@ -35,7 +33,7 @@ switch ($action) {
           include('../message_manager/messages.php');
           break;
 
-     case 'message_content':
+     case 'message_content': // For users to display messages they want to read
           $userId = filter_input(INPUT_POST, 'user_id');
           $messageId = filter_input(INPUT_POST,'message_id');
           $folder = filter_input(INPUT_POST, 'folder');
@@ -71,7 +69,6 @@ switch ($action) {
                $senderId = filter_input(INPUT_POST, 'user_id');
                $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
           
-
                if ($messageBody == null || $recipientUserName == null) {
                     $errorMessage = "Invalid data. Check all fields and try again.";
                     include('../errors/error.php');
@@ -82,6 +79,7 @@ switch ($action) {
                }
                else {
                     $recipent = UserDB::getUserByUserName($recipientUserName);
+
                     $message = new Message();
                     $message->setBody($messageBody);
                     $message->setSenderId($senderId);
@@ -114,7 +112,6 @@ switch ($action) {
                }
                else {
                     $message = new Message();
-                    
                     $message->setBody($messageBody);
                     $message->setSenderId($senderId);
                     $message->setReceiverId($receiverId);
@@ -163,6 +160,5 @@ switch ($action) {
           echo "<h3> File:  user_manager/index.php </h3>";
           require_once '../view/footer.php';
 }
-
 
 ?>

@@ -32,8 +32,8 @@ switch ($action) {
           $senderId = filter_input(INPUT_POST, 'sender_id');
           $receiverId = filter_input(INPUT_POST, 'receiver_id');
           $comment = filter_input(INPUT_POST, 'comment');
-          $feedback = new Feedback();
 
+          $feedback = new Feedback();
           $feedback->setSenderId($senderId);
           $feedback->setReceiverId($receiverId);
           $feedback->setComment($comment);
@@ -54,7 +54,6 @@ switch ($action) {
                } else {
                     Utility::returnToDashboard();
                }
-               
           }
           break;
 

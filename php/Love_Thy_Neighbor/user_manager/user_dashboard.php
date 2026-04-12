@@ -27,9 +27,9 @@
             <?php if ($business == null) { ?>
             <?php } else { ?>
                 <?php if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin()) { ?>
-                    <h1 class="mt-3">Representative of <?php echo $business->getName()?></h1>
+                    <h2 class="mt-3">Representative of <?php echo $business->getName()?></h2>
                 <?php } else { ?>
-                    <h1 class="mt-3">Employee of <?php echo $business->getName()?></h1>
+                    <h2 class="mt-3">Employee of <?php echo $business->getName()?></h2>
                 <?php } ?>
             <?php } ?>
             <h3 class="mt-3">City: <?php echo $user->getCity() ?></h3>
@@ -201,10 +201,7 @@
             </div>
         </div>
 
-
     </div>
 </div>
-
-
 
 <?php require_once ('../view/footer.php'); ?>

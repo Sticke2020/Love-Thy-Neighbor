@@ -2,7 +2,7 @@
 <section>
 
 
-
+<!--------------------- User search ------------------->
 <div class="d-flex justify-content-center">
     <form action="admin_manager/index.php" method="POST" class="mb-2 mt-2">
         <label id="search" class="w-100">Search Users By id . :</label>
@@ -29,7 +29,7 @@
 </div>
 
 
-
+<!-------------------------- Table of users ------------------------->
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header bg-custom-blue text-white">
@@ -39,7 +39,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-hover align-middle">
-                    <thead class="table-custom.table">
+                    <thead class="table-dark">
                         <tr>
                             <th>Id</th>
                             <th>User Type</th>
@@ -50,11 +50,8 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        <?php foreach ($users as $user) :
-                            $id = $user->getId();
-                        ?>
+                        <?php foreach ($users as $user) : $id = $user->getId(); ?>
                         <tr>
                             <td><?php echo $id; ?></td>
                             <td><?php echo $user->getUserTypes(); ?></td>
@@ -80,10 +77,10 @@
 
                                 </div>
                             </td>
+
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
         </div>

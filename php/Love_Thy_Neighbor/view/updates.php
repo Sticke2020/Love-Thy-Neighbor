@@ -5,6 +5,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/user_header.php');
 } ?>
 
+<div class="text-center fs-3 mt-3">
     <p>Your changes have been saved</p>
+</div>
 
 <?php require_once '../view/footer.php'; ?>
