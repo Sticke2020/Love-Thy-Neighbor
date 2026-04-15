@@ -8,7 +8,7 @@ docker compose up -d --build
 Open:
 - App: http://localhost:8080/
 - Xdebug info: http://localhost:8080/xdebug_info.php
-- phpMyAdmin: http://localhost:8081/  (user/password: user / password; DB: demo)
+- phpMyAdmin: http://localhost:8081/  (user/password: root / password; root)
 
 ## VS Code debugging
 1) Install "PHP Debug" (by Xdebug)
