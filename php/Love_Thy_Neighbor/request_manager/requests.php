@@ -3,7 +3,7 @@
 if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/admin_header.php');
 } else {
-    require_once ('../view/user_header.php');
+    require_once ('../view/request_header.php');
 } ?>
 
 <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) : ?>
@@ -17,11 +17,22 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     </fieldset>
 <?php endif; ?>
 
+<div class="d-flex justify-content-evenly mt-3">
+    <form action="request_manager/index.php" method="POST">
+        <input type="hidden" name="action" value="unfulfilled_requests">
+        <input type="submit" value="Unfulfilled Requests" class="fs-4 btn btn-lg bg-custom-black text-custom-white custom-border-outset">
+    </form>
+    <form action="request_manager/index.php" method="POST">
+        <input type="hidden" name="action" value="fulfilled_requests">
+        <input type="submit" value="Fulfilled Requests" class="fs-4 btn btn-lg bg-custom-black text-custom-white custom-border-outset">
+    </form>
+</div>
+
 <div class="container-fluid mt-3 px-0">
 
-    <div class="card">
-        <div class="card-header text-center fs-1 bg-custom-light-yellow">
-            Requests
+    <div class="card fs-4 custom-border-outset">
+        <div class="fs-4 card-header text-center bg-custom-blue border-0 text-custom-white">
+            <h3>Requests</h3>
         </div>
 
         <div class="card-body bg-custom-blue">
@@ -29,24 +40,29 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <p class="text-muted">No requests found.</p>
             <?php else : ?>
                 <?php foreach ($requests as $request) : ?>
-                    <div class="card mb-3 bg-custom-gold border custom-border-inset">
+                    <div class="card mb-4 bg-custom-gold border custom-border-inset">
 
-                        <div class="card-header fs-4 row m-3">
-                            <form action="user_manager/index.php" method="POST" class="d-inline-block align-top col-auto">
-                                <input type="hidden" name="action" value="view_user">
-                                <input type="hidden" name="user_id" value="<?php echo $request->getUserId(); ?>">
+                        <div class="card-header d-flex justify-content-between align-items-center fs-4 m-3 mb-1 custom-border-outset">
+                            <h5 class="card-title fs-2 mb-2">Title: <?php echo $request->getTitle(); ?></h5>
 
-                                <button type="submit" style="border: none; background: none; padding: 0;">
-                                    <img src="<?php echo $request->getUserImage(); ?>"
-                                        class="me-2 mb-2 img-thumbnail"
-                                        style="width:100px; height:100px; object-fit:cover;">
-                                </button>
-                            </form>
-                            <p class="col mt-4 fs-4"><?php echo $request->getUserName() ?></p>
+                            <div class="d-flex flex-column align-items-center justify-content-center me-5 mt-1">
+                                <form action="user_manager/index.php" method="POST" class="mb-0">
+                                    <input type="hidden" name="action" value="view_user">
+                                    <input type="hidden" name="user_id" value="<?php echo $request->getUserId(); ?>">
+
+                                    <button type="submit" style="border: none; background: none; padding: 0;">
+                                        <img src="<?php echo $request->getUserImage(); ?>"
+                                            class="me-2 mb-0 img-thumbnail"
+                                            style="width:100px; height:100px; object-fit:cover;">
+                                    </button>
+                                </form>
+                                <p class="fs-4 mb-0 text-center"><?php echo $request->getUserName() ?></p>
+                            </div>
                         </div>
 
-                        <div class="card-body">
-                            <h5 class="card-title fs-2 mb-4">Title: <?php echo $request->getTitle(); ?></h5>
+                        <div class="card-body m-3 mt-1 custom-border-outset">
+
+                            <p class="card-text fs-2"><?php echo $request->getBody(); ?></p>
 
                             <?php if (!empty($request->getImages())) : ?>
                                 <div class="mb-2">
@@ -55,10 +71,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
-
-                            <p class="card-text fs-2"><?php echo $request->getBody(); ?></p>
-
-                            <hr>
 
                             <p class="fs-3"><strong>Request Status:</strong>
                                 <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>

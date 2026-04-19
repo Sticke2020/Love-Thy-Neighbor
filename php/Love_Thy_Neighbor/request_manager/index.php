@@ -73,6 +73,19 @@ switch ($action) {
 
           $userId = filter_input(INPUT_POST, 'user_id');
 
+          if (!$request->getUserId()) {
+               $error = "Something went wrong please try again.";
+               include('../errors/error.php');
+          }
+          else if (strlen($request->getTitle()) > 200) {
+               $error = "Title must be 200 characters or less.";
+               include('../errors/error.php');
+          }
+          else if (strlen($request->getBody()) > 2000) {
+               $error = "Description must be 2,000 characters or less.";
+               include('../errors/error.php');
+          }
+
           try {
                $db = DataBase::getDB();
                $db->beginTransaction();
@@ -104,6 +117,19 @@ switch ($action) {
           $requestId = filter_input(INPUT_POST, 'request_id');
           $title = filter_input(INPUT_POST, 'title');
           $body = filter_input(INPUT_POST, 'body');
+
+          if (!$userId || $requestId) {
+               $error = "Something went wrong please try again.";
+               include('../errors/error.php');
+          }
+          else if (strlen($title()) > 200) {
+               $error = "Title must be 200 characters or less.";
+               include('../errors/error.php');
+          }
+          else if (strlen($body()) > 2000) {
+               $error = "Description must be 2,000 characters or less.";
+               include('../errors/error.php');
+          }
 
           try{
           $db = DataBase::getDB();

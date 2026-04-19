@@ -5,21 +5,21 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/user_header.php');
 } ?>
 
-<div class="container my-4">
-    <h2 class="mb-4">Messages</h2>
+<div class="container-fluid my-4 fs-4">
+    <h1 class="mb-4 text-center">Messages</h1>
 
     <div class="row">
         <!---------------------- Inbox ----------------------->
         <div class="col-md-4">
 
-            <div class="card">
-                <div class="card-header bg-custom-blue text-custom-white">
+            <div class="card custom-border-outset">
+                <div class="card-header bg-custom-blue text-custom-white border-0">
                     <h4 class="mb-0">Inbox</h4>
                 </div>
 
-                <div class="card-body message-list bg-custom-light-yellow">
+                <div class="card-body message-list bg-custom-blue">
                     <?php foreach ($inbox as $message) : ?>
-                    <form action="message_manager/index.php" method="POST">
+                    <form action="message_manager/index.php" method="POST" class="mb-1 custom-border-outset bg-custom-light-yellow">
                         <input type="hidden" name="action" value="message_content">
                         <input type="hidden" name="message_id" value="<?php echo $message->getId() ?>">
                         <input type="hidden" name="user_id" value="<?php echo $userId ?>">
@@ -33,14 +33,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
             </div>
             <!---------------------- Outbox ----------------------->
-            <div class="card mt-2">
-                <div class="card-header bg-custom-blue text-custom-white">
+            <div class="card mt-3 custom-border-outset">
+                <div class="card-header bg-custom-blue text-custom-white border-0">
                     <h4 class="mb-0">Outbox</h4>
                 </div>
 
-                <div class="card-body message-list bg-custom-light-yellow">
+                <div class="card-body message-list bg-custom-blue">
                     <?php foreach ($outbox as $sent) : ?>
-                    <form action="message_manager/index.php" method="POST">
+                    <form action="message_manager/index.php" method="POST" class="mb-1 custom-border-outset bg-custom-light-yellow">
                         <input type="hidden" name="action" value="message_content">
                         <input type="hidden" name="message_id" value="<?php echo $sent->getId() ?>">
                         <input type="hidden" name="user_id" value="<?php echo $userId ?>">
@@ -59,7 +59,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         <!------------------ Message Content and New Message ------------>
         <div class="col-md-8">
 
-            <div class="card mb-2">
+            <div class="card mb-3 custom-border-outset">
                 <div class="card-header bg-custom-blue text-custom-white">
                     <h4 class="mb-0">Message Content</h4>
                 </div>
@@ -79,7 +79,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                             <input type="hidden" name="action" value="delete_message">
                             <input type="hidden" name="user_id" value="<?php echo $userId ?>">
                             <input type="hidden" name="message_id" value="<?php echo $messageId ?>">
-                            <button type="submit" name="delete_message" class="btn btn-lg bg-custom-red text-custom-white">Delete Message</button>
+                            <button type="submit" name="delete_message" class="fs-4 btn btn-lg bg-custom-red text-custom-white custom-border-outset">Delete Message</button>
                         </form>
                     <?php
                     } else {
@@ -89,7 +89,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 </div>
 
             </div>
-            <div class="card mb-2">
+            <div class="card mb-2 custom-border-outset">
 
                 <div class="card-header bg-custom-blue text-custom-white">
                     <h4 class="mb-0">Compose New Message</h4>
@@ -104,7 +104,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                             <label for="recipient" class="form-label">Recipient</label>
                             <input type="hidden" name="action" value="send_message">
                             <input type="text" name="recipient_username" placeholder="Start typing a username"
-                                list="userList" id="recipient" class="form-control form-control-lg" required>
+                                list="userList" id="recipient" class="form-control form-control-lg border-2 border-black" required>
 
                             <datalist id="userList">
                                 <?php foreach ($userNames as $userName): ?>
@@ -116,10 +116,10 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
                         <div class="mb-3 text-start">
                             <label for="messageBody" class="form-label">Message</label>
-                            <textarea name="message_body" id="messageBody" class="form-control form-control-lg" rows="5" required></textarea>
+                            <textarea name="message_body" id="messageBody" class="form-control form-control-lg border-2 border-black" rows="5" required></textarea>
                         </div>
 
-                        <button type="submit" name="send_message" class="btn btn-lg btn-success">Send Message</button>
+                        <button type="submit" name="send_message" class="mt-4 fs-4 btn btn-lg bg-custom-black text-custom-white custom-border-outset w-100">Send Message</button>
                     </form>
 
                 </div>

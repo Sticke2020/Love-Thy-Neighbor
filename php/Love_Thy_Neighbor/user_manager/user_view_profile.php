@@ -14,9 +14,9 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
 
             <?php if ($profilePic == null) { ?>
-                <img class="img-fluid" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo urlencode($user->getUserName()) ?>">
+                <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo urlencode($user->getUserName()) ?>">
             <?php } else { ?>
-                <img class="img-fluid" src="<?php echo $profilePic->getFileUrl(); ?>">
+                <img class="img-fluid custom-border-outset" src="<?php echo $profilePic->getFileUrl(); ?>">
             <?php } ?>
             <!--This form is to keep uniformity with the dashboard layout since the image size is related
                 to the button size, there may be a better way to fix this later, the image doesnt display 
@@ -49,7 +49,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="message_user">
                 <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
-                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3" type="submit">Message <?php echo $user->getUserName() ?></button> 
+                <button class="fs-4 btn bg-custom-blue text-custom-white btn-lg custom-border-outset" type="submit">Message <?php echo $user->getUserName() ?></button> 
             </form>
         </div>
 
@@ -61,8 +61,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         <div class="col" style="max-width: 50%;">
 
             <!----------------- User Requests Card ------------->
-            <div class="card">
-                <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
+            <div class="card custom-border-outset">
+                <div class="card-header text-center fs-4 bg-custom-blue text-custom-white border-0">
                     <?php echo $user->getUserName() . "'s Requests"; ?>
                 </div>
                 <div class="card-body bg-custom-blue">
@@ -73,7 +73,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                         <?php foreach ($requests as $request) : ?>
                             <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                 <div class="card-body">
-                                    <h5 class="card-title fs-4"><?php echo $request->getTitle(); ?></h5>
+                                    <h5 class="card-title fs-4"><strong><?php echo $request->getTitle(); ?></strong></h5>
 
                                     <?php if (!empty($request->getImages())) : ?>
                                         <div class="mb-2">
@@ -85,7 +85,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
                                     <p class="card-text fs-4"><?php echo $request->getBody(); ?></p>
 
-                                    <p class="fs-4"><strong>Request Status:</strong>
+                                    <p class="fs-5"><strong>Request Status:</strong>
                                         <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                                     </p>
 
@@ -95,7 +95,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                             <input type="hidden" name="action" value="fulfill_request">
                                             <input type="hidden" name="request_title" value="<?php echo $request->getTitle(); ?>">
                                             <input type="hidden" name="receiver_id" value="<?php echo $userId ?>"> 
-                                            <button class="btn btn-success btn-lg" type="submit">Fulfill Request</button>
+                                            <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4" type="submit">Fulfill Request</button>
                                         </form>
                                         
                                         <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) : ?>
@@ -129,16 +129,16 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
         <div class="col">
             <!-----------------User Feedback------------------>
-            <div class="card">
-                <div class="card-header text-center fs-4 bg-custom-black text-custom-white">
+            <div class="card custom-border-outset">
+                <div class="card-header text-center fs-4 bg-custom-blue text-custom-white border-0">
                     <?php echo $user->getUserName() . "'s Feedback"; ?>
                 </div>
-                <div class="card-header text-center fs-4 bg-custom-black">
+                <div class="card-header text-center fs-4 bg-custom-blue border-0">
                     <form action="feedback_manager/index.php" method="POST">
                         <input type="hidden" name="action" value="leave_feedback">
                         <input type="hidden" name="sender_id" value="<?php echo $_SESSION['userId'] ?>">
                         <input type="hidden" name="receiver_id" value="<?php echo $userId ?>">
-                        <input type="submit" class="btn bg-custom-white w-100 mt-2 fs-4" value="Leave Feedback">
+                        <input type="submit" class="btn bg-custom-black text-custom-white w-100 mt-2 fs-4 custom-border-outset" value="Leave Feedback">
                     </form>
                 </div>
                 <div class="card-body bg-custom-blue">
@@ -148,7 +148,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                         <?php foreach ($feedback as $comment) : ?>
                             <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                 <div class="card-body">
-                                    <h5 class="card-title fs-4">From: <?php echo $comment->getSender(); ?></h5>
+                                    <h5 class="card-title fs-4"><strong>From:</strong> <?php echo $comment->getSender(); ?></h5>
                                     
                                     <form action="user_manager/index.php" method="POST" class="d-inline-block align-top">
                                         <input type="hidden" name="action" value="view_user">

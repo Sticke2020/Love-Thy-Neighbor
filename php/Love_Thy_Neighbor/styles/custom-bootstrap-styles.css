@@ -39,10 +39,29 @@
 
 
 /* border style */
+/*
 .custom-border-inset {
   border-style: inset !important;
   border-width: 4px !important;
   border-color: #faffc1 !important;
+}
+
+.custom-border-outset {
+  border-style: outset !important;
+  border-width: 4px !important;
+  border-color: #faffc1 !important;
+}
+*/
+.custom-border-outset {
+  border-style: outset !important;
+  border-width: 3px !important;
+  border-color: #8ebec0 !important;
+}
+
+.custom-border-inset {
+  border-style: inset !important;
+  border-width: 4px !important;
+  border-color: #8ebec0 !important;
 }
 
 
@@ -68,7 +87,7 @@
 }
 
 .table-custom.table-hover > tbody > tr:hover > td {
-  background-color: #ffffff !important;
+  background-color: #faffc1 !important;
 }
 
 

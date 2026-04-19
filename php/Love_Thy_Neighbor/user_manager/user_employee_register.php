@@ -7,9 +7,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-            <div class="card">
-                <div class="card-header bg-custom-blue text-custom-white">
-                    <h4 class="mb-0">Register Employee</h4>
+            <div class="card custom-border-outset shadow">
+                <div class="card-header bg-custom-blue text-custom-white text-center">
+                    <h3 class="mb-0">Register Employee</h3>
                 </div>
 
                 <div class="card-body bg-custom-light-yellow">
@@ -83,7 +83,7 @@
                             <input type="text" name="business_code" class="form-control form-control-lg border-2 border-black" required>
                         </div>
 
-                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white fs-4 w-100 mt-5">
+                        <button type="submit" class="btn btn-lg bg-custom-black custom-border-outset text-custom-white fs-4 w-100 mt-5">
                             Register Employee
                         </button>
 

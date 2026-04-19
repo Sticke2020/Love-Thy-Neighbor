@@ -1,6 +1,6 @@
 <?php
 
-require_once('../model/Database.php');
+
 require_once('../model/User_DB.php');
 require_once('../model/User.php');
 require_once('../model/Request.php');
@@ -16,7 +16,6 @@ require_once('../model/Message.php');
 require_once('../model/Message_DB.php');
 require_once('../model/Report.php');
 require_once('../model/Report_DB.php');
-require_once('../model/Utility.php');
 
 class Utility {
 

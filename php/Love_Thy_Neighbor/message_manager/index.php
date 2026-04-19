@@ -64,7 +64,7 @@ switch ($action) {
           $sentMessages = null;
 
           if (isset($recipientUserName)) {
-               $recipientUserName = filter_input(INPUT_POST, 'recipient_username');
+               //$recipientUserName = filter_input(INPUT_POST, 'recipient_username');
                $messageBody = filter_input(INPUT_POST, 'message_body');
                $senderId = filter_input(INPUT_POST, 'user_id');
                $outbox = MessageDB::getOutboxMessagesByUserId($senderId);
@@ -77,13 +77,17 @@ switch ($action) {
                     $errorMessage = "Username is invalid, Username must be spelled exactly correct, Please try again";
                     include('../errors/error.php');
                }
+               else if (strlen($messageBody) > 2000) {
+                    $errorMessage = "Message must be 2000 characters or less.";
+                    include('../errors/error.php');
+               }
                else {
-                    $recipent = UserDB::getUserByUserName($recipientUserName);
+                    $recipient = UserDB::getUserByUserName($recipientUserName);
 
                     $message = new Message();
                     $message->setBody($messageBody);
                     $message->setSenderId($senderId);
-                    $message->setReceiverId($recipent->getId());
+                    $message->setReceiverId($recipient->getId());
                     $message->setIsRead(0);
 
                     try {
@@ -106,8 +110,12 @@ switch ($action) {
                $senderId = $_SESSION['userId'];
                $receiverId = filter_input(INPUT_POST, 'user_id');
 
-               if ($messageBody == null) {
+               if (!$messageBody || !$senderId || !$receiverId) {
                     $errorMessage = "Invalid data. Check all fields and try again.";
+                    include('../errors/error.php');
+               }
+               else if (strlen($messageBody) > 2000) {
+                    $errorMessage = "Message must be 2000 characters or less.";
                     include('../errors/error.php');
                }
                else {

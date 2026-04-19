@@ -5,15 +5,15 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     require_once ('../view/user_header.php');
 } ?>
 
-<h1 class="mt-2 text-center">Leave Feedback</h1>
+<h1 class="mt-4 text-center">Leave Feedback</h1>
 
 <div class="container mt-4">
 
-    <div class="card border-primary mb-4">
-        <div class="card-header fs-4">
+    <div class="card custom-border-outset mb-4 fs-4">
+        <div class="card-header bg-custom-blue">
             Create a New Feedback Message
         </div>
-        <div class="card-body">
+        <div class="card-body bg-custom-light-yellow">
             <form action="feedback_manager/index.php" method="POST">
 
                 <input type="hidden" name="action" value="create_feedback">
@@ -23,11 +23,11 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <!--------------- Feedback -------------->
                 <div class="mb-3">
                     <label for="body" class="form-label fs-4">Feedback</label>
-                    <textarea class="form-control" id="body" name="comment" rows="6" placeholder="Enter your Feedback here" required></textarea>
+                    <textarea class="form-control form-control-lg border-2 border-black" id="body" name="comment" rows="6" placeholder="Enter your Feedback here" required></textarea>
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary fs-5">Submit Feedback</button>
+                    <button type="submit" class="mt-4 btn btn-lg bg-custom-black custom-border-outset text-custom-white w-100 fs-4">Submit Feedback</button>
                 </div>
 
             </form>

@@ -5,9 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-9 col-lg-9">
 
-            <div class="card shadow">
+            <div class="card custom-border-outset shadow">
                 <div class="card-header bg-custom-blue text-custom-white text-center">
-                    <h4 class="mb-0">Please Log In</h4>
+                    <h3 class="mb-0">Please Log In</h3>
                 </div>
 
                 <div class="card-body bg-custom-light-yellow">
@@ -40,7 +40,7 @@
                                    required>
                         </div>
 
-                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 fs-4 mt-5">
+                        <button type="submit" class="btn btn-lg bg-custom-black custom-border-outset text-custom-white w-100 fs-4 mt-5">
                             Login
                         </button>
 

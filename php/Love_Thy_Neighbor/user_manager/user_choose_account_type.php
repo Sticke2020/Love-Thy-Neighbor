@@ -7,9 +7,9 @@
     <div class="row justify-content-center">
         <div class="col-md-9">
 
-            <div class="card">
+            <div class="card custom-border-outset shadow">
                 <div class="card-header bg-custom-blue text-custom-white text-center">
-                    <h4 class="mb-0">Choose Account Type</h4>
+                    <h3 class="mb-0">Choose Account Type</h3>
                 </div>
 
                 <div class="card-body bg-custom-light-yellow">
@@ -66,7 +66,7 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 fs-4">
+                        <button type="submit" class="btn btn-lg bg-custom-black custom-border-outset text-custom-white w-100 fs-4">
                             Next
                         </button>
 

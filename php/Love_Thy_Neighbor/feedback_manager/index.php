@@ -38,12 +38,12 @@ switch ($action) {
           $feedback->setReceiverId($receiverId);
           $feedback->setComment($comment);
 
-          if ($feedback->getSenderId() == null  || $feedback->getReceiverId() == null || $feedback->getComment() == null) {
+          if (!$feedback->getSenderId()  || !$feedback->getReceiverId() || !$feedback->getComment()) {
                $errorMessage = "Invalid data, please try again.";
                include('../errors/error.php');
           }
-          else if (strlen($feedback->getComment()) > 16000) {
-               $errorMessage = "Feedback must be less that 16,000 characters long";
+          else if (strlen($feedback->getComment()) > 2000) {
+               $errorMessage = "Feedback must be less that 2,000 characters long";
                include('../errors/error.php');
           }
           else {

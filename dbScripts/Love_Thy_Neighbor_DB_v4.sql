@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS feedback;
 CREATE TABLE `user` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `user_type_id` integer NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `state` varchar(50) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(2) NOT NULL,
   `zip` varchar(20) NOT NULL,
-  `email_address` varchar(255) NOT NULL,
+  `email_address` varchar(120) NOT NULL,
   `phone` varchar(20),
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password` varchar(30) NOT NULL,
   `profile_image_id` bigint,
   `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` DATETIME
@@ -67,9 +67,9 @@ CREATE TABLE `business` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(150) NOT NULL,
   `phone` varchar(20) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `state` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(2) NOT NULL,
   `zip` varchar(20) NOT NULL,
   `description` text NOT NULL,
   `verification_code` varchar(50) NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE `action_type` (
 -- Create report_type table
 CREATE TABLE `report_type` (
   `id` int AUTO_INCREMENT PRIMARY KEY,
-  `description` varchar(255)
+  `description` varchar(30)
 );
 
 -- Create business_user table
