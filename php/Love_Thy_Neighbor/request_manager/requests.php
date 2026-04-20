@@ -43,31 +43,31 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     <div class="card mb-4 bg-custom-gold border custom-border-inset">
 
                         <div class="card-header d-flex justify-content-between align-items-center fs-4 m-3 mb-1 custom-border-outset">
-                            <h5 class="card-title fs-2 mb-2">Title: <?php echo $request->getTitle(); ?></h5>
+                            <h5 class="card-title fs-2 mb-2">Title: <?php echo htmlspecialchars($request->getTitle()); ?></h5>
 
                             <div class="d-flex flex-column align-items-center justify-content-center me-5 mt-1">
                                 <form action="user_manager/index.php" method="POST" class="mb-0">
                                     <input type="hidden" name="action" value="view_user">
-                                    <input type="hidden" name="user_id" value="<?php echo $request->getUserId(); ?>">
+                                    <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($request->getUserId()); ?>">
 
                                     <button type="submit" style="border: none; background: none; padding: 0;">
-                                        <img src="<?php echo $request->getUserImage(); ?>"
+                                        <img src="<?php echo htmlspecialchars($request->getUserImage()); ?>"
                                             class="me-2 mb-0 img-thumbnail"
                                             style="width:100px; height:100px; object-fit:cover;">
                                     </button>
                                 </form>
-                                <p class="fs-4 mb-0 text-center"><?php echo $request->getUserName() ?></p>
+                                <p class="fs-4 mb-0 text-center"><?php echo htmlspecialchars($request->getUserName()); ?></p>
                             </div>
                         </div>
 
                         <div class="card-body m-3 mt-1 custom-border-outset">
 
-                            <p class="card-text fs-2"><?php echo $request->getBody(); ?></p>
+                            <p class="card-text fs-2"><?php echo htmlspecialchars($request->getBody()); ?></p>
 
                             <?php if (!empty($request->getImages())) : ?>
                                 <div class="mb-2">
                                     <?php foreach ($request->getImages() as $image): ?>
-                                        <img src="<?php echo $image->getFileUrl(); ?>" width="200" class="me-2 mb-2 img-thumbnail">
+                                        <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" width="200" class="me-2 mb-2 img-thumbnail">
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
@@ -77,8 +77,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                             </p>
 
                             <p class="fs-4"><strong>Date Created:</strong>
-                                 <?php echo $request->getDateCreated(); ?> 
-                                    <strong>Date Updated:</strong> <?php echo $request->getDateUpdated(); ?>
+                                 <?php echo htmlspecialchars($request->getDateCreated()); ?> 
+                                    <strong>Date Updated:</strong> <?php echo htmlspecialchars($request->getDateUpdated()); ?>
                             </p> 
 
                         </div>

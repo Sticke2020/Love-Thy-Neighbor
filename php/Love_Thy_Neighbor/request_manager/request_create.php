@@ -16,7 +16,7 @@
             <form action="request_manager/index.php" method="POST" enctype="multipart/form-data">
 
                 <input type="hidden" name="action" value="create_request">
-                <input type="hidden" name="user_id" value="<?php echo $userId ?>">
+                <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>">
 
                 <!---------- Title / Headline ---------->
                 <div class="mb-3">

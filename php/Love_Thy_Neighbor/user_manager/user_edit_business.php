@@ -112,7 +112,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <div class="card-body bg-custom-light-yellow">
                     <form action="business_manager/index.php" method="post">
                         <input type="hidden" name="action" value="update_business">
-                        <input type="hidden" name="business_id" value="<?= $business->getId(); ?>">
+                        <input type="hidden" name="business_id" value="<?= htmlspecialchars($business->getId()); ?>">
 
                         <div class="mb-3">
                             <label class="form-label fs-4">Business Id</label>
@@ -186,8 +186,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     <?php foreach ($employees as $employee) : ?>
                     <form action="business_manager/index.php" method="post" class="mb-4">
                         <input type="hidden" name="action" value="remove_employee">
-                        <input type="hidden" name="employee_id" value="<?php echo $employee->getUserId() ?>">
-                        <input type="hidden" name="business_id" value="<?php echo $employee->getBusinessId() ?>">
+                        <input type="hidden" name="employee_id" value="<?php echo htmlspecialchars($employee->getUserId()); ?>">
+                        <input type="hidden" name="business_id" value="<?php echo htmlspecialchars($employee->getBusinessId()); ?>">
 
                         <div>
                             <div class="mb-3">
@@ -215,7 +215,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <div class="card-body bg-custom-light-yellow">
                     <form action="user_manager/index.php" method="post">
                         <input type="hidden" name="action" value="change_password">
-                        <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
 
                         <div class="mb-3">
                             <label class="form-label fs-4">Current Password</label>
@@ -248,7 +248,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <div class="card-body bg-custom-light-yellow">
                     <form action="user_manager/index.php" method="post">
                         <input type="hidden" name="action" value="delete_account">
-                        <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
 
                         <div class="mb-3">
                             <label class="form-label fs-4">Enter Password</label>

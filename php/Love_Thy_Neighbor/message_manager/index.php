@@ -72,14 +72,17 @@ switch ($action) {
                if ($messageBody == null || $recipientUserName == null) {
                     $errorMessage = "Invalid data. Check all fields and try again.";
                     include('../errors/error.php');
+                    exit;
                }
                else if (!UserDB::userNameExists($recipientUserName)) {
                     $errorMessage = "Username is invalid, Username must be spelled exactly correct, Please try again";
                     include('../errors/error.php');
+                    exit;
                }
                else if (strlen($messageBody) > 2000) {
                     $errorMessage = "Message must be 2000 characters or less.";
                     include('../errors/error.php');
+                    exit;
                }
                else {
                     $recipient = UserDB::getUserByUserName($recipientUserName);
@@ -96,6 +99,7 @@ switch ($action) {
                     catch (Exception $e) {
                          $error = "Something went wrong while sending your message. Please try again at another time.";
                          include('../errors/error.php');
+                         exit;
                     }
                     $userId = $senderId;
                     $inbox = MessageDB::getInboxMessagesByUserId($senderId);
@@ -103,6 +107,7 @@ switch ($action) {
                     $userNames = UserDB::getUserNames();
 
                     include('../message_manager/messages.php');
+                    exit;
                }
           }
           else if (!isset($recipientUserName)) {
@@ -113,10 +118,12 @@ switch ($action) {
                if (!$messageBody || !$senderId || !$receiverId) {
                     $errorMessage = "Invalid data. Check all fields and try again.";
                     include('../errors/error.php');
+                    exit;
                }
                else if (strlen($messageBody) > 2000) {
                     $errorMessage = "Message must be 2000 characters or less.";
                     include('../errors/error.php');
+                    exit;
                }
                else {
                     $message = new Message();
@@ -130,6 +137,7 @@ switch ($action) {
                     catch (Exception $e) {
                          $error = "Something went wrong while sending your message. Please try again at another time.";
                          include('../errors/error.php');
+                         exit;
                     }
 
                     $userId = $senderId;

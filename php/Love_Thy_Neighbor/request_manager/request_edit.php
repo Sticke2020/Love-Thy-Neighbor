@@ -22,7 +22,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <form action="request_manager/index.php" method="POST" enctype="multipart/form-data">
 
                 <input type="hidden" name="action" value="update_request">
-                <input type="hidden" name="request_id" value="<?php echo $request->getId(); ?>">
+                <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
 
                 <!-------------- Title / Headline --------->
                 <div class="mb-3">
@@ -52,12 +52,12 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     <div class="row mb-3">
                         <?php foreach ($request->getImages() as $image): ?>
                             <div class="col-md-3 mb-3 text-center">
-                                <img src="<?php echo $image->getFileUrl(); ?>" class="img-fluid rounded mb-2">
+                                <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" class="img-fluid rounded mb-2">
 
                                 <div class="d-flex justify-content-center align-items-center gap-1">
                                     <input class="form-check-input me-1 fs-4 border-2 border-black" type="checkbox" name="delete_images[]" 
-                                           value="<?php echo $image->getId(); ?>" id="delete-<?php echo $image->getId(); ?>">
-                                    <label class="form-check-label fs-4" for="delete-<?php echo $image->getId(); ?>">Delete</label>
+                                           value="<?php echo htmlspecialchars($image->getId()); ?>" id="delete-<?php echo htmlspecialchars($image->getId()); ?>">
+                                    <label class="form-check-label fs-4" for="delete-<?php echo htmlspecialchars($image->getId()); ?>">Delete</label>
                                 </div>
 
                             </div>

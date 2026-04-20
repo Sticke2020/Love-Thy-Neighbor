@@ -27,13 +27,7 @@ public static function getRequests() {
             LEFT JOIN request_image ri ON r.id = ri.request_id
             LEFT JOIN image ri_img ON ri.image_id = ri_img.id
             LEFT JOIN user u ON u.id = r.user_id
-            -- Gets one user image not linked to the request
-            LEFT JOIN image ui ON ui.user_id = r.user_id 
-                AND ui.id NOT IN (
-                    SELECT image_id 
-                    FROM request_image 
-                    WHERE request_id = r.id
-                )
+            LEFT JOIN image ui ON ui.id = u.profile_image_id
             ORDER BY r.date_created DESC';
 
     $statement = $db->prepare($query);

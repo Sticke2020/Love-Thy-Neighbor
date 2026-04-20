@@ -78,17 +78,41 @@ public static function insertImage($image) {
 }
 // Uploads the user profile pic to the image server and stores the image info in the DB
 public static function uploadProfileImage($uploadDirectory, $userId) {
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'avif'];
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/avif'];
 
     // Checks if the file uploaded sucessfully (to a temporary folder) without errors
     // In this case image contains attributes for the Image being uploaded like name, size, error and type
     // error contains the upload status code 0 = success, anything else is some sort of error
     if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
+ 
+        // The temporary file before it is stored on the server
+        $fileTmp = $_FILES['image']['tmp_name'];
 
         // Gets the filesize in bytes
         $fileSize = $_FILES['image']['size'];
 
+        // Limits the image size
+        if ($fileSize > 2 * 1024 *1024) {
+            throw new Exception("File Too Large (Max 2MB).");
+        }
+
         // Gets the file extension
-        $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+        // checks extension agains array of allowed extensions
+        if (!in_array($extension, $allowedExtensions)) {
+            throw new Exception("Invalid File Type");
+        }
+        
+        // Validates the actual file type and not just the extension
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($finfo, $fileTmp);
+        finfo_close($finfo);
+
+        if (!in_array($mimeType, $allowedMimeTypes)) {
+            throw new Exception("Invalid File Type");
+        }
 
         // Creates a unique 16 byte filename to prevent naming conflicts
         $name =  bin2hex(random_bytes(16))  . '.' . $extension;
@@ -134,6 +158,8 @@ public static function insertRequestImage($imageId, $requestId) {
 
 // For uploading 1 or more images for user requests
 public static function uploadRequestImages($requestId, $userId) {
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'avif'];
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/avif'];
 
     // Location on the server where images will be stored
     $uploadDirectory = '/var/www/uploads/';
@@ -149,37 +175,60 @@ public static function uploadRequestImages($requestId, $userId) {
         for ($i = 0; $i  < $totalFiles; $i++) {
 
             // Checks if file at index $i was uploaded without errors
-            if ($_FILES['images']['error'][$i] === UPLOAD_ERR_OK) {
+            if ($_FILES['images']['error'][$i] !== UPLOAD_ERR_OK) {
+                throw new Exception("Error Uploading File At Index $i");
+            }
 
-                // Gets the file size
-                $fileSize = $_FILES['images']['size'][$i];
+            // The temporary file before it is stored on the server
+            $tmpFile  = $_FILES['images']['tmp_name'][$i];
 
-                // Gets the file extension
-                $extension = pathinfo($_FILES['images']['name'][$i], PATHINFO_EXTENSION);
+            // Gets the file size
+            $fileSize = $_FILES['images']['size'][$i];
 
-                // Creates a unique 16 byte name for the file
-                $name =  bin2hex(random_bytes(16))  . '.' . $extension;
+            // Validate file size
+            if ($fileSize > 2 * 1024 * 1024) {
+                throw new Exception("File Too Large At Index $i (Max 2MB).");
+            }
 
-                // Location the file will be stored on the image server
-                $destination = $uploadDirectory . $name;
+            // Gets the file extension
+            $extension = strtolower(pathinfo($_FILES['images']['name'][$i], PATHINFO_EXTENSION));
 
-                // url used by browser to display the image
-                $fileUrl = 'http://localhost:8082/uploads/' . $name;
+            // checks extension agains array of allowed extensions
+            if (!in_array($extension, $allowedExtensions)) {
+                throw new Exception("Invalid File Type");
+            }
 
-                // moves the file at index $i from temp storage to final destination on the image server
-                if (move_uploaded_file($_FILES['images']['tmp_name'][$i], $destination)) {
-                    $image = new Image();
+            // verify the actual file type
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $tmpFile);
+            finfo_close($finfo);
 
-                    $image->setRequestId($requestId);
-                    $image->setFileName($name);
-                    $image->setFileUrl($fileUrl);
-                    $image->setUserId($userId);
-                    $image->setFileSizeBytes($fileSize);
+            if (!in_array($mimeType, $allowedMimeTypes)) {
+                throw new Exception("Invalid File Type At Index $i");
+            }
 
-                    // Image Id is returned by insertImage method
-                    $imageId = ImageDB::insertImage($image);
-                    ImageDB::insertRequestImage($imageId, $requestId);
-                }
+            // Creates a unique 16 byte name for the file
+            $name =  bin2hex(random_bytes(16))  . '.' . $extension;
+
+            // Location the file will be stored on the image server
+            $destination = $uploadDirectory . $name;
+
+            // url used by browser to display the image
+            $fileUrl = 'http://localhost:8082/uploads/' . $name;
+
+            // moves the file at index $i from temp storage to final destination on the image server
+            if (move_uploaded_file($_FILES['images']['tmp_name'][$i], $destination)) {
+                $image = new Image();
+
+                $image->setRequestId($requestId);
+                $image->setFileName($name);
+                $image->setFileUrl($fileUrl);
+                $image->setUserId($userId);
+                $image->setFileSizeBytes($fileSize);
+
+                // Image Id is returned by insertImage method
+                $imageId = ImageDB::insertImage($image);
+                ImageDB::insertRequestImage($imageId, $requestId);
             }
         }
     }

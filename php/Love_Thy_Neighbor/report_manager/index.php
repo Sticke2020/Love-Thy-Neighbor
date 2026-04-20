@@ -47,10 +47,12 @@ switch ($action) {
             if (!$reportTypeId || !$reportBody || !$userId) {
                 $errorMessage = "Something went wrong, Please try again.";
                 include('../errors/error.php');
+                exit;
             }
             else if ($reportBody > 2000) {
                 $errorMessage = "Report must be 2,000 characters or less.";
                 include('../errors/error.php');
+                exit;
             }
 
             ReportDB::createReport($report);

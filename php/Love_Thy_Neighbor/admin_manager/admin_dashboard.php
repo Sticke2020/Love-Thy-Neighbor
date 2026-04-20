@@ -7,9 +7,9 @@
         <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
 
             <?php if ($profilePic == null) { ?>
-                <img class="img-fluid" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo urlencode($user->getUserName())?>">
+                <img class="img-fluid" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
             <?php } else { ?>
-                <img class="img-fluid" src="<?php echo $profilePic->getFileUrl(); ?>">
+                <img class="img-fluid" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
             <?php } ?>
 
             <form action="image_manager/index.php" method="POST">
@@ -21,7 +21,7 @@
 
         <!------------------ Admin Profile Data ----------------->
         <div class="col">
-            <h1 class="mt-1"><?php echo $user->getUserName()?></h1>
+            <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
             <h1 class="mt-2">Site Admin</h1>      
         </div>
 
@@ -30,7 +30,7 @@
         <div class="col">
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="messages">
-                <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
                 <button class="btn text-custom-white btn-lg border-3"
                     id="inbox_button_blink" type="submit">Check Your Messages</button> 
             </form>
@@ -39,7 +39,7 @@
         <div class="col"> <!-------------- No unread messages button is solid no blinking ------->
             <form action="message_manager/index.php" method="POST" class="text-end m-5">
                 <input type="hidden" name="action" value="messages">
-                <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
                 <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3"
                          type="submit">Check Your Messages</button> 
             </form>
@@ -82,17 +82,17 @@
                         <?php foreach ($reports as $report) : ?>
                             <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                 <div class="card-body">
-                                    <h5 class="card-title fs-4">UserName: <?php echo $report->getUserName(); ?></h5>
+                                    <h5 class="card-title fs-4">UserName: <?php echo htmlspecialchars($report->getUserName()); ?></h5>
                                     <p class="fs-5"><strong>Report Type:</strong>
-                                        <?php echo $report->getReportTypeId() . " " . $report->getReportTypes(); ?>
+                                        <?php echo htmlspecialchars($report->getReportTypeId()) . " " . htmlspecialchars($report->getReportTypes()); ?>
                                     </p>
-                                    <p class="card-text fs-4"><?php echo $report->getBody(); ?></p>
+                                    <p class="card-text fs-4"><?php echo htmlspecialchars($report->getBody()); ?></p>
                                     <p class="fs-5"><strong>Date Created:</strong>
-                                        <?php echo $report->getDateCreated(); ?>
+                                        <?php echo htmlspecialchars($report->getDateCreated()); ?>
                                     </p>
                                     <form action="report_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="delete_report" />
-                                        <input type="hidden" name="report_id" value="<?php echo $report->getId() ?>">
+                                        <input type="hidden" name="report_id" value="<?php echo htmlspecialchars($report->getId()); ?>">
                                         <button class="btn text-custom-white btn-lg bg-custom-red border-3"
                                             type="submit">Delete Report</button>
                                     </form>

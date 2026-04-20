@@ -42,21 +42,48 @@ switch ($action) {
         $business->setDescription(filter_input(INPUT_POST, 'business_description'));
         $business->setVerificationCode(filter_input(INPUT_POST, 'business_code'));
         
-        if ($business->getID() == null || $business->getName() == null || $business->getPhone() == null ||
-            $business->getAddress() == null || $business->getCity() == null ||
-            $business->getState() == null || $business->getZip() == null || $business->getDescription() == null ||
-            $business->getVerificationCode() == null) {
+        if (!$business->getID() || !$business->getName() || !$business->getPhone() ||
+            !$business->getAddress() || !$business->getCity() || !$business->getState() || 
+            !$business->getZip() || !$business->getDescription() || !$business->getVerificationCode()) {
             $error = "Invalid customer data. Check all fields and try again.";
             include('../errors/error.php');
+            exit;
         }
         else if (strlen(trim($business->getState())) !== 2) {
             $error = "State must be a 2 letters like AZ or CA";
             include('../errors/error.php');
+            exit;
+        }
+        else if (strlen($business->getName()) > 150) {
+            $error = "Business Name must be 150 characters or less.";
+            include('../errors/error.php');
+            exit;
+        }
+        else if (strlen($business->getCity()) >= 50) {
+            $error = "City must be less than 50 characters.";
+            include('../errors/error.php');
+            exit;
+        }
+        else if (strlen(trim($business->getState())) > 2) {
+            $error = "State must be 2 characters like AZ or CA.";
+            include('../errors/error.php');
+            exit;
+        }
+        else if (strlen(trim($business->getZip())) > 10) {
+            $error = "Postal Code must be 10 digits or less.";
+            include('../errors/error.php');
+            exit;
+        }
+        else if (strlen($business->getAddress()) > 100) {
+            $error = "Business Address must be 100 characters or less.";
+            include('../errors/error.php');
+            exit;
         }
         else if (empty($business->getPhone()) || (int)strlen($business->getPhone()) < 10) {
             $error = "Phone number must be 10 digits\n". 
                         "Invalid phone number";
             include('../errors/error.php');
+            exit;
         }
         else if (!empty($business->getPhone()) && (int)strlen($business->getPhone()) >= 10) {
             $phone = $business->getPhone();
@@ -66,6 +93,7 @@ switch ($action) {
                 $error = "Phone number must be 10 digits\n". 
                     "Invalid phone number";
                 include('../errors/error.php');
+                exit;
             }
             else if ((int)strlen($phoneNumbersOnly) == 10) {
                 $areaCode = substr($phoneNumbersOnly, 0 , 3);
@@ -77,6 +105,7 @@ switch ($action) {
                 BusinessDB::updateBusiness($business);
             
                 include('../view/updates.php');
+                exit;
             }
         }
         else {

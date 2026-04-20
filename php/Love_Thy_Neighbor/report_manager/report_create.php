@@ -14,7 +14,7 @@
         <div class="card-body bg-custom-light-yellow">
             <form action="report_manager/index.php" method="post">
                 <input type="hidden" name="action" value="create_report">
-                <input type="hidden" name="user_id" value="<?php echo $_SESSION['userId'] ?>">
+                <input type="hidden" name="user_id" value="<?php echo $_SESSION['userId']; ?>">
                 <!------------- Report Type Select -------------->
                 <div class="mb-3">
                     <label class="form-label">Report Type</label>
@@ -22,7 +22,7 @@
                         <option value="">-- Select Report Type --</option>
 
                         <?php foreach ($reportTypes as $reportType) { ?>
-                            <option value="<?php echo $reportType->getId(); ?>">
+                            <option value="<?php echo htmlspecialchars($reportType->getId()); ?>">
                                 <?php echo htmlspecialchars($reportType->getDescription()); ?>
                             </option>
                         <?php } ?>

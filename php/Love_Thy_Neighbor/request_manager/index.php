@@ -76,14 +76,17 @@ switch ($action) {
           if (!$request->getUserId()) {
                $error = "Something went wrong please try again.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($request->getTitle()) > 200) {
                $error = "Title must be 200 characters or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($request->getBody()) > 2000) {
                $error = "Description must be 2,000 characters or less.";
                include('../errors/error.php');
+               exit;
           }
 
           try {
@@ -118,17 +121,20 @@ switch ($action) {
           $title = filter_input(INPUT_POST, 'title');
           $body = filter_input(INPUT_POST, 'body');
 
-          if (!$userId || $requestId) {
+          if (!$userId || !$requestId) {
                $error = "Something went wrong please try again.";
                include('../errors/error.php');
+               exit;
           }
-          else if (strlen($title()) > 200) {
+          else if (strlen($title) > 200) {
                $error = "Title must be 200 characters or less.";
                include('../errors/error.php');
+               exit;
           }
-          else if (strlen($body()) > 2000) {
+          else if (strlen($body) > 2000) {
                $error = "Description must be 2,000 characters or less.";
                include('../errors/error.php');
+               exit;
           }
 
           try{
@@ -151,6 +157,9 @@ switch ($action) {
           }
           catch (Exception $e) {
                $db->rollBack();
+               $error = "Update failed: " . $e->getMessage();
+               include('../errors/error.php');
+               exit;
           }
 
           if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {

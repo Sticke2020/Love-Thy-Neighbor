@@ -21,11 +21,11 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     <?php foreach ($inbox as $message) : ?>
                     <form action="message_manager/index.php" method="POST" class="mb-1 custom-border-outset bg-custom-light-yellow">
                         <input type="hidden" name="action" value="message_content">
-                        <input type="hidden" name="message_id" value="<?php echo $message->getId() ?>">
-                        <input type="hidden" name="user_id" value="<?php echo $userId ?>">
+                        <input type="hidden" name="message_id" value="<?php echo htmlspecialchars($message->getId()); ?>">
+                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>">
                         <button type="submit" class="message-item btn btn-link text-start w-100 fs-4">
-                            <strong>From: <?php echo $message->getSender() ?></strong>
-                            <small class="text-muted"><?php echo substr($message->getBody(), 0, 59); ?></small>
+                            <strong>From: <?php echo htmlspecialchars($message->getSender()); ?></strong>
+                            <small class="text-muted"><?php echo htmlspecialchars(substr($message->getBody(), 0, 59)); ?></small>
                         </button>
                     </form>
                     <?php endforeach; ?>
@@ -42,11 +42,11 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                     <?php foreach ($outbox as $sent) : ?>
                     <form action="message_manager/index.php" method="POST" class="mb-1 custom-border-outset bg-custom-light-yellow">
                         <input type="hidden" name="action" value="message_content">
-                        <input type="hidden" name="message_id" value="<?php echo $sent->getId() ?>">
-                        <input type="hidden" name="user_id" value="<?php echo $userId ?>">
+                        <input type="hidden" name="message_id" value="<?php echo htmlspecialchars($sent->getId()); ?>">
+                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>">
                         <button type="submit" class="message-item btn btn-link text-start w-100 fs-4">
-                            <strong>To: <?php echo $sent->getReceiver() ?></strong>
-                            <small class="text-muted"><?php echo substr($sent->getBody(), 0, 59); ?></small>
+                            <strong>To: <?php echo htmlspecialchars($sent->getReceiver()); ?></strong>
+                            <small class="text-muted"><?php echo htmlspecialchars(substr($sent->getBody(), 0, 59)); ?></small>
                         </button>
                     </form>
                     <?php endforeach; ?>
@@ -67,18 +67,18 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <div class="card-body bg-custom-light-yellow fs-4">
                     <?php
                     if (isset($messageContent)) {
-                        echo "<p>Sent By: " . $messageContent->getSender() . "</p>";
-                        echo $messageContent->getBody();
+                        echo "<p>Sent By: " . htmlspecialchars($messageContent->getSender()) . "</p>";
+                        echo htmlspecialchars($messageContent->getBody());
                         echo "<br>";
                         echo "<br>";
-                        echo $messageContent->getDateCreated();
+                        echo htmlspecialchars($messageContent->getDateCreated());
                         echo "<br>";
                         echo "<br>";
                     ?>
                         <form action="message_manager/index.php" method="POST" class="text-end">
                             <input type="hidden" name="action" value="delete_message">
-                            <input type="hidden" name="user_id" value="<?php echo $userId ?>">
-                            <input type="hidden" name="message_id" value="<?php echo $messageId ?>">
+                            <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>">
+                            <input type="hidden" name="message_id" value="<?php echo htmlspecialchars($messageId); ?>">
                             <button type="submit" name="delete_message" class="fs-4 btn btn-lg bg-custom-red text-custom-white custom-border-outset">Delete Message</button>
                         </form>
                     <?php
@@ -98,7 +98,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                 <div class="card-body bg-custom-light-yellow fs-4">
             
                     <form action="message_manager/index.php" method="POST" class="text-end">
-                        <input type="hidden" name="user_id" value="<?php echo $userId ?>">
+                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>">
 
                         <div class="mb-3 text-start">
                             <label for="recipient" class="form-label">Recipient</label>

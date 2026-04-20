@@ -77,12 +77,15 @@ switch ($action) {
 
           if ($accountType == 'PERSONAL') {
                include('user_register.php');
+               exit;
           }
           else if ($accountType == 'EMPLOYEE') {
                include('user_employee_register.php');
+               exit;
           }
           else if ($accountType == 'BUSINESS') {
                include('user_business_register.php');
+               exit;
           }
           break;
 
@@ -112,12 +115,14 @@ switch ($action) {
           if (!$email || !$password) {
                $errorMessage = "Please enter a valid email and password";
                include('user_login.php');
+               exit;
           } 
           else {
                $user = UserDB::getUserByEmailAndPassword($email,$password);
                if(!$user || !$user->getId()) {
                     $errorMessage = "Incorrect email or password";
                     include('user_login.php');
+                    exit;
                }
                else if ($user && $user->getId()) {
                     $ID = $user->getId();
@@ -136,6 +141,7 @@ switch ($action) {
                               $reports = ReportDB::getReports();
 
                               include('../admin_manager/admin_dashboard.php');
+                              exit;
                          }
                          else if ($user->getUserTypeId() != 1) {
                               $requests = RequestDB::getRequestsByUserId($ID);
@@ -155,6 +161,7 @@ switch ($action) {
                               $log = new Log($ID, 5);
                               LogDB::createLog($log);
                               include('user_dashboard.php');
+                              exit;
                          }
                     } 
                     else{
@@ -188,60 +195,74 @@ switch ($action) {
 
                $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getFirstName()) >= 30) {
                $error = "First Name must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getLastName()) >= 30) {
                $error = "Last Name must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_])(?=.*\d).{8,}$/', $password)) {
                $error = "Password must contain an Uppercase letter, a special character,\n".
                          " a number and be 8 characters at a minumum.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($password) > 30) {
                $error = "Password must be 30 characters or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
                $error = "You must enter a valid email address";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getEmail()) >= 120) {
                $error = "Email must be less than 120 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::emailAddressExists($user->getEmail())) {
                $error = "Email address in use, you must use a different email address";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getUserName()) >= 30) {
                $error = "UserName must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::userNameExists($user->getUserName())) {
                $error = "UserName is NOT available, you must choose a different UserName";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getCity()) >= 50) {
                $error = "City must be less than 50 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getState())) > 2) {
                $error = "State must be 2 characters like AZ or CA.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getZip())) > 10) {
                $error = "Postal Code must be 10 digits or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
                $error = "Phone number must be 10 digits\n". 
                               "Invalid phone number";
                include('../errors/error.php');
+               exit;
           }
           else if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
                $phone = $user->getPhone();
@@ -251,6 +272,7 @@ switch ($action) {
                     $error = "Phone number must be 10 digits\n". 
                          "Invalid phone number";
                     include('../errors/error.php');
+                    exit;
                }
                else if ((int)strlen($phoneNumbersOnly) == 10) {
                     $areaCode = substr($phoneNumbersOnly, 0 , 3);
@@ -261,6 +283,7 @@ switch ($action) {
                     UserDB::createUser($user);
                
                     include('user_registered.php');
+                    exit;
                }
           }
           else {
@@ -298,6 +321,7 @@ switch ($action) {
 
                $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
+               exit;
           }
 
           if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
@@ -305,9 +329,10 @@ switch ($action) {
                $phoneNumbersOnly = preg_replace('/\D/', '', $phone);
 
                if ((int)strlen($phoneNumbersOnly) != 10) {
-               $error = "Phone number must be 10 digits\n". 
-                    "Invalid phone number";
-               include('../errors/error.php');
+                    $error = "Phone number must be 10 digits\n". 
+                         "Invalid phone number";
+                    include('../errors/error.php');
+                    exit;
                }
                else if ((int)strlen($phoneNumbersOnly) == 10) {
                     $areaCode = substr($phoneNumbersOnly, 0 , 3);
@@ -321,57 +346,70 @@ switch ($action) {
           if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
                $error = "You must enter a valid email address";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getFirstName()) >= 30) {
                $error = "First Name must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getLastName()) >= 30) {
                $error = "Last Name must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getEmail()) >= 120) {
                $error = "Email must be less than 120 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::emailAddressExists($user->getEmail())) {
                $error = "Email address in use, you must use a different email address";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getUserName()) >= 30) {
                $error = "UserName must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::userNameExists($user->getUserName())) {
                $error = "UserName is NOT available, you must choose a different UserName";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getCity()) >= 50) {
                $error = "City must be less than 50 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getState())) > 2) {
                $error = "State must be 2 characters like AZ or CA.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getZip())) > 10) {
                $error = "Postal Code must be 10 digits or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
                $error = "Phone number must be 10 digits\n". 
                               "Invalid phone number";
                include('../errors/error.php');
+               exit;
           }
           else if (!$businessId || !$verificationCode) {
                $error = "You must enter a Business ID and Verification Code";
                include('../errors/error.php');
+               exit;
           }
           else if ($business->getVerificationCode() != $verificationCode) {
                $error = "The Business ID and Verification code are invalid.\n".
                          "Please make sure you entered the ID and Code correctly.\n".
                          "If you continue to see this error contact your employer";
                include('../errors/error.php');
+               exit;
           }
           else {
                UserDB::createUser($user);
@@ -415,6 +453,7 @@ switch ($action) {
 
                $error = "Invalid user data. Check all fields and try again.";
                include('../errors/error.php');
+               exit;
           }
 
           if (!$business->getName() || !$business->getPhone() || !$business->getAddress() ||
@@ -423,6 +462,7 @@ switch ($action) {
 
                $error = "Invalid Business data. Check all fields and try again.";
                include('../errors/error.php');
+               exit;
           }
 
           if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
@@ -433,6 +473,7 @@ switch ($action) {
                $error = "Phone number must be 10 digits\n". 
                     "Invalid phone number";
                include('../errors/error.php');
+               exit;
                }
                else if ((int)strlen($phoneNumbersOnly) == 10) {
                     $areaCode = substr($phoneNumbersOnly, 0 , 3);
@@ -451,6 +492,7 @@ switch ($action) {
                $error = "Phone number must be 10 digits\n". 
                     "Invalid phone number";
                include('../errors/error.php');
+               exit;
                }
                else if ((int)strlen($phoneNumbersOnly) == 10) {
                     $areaCode = substr($phoneNumbersOnly, 0 , 3);
@@ -464,89 +506,110 @@ switch ($action) {
           if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
                $error = "You must enter a valid email address";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getFirstName()) >= 30) {
                $error = "First Name must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getLastName()) >= 30) {
                $error = "Last Name must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($business->getName()) > 150) {
                $error = "Business Name must be 150 characters or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($business->getAddress()) > 100) {
                $error = "Business Address must be 100 characters or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_])(?=.*\d).{8,}$/', $password)) {
                $error = "Password must contain an Uppercase letter, a special character,\n".
                          " a number and be 8 characters at a minumum.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($password) > 30) {
                $error = "Password must be 30 characters or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getEmail()) >= 120) {
                $error = "Email must be less than 120 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::emailAddressExists($user->getEmail())) {
                $error = "Email address in use, you must use a different email address";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getUserName()) >= 30) {
                $error = "UserName must be less than 30 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::userNameExists($user->getUserName())) {
                $error = "UserName is NOT available, you must choose a different UserName";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($user->getCity()) >= 50) {
                $error = "City must be less than 50 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($business->getCity()) >= 50) {
                $error = "City must be less than 50 characters.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getState())) > 2) {
                $error = "State must be 2 characters like AZ or CA.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($business->getState())) > 2) {
                $error = "State must be 2 characters like AZ or CA.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getZip())) > 10) {
                $error = "Postal Code must be 10 digits or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($business->getZip())) > 10) {
                $error = "Postal Code must be 10 digits or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
                $error = "Phone number must be 10 digits\n". 
                               "Invalid phone number";
                include('../errors/error.php');
+               exit;
           }
           else if (empty($business->getPhone()) || (int)strlen($business->getPhone()) < 10) {
                $error = "Phone number must be 10 digits\n". 
                               "Invalid phone number";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($business->getVerificationCode())) > 50) {
                $error = "Verification Code must be 50 characters or less.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($business->getDescription()) > 2000) {
                $error = "Description must be less than 2,000 characters.";
                include('../errors/error.php');
+               exit;
           }
           else {
                UserDB::createUser($user);
@@ -615,29 +678,60 @@ switch ($action) {
                !$user->getLastName() || !$user->getCity() || !$user->getState() || 
                !$user->getZip() || !$user->getEmail() || !$user->getPhone() ||
                !$user->getUserName()) {
-          $error = "Invalid customer data. Check all fields and try again.";
-          include('../errors/error.php');
+               $error = "Invalid customer data. Check all fields and try again.";
+               include('../errors/error.php');
+               exit;
+          }
+          else if (strlen($user->getFirstName()) >= 30) {
+               $error = "First Name must be less than 30 characters.";
+               include('../errors/error.php');
+               exit;
+          }
+          else if (strlen($user->getLastName()) >= 30) {
+               $error = "Last Name must be less than 30 characters.";
+               include('../errors/error.php');
+               exit;
+          }
+          else if (strlen($user->getCity()) >= 50) {
+               $error = "City must be less than 50 characters.";
+               include('../errors/error.php');
+               exit;
           }
           else if (strlen(trim($user->getState())) !== 2) {
                $error = "State must be a 2 letters like AZ or CA";
                include('../errors/error.php');
+               exit;
+          }
+          else if (strlen(trim($user->getZip())) > 10) {
+               $error = "Postal Code must be 10 digits or less.";
+               include('../errors/error.php');
+               exit;
           }
           else if (!str_contains($user->getEmail(), '@') || !str_contains($user->getEmail(), '.')) {
                $error = "You must enter a valid email address";
                include('../errors/error.php');
+               exit;
           }
           else if (UserDB::emailAddressExists($user->getEmail(), $user->getId())) {
                $error = "Email address in use, you must use a different email address";
                include('../errors/error.php');
+               exit;
+          }
+          else if (strlen($user->getUserName()) >= 30) {
+               $error = "UserName must be less than 30 characters.";
+               include('../errors/error.php');
+               exit;
           }
           else if (UserDB::userNameExists($user->getUserName(), $user->getId())) {
                $error = "UserName is NOT available, you must choose a different UserName";
                include('../errors/error.php');
+               exit;
           }
           else if (empty($user->getPhone()) || (int)strlen($user->getPhone()) < 10) {
                $error = "Phone number must be 10 digits\n". 
                               "Invalid phone number";
                include('../errors/error.php');
+               exit;
           }
           else if (!empty($user->getPhone()) && (int)strlen($user->getPhone()) >= 10) {
                $phone = $user->getPhone();
@@ -647,6 +741,7 @@ switch ($action) {
                     $error = "Phone number must be 10 digits\n". 
                          "Invalid phone number";
                     include('../errors/error.php');
+                    exit;
                }
                else if ((int)strlen($phoneNumbersOnly) == 10) {
                     $areaCode = substr($phoneNumbersOnly, 0 , 3);
@@ -658,11 +753,13 @@ switch ($action) {
                     UserDB::updateUser($user);
                
                     include('../view/updates.php');
+                    exit;
                }
           }
           else {
                UserDB::updateUser($user);
                include('../view/updates.php');
+               exit;
           }
           break;
 
@@ -674,29 +771,60 @@ switch ($action) {
 
           if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                if ($newPassword === $newPasswordConfirmed && $newPassword != null) {
+
+                    if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_])(?=.*\d).{8,}$/', $newPassword)) {
+                         $error = "Password must contain an Uppercase letter, a special character,\n".
+                                   " a number and be 8 characters at a minumum.";
+                         include('../errors/error.php');
+                         exit;
+                    }
+                    else if (strlen($newPassword) > 30) {
+                         $error = "Password must be 30 characters or less.";
+                         include('../errors/error.php');
+                         exit;
+                    }
+
                     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                     UserDB::updatePassword($userId, $hashedPassword);
                     include('../view/updates.php');
+                    exit;
                }
                else {
                     $error = "Your new password entries do not match";
                     include('../errors/error.php');
+                    exit;
                }
           }
           else if (UserDB::confirmUserPassword($_SESSION['userId'], $password)) {
                if ($newPassword === $newPasswordConfirmed && $newPassword != null) {
+
+                    if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_])(?=.*\d).{8,}$/', $newPassword)) {
+                         $error = "Password must contain an Uppercase letter, a special character,\n".
+                                   " a number and be 8 characters at a minumum.";
+                         include('../errors/error.php');
+                         exit;
+                    }
+                    else if (strlen($newPassword) > 30) {
+                         $error = "Password must be 30 characters or less.";
+                         include('../errors/error.php');
+                         exit;
+                    }
+
                     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                     UserDB::updatePassword($userId, $hashedPassword);
                     include('../view/updates.php');
+                    exit;
                }
                else {
                     $error = "Your new password entries do not match";
                     include('../errors/error.php');
+                    exit;
                }
           } 
           else {
                $error = "Your current password is incorrect";
                     include('../errors/error.php');
+                    exit;
           }
           break;
 
@@ -713,6 +841,7 @@ switch ($action) {
           else {
                $error = "Your current password is incorrect";
                     include('../errors/error.php');
+                    exit;
           }
           break;
 

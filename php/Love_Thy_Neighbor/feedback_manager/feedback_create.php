@@ -17,8 +17,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <form action="feedback_manager/index.php" method="POST">
 
                 <input type="hidden" name="action" value="create_feedback">
-                <input type="hidden" name="sender_id" value="<?php echo $senderId ?>">
-                <input type="hidden" name="receiver_id" value="<?php echo $receiverId ?>">
+                <input type="hidden" name="sender_id" value="<?php echo htmlspecialchars($senderId); ?>">
+                <input type="hidden" name="receiver_id" value="<?php echo htmlspecialchars($receiverId); ?>">
 
                 <!--------------- Feedback -------------->
                 <div class="mb-3">

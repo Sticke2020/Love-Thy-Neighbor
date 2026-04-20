@@ -41,10 +41,12 @@ switch ($action) {
           if (!$feedback->getSenderId()  || !$feedback->getReceiverId() || !$feedback->getComment()) {
                $errorMessage = "Invalid data, please try again.";
                include('../errors/error.php');
+               exit;
           }
           else if (strlen($feedback->getComment()) > 2000) {
                $errorMessage = "Feedback must be less that 2,000 characters long";
                include('../errors/error.php');
+               exit;
           }
           else {
                FeedbackDB::createFeedback($feedback);

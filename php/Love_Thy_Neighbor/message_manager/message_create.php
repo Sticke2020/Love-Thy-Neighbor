@@ -6,7 +6,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 } ?>
 
 <div class="container">
-    <h1 class="m-4 text-center">Write <?php echo $user->getUserName() ?> A Message</h1>
+    <h1 class="m-4 text-center">Write <?php echo htmlspecialchars($user->getUserName()); ?> A Message</h1>
     <div class="row">
 
         <div class="card p-0 custom-border-outset fs-4">
@@ -17,7 +17,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <div class="card-body bg-custom-light-yellow">
         
                 <form action="message_manager/index.php" method="POST">
-                    <input type="hidden" name="user_id" value="<?php echo $user->getId() ?>">
+                    <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
                     <input type="hidden" name="action" value="send_message">
             
                     <div class="mb-3">

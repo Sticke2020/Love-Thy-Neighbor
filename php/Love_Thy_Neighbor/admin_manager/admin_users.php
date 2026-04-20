@@ -53,7 +53,7 @@
                     <tbody>
                         <?php foreach ($users as $user) : $id = $user->getId(); ?>
                         <tr>
-                            <td><?php echo $id; ?></td>
+                            <td><?php echo htmlspecialchars($id); ?></td>
                             <td><?php echo $user->getUserTypes(); ?></td>
                             <td><?php echo htmlspecialchars($user->getUserName()); ?></td>
                             <td><?php echo htmlspecialchars($user->getFirstName()); ?></td>
@@ -65,13 +65,13 @@
 
                                     <form action="user_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="view_user">
-                                        <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($id); ?>">
                                         <button class="btn btn-md btn-primary">View</button>
                                     </form>
 
                                     <form action="user_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="edit_user">
-                                        <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($id); ?>">
                                         <button class="btn btn-md btn-warning">Edit</button>
                                     </form>
 

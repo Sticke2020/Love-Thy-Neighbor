@@ -62,6 +62,9 @@ switch ($action) {
         catch (Exception $e) {
             $db->rollBack();
             echo "Transaction failed: " . $e->getMessage();
+            $errorMessage = $e->getMessage();
+            include('../errors/error.php');
+            exit;
         }
         
         if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
