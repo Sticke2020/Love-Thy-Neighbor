@@ -2,7 +2,7 @@
 
 <h1 class="mt-2 text-center">Make A New Request</h1>
 
-<div class="container mt-4">
+<div class="container mt-4 p-0">
 
     <p class="fs-4 text-center">
         Note: If you want to upload more than 1 image you must select multiple images together.

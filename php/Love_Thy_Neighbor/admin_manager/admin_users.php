@@ -3,7 +3,7 @@
 
 
 <!--------------------- User search ------------------->
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center fs-4">
     <form action="admin_manager/index.php" method="POST" class="mb-2 mt-2">
         <label id="search" class="w-100">Search Users By id . :</label>
         <input class='text_input' type="text" name="search_id">
@@ -11,7 +11,7 @@
         <input class='clickable' type="submit" value="Search"><br>
     </form>
 </div>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center fs-4">
     <form action="admin_manager/index.php" method="POST" class="mb-2">
         <label id="search" class="w-100">Search By UserName:</label>
         <input class='text_input' type="text" name="search_username">
@@ -19,7 +19,7 @@
         <input class='clickable' type="submit" value="Search"><br>
     </form>
 </div>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center fs-4">
     <form action="admin_manager/index.php" method="POST">
         <label id="search" class="w-100">Search By LastName:</label>
         <input class='text_input' type="text" name="search_lastname">
@@ -30,14 +30,14 @@
 
 
 <!-------------------------- Table of users ------------------------->
-<div class="container mt-4">
-    <div class="card shadow">
-        <div class="card-header bg-custom-blue text-white">
+<div class="container-fluid mt-4">
+    <div class="card custom-border-outset shadow bg-custom-blue">
+        <div class="card-header bg-custom-blue text-white border-0">
             <h4 class="mb-0">Manage Users</h4>
         </div>
 
-        <div class="card-body">
-            <div class="table-responsive">
+        <div class="card-body fs-4">
+            <div class="table-responsive custom-border-outset">
                 <table class="table table-striped table-hover align-middle">
                     <thead class="table-dark">
                         <tr>
@@ -66,13 +66,13 @@
                                     <form action="user_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="view_user">
                                         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($id); ?>">
-                                        <button class="btn btn-md btn-primary">View</button>
+                                        <button class="btn btn-lg text-custom-white bg-custom-black custom-border-outset fs-4">View</button>
                                     </form>
 
                                     <form action="user_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="edit_user">
                                         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($id); ?>">
-                                        <button class="btn btn-md btn-warning">Edit</button>
+                                        <button class="btn btn-lg text-custom-white bg-custom-black custom-border-outset fs-4">Edit</button>
                                     </form>
 
                                 </div>

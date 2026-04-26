@@ -394,7 +394,12 @@ public static function createUser($user) {
     $statement->bindvalue(':userName', $userName);
     $statement->bindvalue(':password', $password);
     $statement->execute();
+
+    $userId = $db->lastInsertId();
+
     $statement->closeCursor();
+
+    return $userId;
 }
 
 public static function setUserProfilePic($userId, $imageId) {

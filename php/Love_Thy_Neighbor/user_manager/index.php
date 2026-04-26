@@ -51,6 +51,18 @@ switch ($action) {
           include('users.php');
           break;
 
+     case 'search_users_by_username':
+          $userName = filter_input(INPUT_POST, 'search_username');
+          $users = UserDB::searchUsersByUserName($userName);
+          include('users.php');
+          break;
+
+     case 'search_users_by_lastname':
+          $lastName = filter_input(INPUT_POST, 'search_lastname');
+          $users = UserDB::searchUsersByLastName($lastName);
+          include('users.php');
+          break;
+
      case 'view_user':
           $userId = filter_input(INPUT_POST, 'user_id');
           $user = UserDB::getUserById($userId);
@@ -95,6 +107,15 @@ switch ($action) {
           break;
 
      case 'logout_user':
+          if (isset($_SESSION['userId'])) {
+               $log = new Log($_SESSION['userId'], 7);  // 7 = User Logout
+               LogDB::createLog($log);
+          }
+          else if (isset($_session['user'])) {
+               $log = new Log($_SESSION['user']->getId(), 7);  // 7 = User Logout
+               LogDB::createLog($log);
+          }
+
           $_SESSION = array();
           session_destroy();
           $lifetime = 60 * 60 * 24 * -14;
@@ -114,6 +135,14 @@ switch ($action) {
 
           if (!$email || !$password) {
                $errorMessage = "Please enter a valid email and password";
+
+               // Logs the failed login attempt if the email is in the DB
+               if (UserDB::emailAddressExists($email)) {
+                    $id = UserDB::getUserByEmail($email);
+                    $log = new Log($id->getId(), 6);  // 6 = Failed Login Attempt
+                    LogDB::createLog($log);
+               }
+
                include('user_login.php');
                exit;
           } 
@@ -121,6 +150,11 @@ switch ($action) {
                $user = UserDB::getUserByEmailAndPassword($email,$password);
                if(!$user || !$user->getId()) {
                     $errorMessage = "Incorrect email or password";
+
+                    $id = UserDB::getUserByEmail($email);
+                    $log = new Log($id->getId(), 6);  // 6 = Failed Login Attempt
+                    LogDB::createLog($log);
+
                     include('user_login.php');
                     exit;
                }
@@ -158,7 +192,7 @@ switch ($action) {
                               $feedback = FeedbackDB::getFeedbackByUserId($user->getId());
                               $unreadMessages = MessageDB::hasUnreadMessages($ID);
 
-                              $log = new Log($ID, 5);
+                              $log = new Log($ID, 5);  // 5 = User Login
                               LogDB::createLog($log);
                               include('user_dashboard.php');
                               exit;
@@ -278,16 +312,20 @@ switch ($action) {
                     $areaCode = substr($phoneNumbersOnly, 0 , 3);
                     $prefix = substr($phoneNumbersOnly, 3 , 3);
                     $suffix = substr($phoneNumbersOnly, 6 , 4);
-
                     $user->setPhone($areaCode . "-" . $prefix . "-" . $suffix);
-                    UserDB::createUser($user);
+
+                    $userId = UserDB::createUser($user);
+                    $log = new Log($userId, 1);  // 1 = Account Created
+                    LogDB::createLog($log);
                
                     include('user_registered.php');
                     exit;
                }
           }
           else {
-               UserDB::createUser($user);
+               $userId = UserDB::createUser($user);
+               $log = new Log($userId, 1);  // 1 = Account Created
+               LogDB::createLog($log);
                include('user_registered.php');
           }
           break;
@@ -412,9 +450,12 @@ switch ($action) {
                exit;
           }
           else {
-               UserDB::createUser($user);
-               $userId = UserDB::getUserByEmail($user->getEmail());
-               BusinessDB::createBusinessUser($userId->getId(), $businessId, 0);
+               $userId = UserDB::createUser($user);
+               BusinessDB::createBusinessUser($userId, $businessId, 0);
+
+               $log = new Log($userId->getId(), 1);  // 1 = Account Created
+               LogDB::createLog($log);
+
                include('user_employee_registered.php');
           }
           break;
@@ -612,13 +653,17 @@ switch ($action) {
                exit;
           }
           else {
-               UserDB::createUser($user);
+               $userId = UserDB::createUser($user);
                BusinessDB::createBusiness($business);
-
                $newBusiness = BusinessDB::getBusinessByName($business->getName());
-               $userId = UserDB::getUserByEmail($user->getEmail());
+               BusinessDB::createBusinessUser($userId, $newBusiness->getId(), 1);
 
-               BusinessDB::createBusinessUser($userId->getId(), $newBusiness->getId(), 1);
+               $log = new Log($userId, 1);  // 1 = Account Created
+               LogDB::createLog($log);
+
+               $logBusiness = new Log($userId, 3);  // 3 = Business Registered
+               LogDB::createLog($logBusiness);
+
                include('user_business_registered.php');
           }
           break;

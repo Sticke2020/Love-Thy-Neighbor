@@ -7,7 +7,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 } ?>
 
 <?php if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) : ?>
-    <fieldset class="m-2">
+    <fieldset class="m-2 fs-4 text-center">
         <form action="request_manager/index.php" method="POST">
             <label id="search">Search Requests By User Id:</label>
             <input class='text_input' type="text" name="requests_by_user_id">
@@ -17,7 +17,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     </fieldset>
 <?php endif; ?>
 
-<div class="d-flex justify-content-evenly mt-3">
+
+<div class="d-flex flex-column flex-md-row justify-content-center gap-4 fs-4 mt-3">
     <form action="request_manager/index.php" method="POST">
         <input type="hidden" name="action" value="unfulfilled_requests">
         <input type="submit" value="Unfulfilled Requests" class="fs-4 btn btn-lg bg-custom-black text-custom-white custom-border-outset">
@@ -41,11 +42,10 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <?php else : ?>
                 <?php foreach ($requests as $request) : ?>
                     <div class="card mb-4 bg-custom-gold border custom-border-inset">
+                        <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-md-between fs-4 m-3 mb-1 custom-border-outset">
+                            <h5 class="card-title fs-2 mb-2 order-2 order-md-1">Title: <?php echo htmlspecialchars($request->getTitle()); ?></h5>
 
-                        <div class="card-header d-flex justify-content-between align-items-center fs-4 m-3 mb-1 custom-border-outset">
-                            <h5 class="card-title fs-2 mb-2">Title: <?php echo htmlspecialchars($request->getTitle()); ?></h5>
-
-                            <div class="d-flex flex-column align-items-center justify-content-center me-5 mt-1">
+                            <div class="d-flex flex-column align-items-center justify-content-center mt-2 mt-md-0 order-1 order-md-2">
                                 <form action="user_manager/index.php" method="POST" class="mb-0">
                                     <input type="hidden" name="action" value="view_user">
                                     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($request->getUserId()); ?>">
@@ -77,8 +77,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                             </p>
 
                             <p class="fs-4"><strong>Date Created:</strong>
-                                 <?php echo htmlspecialchars($request->getDateCreated()); ?> 
-                                    <strong>Date Updated:</strong> <?php echo htmlspecialchars($request->getDateUpdated()); ?>
+                                 <?php echo $request->getDateCreated(); ?> 
+                                    <strong>Date Updated:</strong> <?php echo $request->getDateUpdated(); ?>
                             </p> 
 
                         </div>

@@ -33,7 +33,7 @@ CREATE TABLE `user` (
   `email_address` varchar(120) NOT NULL,
   `phone` varchar(20),
   `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `profile_image_id` bigint,
   `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` DATETIME

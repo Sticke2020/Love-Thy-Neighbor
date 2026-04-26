@@ -8,10 +8,10 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
 
 <div class="container-fluid px-0 mb-3">
-    <div class="row align-items-start">
+    <div class="row align-items-start gy-3">
 
         <!------User Profile Image--------->
-        <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
+        <div class="col-12 col-md-4">
 
             <?php if ($profilePic == null) { ?>
                 <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
@@ -29,7 +29,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div> 
 
         <!--User Profile Data such as Name and Business-->
-        <div class="col">
+        <div class="col-12 col-md-5">
             <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
             <?php if ($business == null) { ?>
             <?php } else { ?>
@@ -45,11 +45,11 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
 
         <!----------------Messages Button------------->
-        <div class="col">
-            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+        <div class="col-12 col-md-3">
+            <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="message_user">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="fs-4 btn bg-custom-blue text-custom-white btn-lg custom-border-outset" type="submit">Message <?php echo htmlspecialchars($user->getUserName()); ?></button> 
+                <button class="fs-4 btn bg-custom-black text-custom-white btn-lg custom-border-outset w-100" type="submit">Message <?php echo htmlspecialchars($user->getUserName()); ?></button> 
             </form>
         </div>
 
@@ -58,7 +58,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
 <div class="container-fluid mt-3 px-0">
     <div class="row">
-        <div class="col" style="max-width: 50%;">
+        <div class="col-12 col-lg-6">
 
             <!----------------- User Requests Card ------------->
             <div class="card custom-border-outset">
@@ -78,7 +78,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                     <?php if (!empty($request->getImages())) : ?>
                                         <div class="mb-2">
                                             <?php foreach ($request->getImages() as $image): ?>
-                                                <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" width="200" class="me-2 mb-2 img-thumbnail">
+                                                <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" style="max-width: 200px;" class="me-2 mb-2 img-thumbnail">
                                             <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
@@ -102,19 +102,19 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="delete_request">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="btn bg-custom-red btn-lg text-custom-white" type="submit">Delete Request</button>
+                                                <button class="btn bg-custom-red text-custom-white btn-lg custom-border-outset fs-4" type="submit">Delete Request</button>
                                             </form>
 
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="mark_request_fulfilled">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="btn bg-custom-green text-custom-white btn-lg" type="submit">Mark Fulfilled</button>
+                                                <button class="btn bg-custom-blue text-custom-white btn-lg custom-border-outset fs-4" type="submit">Mark Fulfilled</button>
                                             </form>
 
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="edit_request">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="btn bg-custom-grey text-custom-white btn-lg" type="submit">Edit Request</button>
+                                                <button class="btn bg-custom-grey text-custom-white btn-lg custom-border-outset fs-4" type="submit">Edit Request</button>
                                             </form>
                                         <?php endif; ?>
                                     </div>
@@ -127,7 +127,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-12 col-lg-6">
             <!-----------------User Feedback------------------>
             <div class="card custom-border-outset">
                 <div class="card-header text-center fs-4 bg-custom-blue text-custom-white border-0">
@@ -138,7 +138,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                         <input type="hidden" name="action" value="leave_feedback">
                         <input type="hidden" name="sender_id" value="<?php echo htmlspecialchars($_SESSION['userId']); ?>">
                         <input type="hidden" name="receiver_id" value="<?php echo htmlspecialchars($userId); ?>">
-                        <input type="submit" class="btn bg-custom-black text-custom-white w-100 mt-2 fs-4 custom-border-outset" value="Leave Feedback">
+                        <input type="submit" class="btn btn-lg bg-custom-black text-custom-white w-100 mt-2 fs-4 custom-border-outset" value="Leave Feedback">
                     </form>
                 </div>
                 <div class="card-body bg-custom-blue">
@@ -169,7 +169,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                         <form action="feedback_manager/index.php" method="POST">
                                             <input type="hidden" name="action" value="delete_feedback">
                                             <input type="hidden" name="feedback_id" value="<?php echo htmlspecialchars($comment->getId()); ?>">
-                                            <button type="submit" class="btn btn-lg bg-custom-red text-custom-white">Delete Feedback</button>
+                                            <button type="submit" class="btn bg-custom-red text-custom-white btn-lg custom-border-outset fs-4">Delete Feedback</button>
                                         </form>
                                     <?php endif; ?>
                                 </div>

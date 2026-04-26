@@ -9,6 +9,7 @@ require_once('../model/Image.php');
 require_once('../model/Image_DB.php');
 require_once('../model/Message.php');
 require_once('../model/Message_DB.php');
+require_once('../model/Utility.php');
 
 if(session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 14;

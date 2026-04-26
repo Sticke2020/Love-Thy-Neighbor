@@ -4,7 +4,7 @@
 
 <h1 class="mt-3 text-center">File A Report</h1>
 
-<div class="container my-4">
+<div class="container my-4 p-0">
 
     <div class="card mb-4 custom-border-outset fs-4">
         <div class="card-header bg-custom-blue text-white">

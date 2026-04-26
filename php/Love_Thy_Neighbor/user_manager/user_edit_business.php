@@ -12,7 +12,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
 <h1 class="mt-3 text-center">Edit Your Information</h1>
 
-<div class="container my-4">
+<div class="container my-4 p-0">
 
     <div class="row justify-content-center">
         <div class="col-md-10">

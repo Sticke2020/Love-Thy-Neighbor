@@ -1,46 +1,46 @@
 <?php require_once ('../view/admin_header.php'); ?>
 
 <div class="container-fluid px-0 mb-3">
-    <div class="row align-items-start">
+    <div class="row align-items-start gy-3">
 
         <!-------------- Admin Profile Image ---------------->
-        <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
+        <div class="col-12 col-md-4">
+            <div class="d-inline-block">
+                <?php if ($profilePic == null) { ?>
+                    <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
+                <?php } else { ?>
+                    <img class="img-fluid custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
+                <?php } ?>
 
-            <?php if ($profilePic == null) { ?>
-                <img class="img-fluid" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
-            <?php } else { ?>
-                <img class="img-fluid" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
-            <?php } ?>
-
-            <form action="image_manager/index.php" method="POST">
-                <input type="hidden" name="action" value="add_profile_image" />
-                <input class="btn bg-custom-white w-100 mt-2 fs-4" type="submit" value="Change Profile Image" />
-            </form>
-
+                <form action="image_manager/index.php" method="POST">
+                    <input type="hidden" name="action" value="add_profile_image" />
+                    <input class="mt-2 btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4 w-100" type="submit" value="Change Profile Image" />
+                </form>
+            </div>
         </div> 
 
         <!------------------ Admin Profile Data ----------------->
-        <div class="col">
+        <div class="col-12 col-md-5">
             <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
             <h1 class="mt-2">Site Admin</h1>      
         </div>
 
         <!-- ---------Messages Button blinks if there are unread messages -------->
         <?php if ($unreadMessages == true) { ?>
-        <div class="col">
-            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+        <div class="col-12 col-md-3">
+            <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="btn text-custom-white btn-lg border-3"
+                <button class="btn bg-custom-blue text-custom-white btn-lg custom-border-outset fs-4 w-100"
                     id="inbox_button_blink" type="submit">Check Your Messages</button> 
             </form>
         </div>
         <?php } else { ?>
-        <div class="col"> <!-------------- No unread messages button is solid no blinking ------->
-            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+        <div class="col-12 col-md-3"> <!-------------- No unread messages button is solid no blinking ------->
+            <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="btn bg-custom-blue text-custom-white btn-lg border-white border-3"
+                <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4"
                          type="submit">Check Your Messages</button> 
             </form>
         </div>
@@ -49,23 +49,24 @@
 </div>
 
 <!--------------------- Search reports ------------------------->
-<fieldset class="m-2 text-center">
-    <form action="report_manager/index.php" method="POST">
-        <label id="search">Search Reports By UserName:</label>
-        <input class='text_input' type="text" name="search_username">
-        <input type="hidden" name="action" value="search_reports_by_username" /> 
-        <input class='clickable' type="submit" value="Search"><br>
-    </form>
-</fieldset>
-<fieldset class="m-2 text-center">
-    <form action="report_manager/index.php" method="POST">
-        <label id="search">Search Reports Report TypeId:</label>
-        <input class='text_input' type="text" name="search_report_id">
-        <input type="hidden" name="action" value="search_reports_by_type_id" /> 
-        <input class='clickable' type="submit" value="Search"><br>
-    </form>
-</fieldset>
-
+<div class="d-flex flex-column flex-md-row justify-content-center gap-4 fs-4 mt-3">
+    <fieldset class="m-2 text-center fs-4">
+        <form action="report_manager/index.php" method="POST">
+            <label id="search">Search Reports By UserName:</label>
+            <input class='text_input' type="text" name="search_username">
+            <input type="hidden" name="action" value="search_reports_by_username" /> 
+            <input class='clickable' type="submit" value="Search"><br>
+        </form>
+    </fieldset>
+    <fieldset class="m-2 text-center fs-4">
+        <form action="report_manager/index.php" method="POST">
+            <label id="search">Search Reports Report TypeId:</label>
+            <input class='text_input' type="text" name="search_report_id">
+            <input type="hidden" name="action" value="search_reports_by_type_id" /> 
+            <input class='clickable' type="submit" value="Search"><br>
+        </form>
+    </fieldset>
+</div>
 
 <!------------------------------------- User Reports ------------------------------->
 <div class="container-fluid mt-3 px-0">
@@ -93,7 +94,7 @@
                                     <form action="report_manager/index.php" method="POST">
                                         <input type="hidden" name="action" value="delete_report" />
                                         <input type="hidden" name="report_id" value="<?php echo htmlspecialchars($report->getId()); ?>">
-                                        <button class="btn text-custom-white btn-lg bg-custom-red border-3"
+                                        <button class="btn text-custom-white btn-lg bg-custom-red fs-4 custom-border-outset"
                                             type="submit">Delete Report</button>
                                     </form>
                                 </div>

@@ -2,26 +2,26 @@
 <?php require_once ('../view/user_header.php'); ?>
 
 <div class="container-fluid px-0 mb-4">
-    <div class="row align-items-start">
+    <div class="row align-items-start gy-3">
 
         <!--------- User Profile Image ---------------------------------->
-        <div class="col-auto" style="max-width: 40%; max-height: 500px;" >
+        <div class="col-12 col-md-4">
+            <div class="d-inline-block">
+                <?php if ($profilePic == null) { ?>
+                    <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
+                <?php } else { ?>
+                    <img class="img-fluid custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
+                <?php } ?>
 
-            <?php if ($profilePic == null) { ?>
-                <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
-            <?php } else { ?>
-                <img class="img-fluid custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
-            <?php } ?>
-
-            <form action="image_manager/index.php" method="POST">
-                <input type="hidden" name="action" value="add_profile_image" />
-                <input class="btn btn-lg bg-custom-black text-custom-white w-100 mt-2 fs-4 custom-border-outset" type="submit" value="Change Profile Image" />
-            </form>
-
+                <form action="image_manager/index.php" method="POST">
+                    <input type="hidden" name="action" value="add_profile_image" />
+                    <input class="btn btn-lg bg-custom-black text-custom-white w-100 mt-2 fs-4 custom-border-outset" type="submit" value="Change Profile Image" />
+                </form>
+            </div>
         </div> 
 
         <!------------ User Profile Data such as Name and Business ------>
-        <div class="col">
+        <div class="col-12 col-md-5">
             <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
 
             <?php if ($business == null) { ?>
@@ -40,8 +40,8 @@
 
         <!---------------------------- Messages Button ------------------>
         <?php if ($unreadMessages == true) { ?>
-        <div class="col">
-            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+        <div class="col-12 col-md-3">
+            <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
                 <button class="btn text-custom-white btn-lg custom-border-outset fs-4"
@@ -49,11 +49,11 @@
             </form>
         </div>
         <?php } else { ?>
-        <div class="col">
-            <form action="message_manager/index.php" method="POST" class="text-end m-5">
+        <div class="col-12 col-md-3">
+            <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="btn bg-custom-blue text-custom-white btn-lg custom-border-outset fs-4"
+                <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4"
                          type="submit">Check Your Messages</button> 
             </form>
         </div>
@@ -64,7 +64,7 @@
 
 <div class="container-fluid mt-3 px-0">
     <div class="row">
-        <div class="col" style="max-width: 50%;">
+        <div class="col-12 col-lg-6">
 
             <!----------------------- User Requests Card ---------------->
             <div class="card custom-border-outset shadow">
@@ -95,7 +95,7 @@
                                         <?php if (!empty($request->getImages())) : ?>
                                             <div class="mb-2">
                                                 <?php foreach ($request->getImages() as $image): ?>
-                                                    <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" width="200" class="me-2 mb-2 img-thumbnail">
+                                                    <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" class="me-2 mb-2 img-thumbnail">
                                                 <?php endforeach; ?>
                                             </div>
                                         <?php endif; ?>
@@ -107,7 +107,7 @@
                                         </p>
 
                                         <!-----------Buttons------------->
-                                        <div class="d-flex justify-content-between flex-wrap">
+                                        <div class="d-flex flex-column flex-md-row gap-2">
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="delete_request">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
@@ -167,7 +167,7 @@
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-12 col-lg-6">
             <!---------------------- User Feedback ----------------------->
             <div class="card custom-border-outset shadow">
                 <div class="card-header text-center fs-4 bg-custom-blue text-custom-white border-0">

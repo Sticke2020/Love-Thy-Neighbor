@@ -7,7 +7,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 
 <h1 class="mt-3 text-center">Edit Your Information</h1>
 
-<div class="container my-4">
+<div class="container my-4 p-0">
 
     <!--------- Edit User --------->
     <div class="card mb-5 custom-border-outset">

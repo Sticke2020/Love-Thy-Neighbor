@@ -2,7 +2,7 @@
  require_once '../view/header.php'; 
 ?> 
 
-<div class="container my-5">
+<div class="container my-5 p-0">
 
     <div class="row justify-content-center">
         <div class="col-md-9">

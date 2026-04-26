@@ -8,9 +8,9 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
 <div class="container-fluid my-4 fs-4">
     <h1 class="mb-4 text-center">Messages</h1>
 
-    <div class="row">
+    <div class="row gy-3">
         <!---------------------- Inbox ----------------------->
-        <div class="col-md-4">
+        <div class="col-md-4 order-2 order-md-1">
 
             <div class="card custom-border-outset">
                 <div class="card-header bg-custom-blue text-custom-white border-0">
@@ -57,7 +57,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
 
         <!------------------ Message Content and New Message ------------>
-        <div class="col-md-8">
+        <div class="col-md-8 order-1 order-md-2">
 
             <div class="card mb-3 custom-border-outset">
                 <div class="card-header bg-custom-blue text-custom-white">
