@@ -42,8 +42,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
             <?php else : ?>
                 <?php foreach ($requests as $request) : ?>
                     <div class="card mb-4 bg-custom-gold border custom-border-inset">
-                        <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-md-between fs-4 m-3 mb-1 custom-border-outset">
-                            <h5 class="card-title fs-2 mb-2 order-2 order-md-1">Title: <?php echo htmlspecialchars($request->getTitle()); ?></h5>
+                        <div class="card-header bg-custom-gold d-flex flex-column flex-md-row align-items-center justify-content-md-between fs-4 m-3 mb-1 border-bottom border-2 border-black">
+                            <h5 class="card-title fs-2 mb-2 order-2 order-md-1"><strong>Title:</strong> <?php echo htmlspecialchars($request->getTitle()); ?></h5>
 
                             <div class="d-flex flex-column align-items-center justify-content-center mt-2 mt-md-0 order-1 order-md-2">
                                 <form action="user_manager/index.php" method="POST" class="mb-0">
@@ -60,19 +60,19 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                             </div>
                         </div>
 
-                        <div class="card-body m-3 mt-1 custom-border-outset">
+                        <div class="card-body m-3 mt-1 ">
 
-                            <p class="card-text fs-2"><?php echo htmlspecialchars($request->getBody()); ?></p>
+                            <p class="card-text fs-2 border-bottom border-2 border-black"><?php echo htmlspecialchars($request->getBody()); ?></p>
 
                             <?php if (!empty($request->getImages())) : ?>
-                                <div class="mb-2">
+                                <div class="mb-2 border-bottom border-2 border-black">
                                     <?php foreach ($request->getImages() as $image): ?>
                                         <img src="<?php echo htmlspecialchars($image->getFileUrl()); ?>" width="200" class="me-2 mb-2 img-thumbnail">
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
 
-                            <p class="fs-3"><strong>Request Status:</strong>
+                            <p class="fs-3 border-bottom border-2 border-black"><strong>Request Status:</strong>
                                 <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
                             </p>
 

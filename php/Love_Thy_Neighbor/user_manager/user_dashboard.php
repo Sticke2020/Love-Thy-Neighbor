@@ -5,7 +5,7 @@
     <div class="row align-items-start gy-3">
 
         <!--------- User Profile Image ---------------------------------->
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <div class="d-inline-block">
                 <?php if ($profilePic == null) { ?>
                     <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
@@ -21,21 +21,21 @@
         </div> 
 
         <!------------ User Profile Data such as Name and Business ------>
-        <div class="col-12 col-md-5">
-            <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
+        <div class="col-12 col-md-6 text-center">
+            <h1 class="mt-1"><strong><?php echo htmlspecialchars($user->getUserName()); ?></strong></h1>
 
             <?php if ($business == null) { ?>
             <?php } else { ?>
                 <?php if (isset($_SESSION['businessUser']) && $_SESSION['businessUser']->getIsAdmin()) { ?>
-                    <h2 class="mt-3">Representative of <?php echo htmlspecialchars($business->getName()); ?></h2>
+                    <h2 class="mt-3"><strong>Representative of <?php echo htmlspecialchars($business->getName()); ?></strong></h2>
                 <?php } else { ?>
-                    <h2 class="mt-3">Employee of <?php echo htmlspecialchars($business->getName()); ?></h2>
+                    <h2 class="mt-3"><strong>Employee of <?php echo htmlspecialchars($business->getName()); ?></strong></h2>
                 <?php } ?>
             <?php } ?>
 
-            <h3 class="mt-3">City: <?php echo htmlspecialchars($user->getCity()); ?></h3>
-            <h3 class="mt-2">State: <?php echo htmlspecialchars($user->getState()); ?></h3>
-            <h3 class="mt-2">Zip: <?php echo htmlspecialchars($user->getZip()); ?></h3>
+            <h3 class="mt-3"><strong>City:</strong> <?php echo htmlspecialchars($user->getCity()); ?></h3>
+            <h3 class="mt-2"><strong>State:</strong> <?php echo htmlspecialchars($user->getState()); ?></h3>
+            <h3 class="mt-2"><strong>Zip:</strong> <?php echo htmlspecialchars($user->getZip()); ?></h3>
         </div>
 
         <!---------------------------- Messages Button ------------------>
@@ -44,7 +44,7 @@
             <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="btn text-custom-white btn-lg custom-border-outset fs-4"
+                <button class="btn text-custom-white btn-lg custom-border-outset fs-4 w-100"
                     id="inbox_button_blink" type="submit">Check Your Messages</button> 
             </form>
         </div>
@@ -53,7 +53,7 @@
             <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4"
+                <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4 w-100"
                          type="submit">Check Your Messages</button> 
             </form>
         </div>
@@ -75,7 +75,7 @@
                 <div class="card-header text-center fs-4 bg-custom-blue border-0">
                     <form action="request_manager/index.php" method="POST">
                         <input type="hidden" name="action" value="make_request">
-                        <input type="submit" class="custom-border-outset btn btn-lg bg-custom-black text-custom-white w-100 mt-2 fs-4 " value="Create Request">
+                        <input type="submit" class="custom-border-outset btn btn-lg bg-custom-black text-custom-white w-100 mt-2 fs-4" value="Create Request">
                     </form>
                 </div>
 
@@ -90,7 +90,7 @@
                                 <!--------- Unfulfilled Requests --------------->
                                 <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                     <div class="card-body">
-                                        <h5 class="card-title fs-4"><strong><?php echo htmlspecialchars($request->getTitle()); ?></strong></h5>
+                                        <h5 class="card-title fs-4 border-bottom border-2 border-black"><strong><?php echo htmlspecialchars($request->getTitle()); ?></strong></h5>
 
                                         <?php if (!empty($request->getImages())) : ?>
                                             <div class="mb-2">
@@ -100,7 +100,7 @@
                                             </div>
                                         <?php endif; ?>
 
-                                        <p class="card-text fs-4"><?php echo htmlspecialchars($request->getBody()); ?></p>
+                                        <p class="card-text fs-4 border-bottom border-2 border-black"><?php echo htmlspecialchars($request->getBody()); ?></p>
 
                                         <p class="fs-5"><strong>Request Status:</strong>
                                             <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
@@ -111,19 +111,19 @@
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="delete_request">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="fs-4 btn bg-custom-red btn-lg text-custom-white custom-border-outset" type="submit">Delete Request</button>
+                                                <button class="fs-4 btn bg-custom-red btn-lg text-custom-white custom-border-outset w-100" type="submit">Delete Request</button>
                                             </form>
 
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="mark_request_fulfilled">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="fs-4 btn bg-custom-blue text-custom-white btn-lg custom-border-outset" type="submit">Mark Fulfilled</button>
+                                                <button class="fs-4 btn bg-custom-blue text-custom-white btn-lg custom-border-outset w-100" type="submit">Mark Fulfilled</button>
                                             </form>
 
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="edit_request">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="fs-4 btn bg-custom-grey text-custom-white btn-lg custom-border-outset" type="submit">Edit Request</button>
+                                                <button class="fs-4 btn bg-custom-grey text-custom-white btn-lg custom-border-outset w-100" type="submit">Edit Request</button>
                                             </form>
                                         </div>
 
@@ -134,7 +134,7 @@
                                 <!--------- fulfilled Requests --------------->
                                 <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                     <div class="card-body">
-                                        <h5 class="card-title fs-4"><strong><?php echo htmlspecialchars($request->getTitle()); ?></strong></h5>
+                                        <h5 class="card-title fs-4 border-bottom border-2 border-black"><strong><?php echo htmlspecialchars($request->getTitle()); ?></strong></h5>
 
                                         <?php if (!empty($request->getImages())) : ?>
                                             <div class="mb-2">
@@ -144,7 +144,7 @@
                                             </div>
                                         <?php endif; ?>
 
-                                        <p class="card-text fs-4"><?php echo htmlspecialchars($request->getBody()); ?></p>
+                                        <p class="card-text fs-4 border-bottom border-2 border-black"><?php echo htmlspecialchars($request->getBody()); ?></p>
 
                                         <p class="fs-5"><strong>Request Status:</strong>
                                             <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>
@@ -155,7 +155,7 @@
                                             <form action="request_manager/index.php" method="POST">
                                                 <input type="hidden" name="action" value="delete_request">
                                                 <input type="hidden" name="request_id" value="<?php echo htmlspecialchars($request->getId()); ?>">
-                                                <button class="btn bg-custom-red btn-lg text-custom-white custom-border-outset" type="submit">Delete Request</button>
+                                                <button class="btn bg-custom-red btn-lg text-custom-white custom-border-outset fs-4 w-100" type="submit">Delete Request</button>
                                             </form>
                                         </div>
                                     </div>

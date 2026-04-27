@@ -4,7 +4,7 @@
     <div class="row align-items-start gy-3">
 
         <!-------------- Admin Profile Image ---------------->
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <div class="d-inline-block">
                 <?php if ($profilePic == null) { ?>
                     <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
@@ -20,7 +20,7 @@
         </div> 
 
         <!------------------ Admin Profile Data ----------------->
-        <div class="col-12 col-md-5">
+        <div class="col-12 col-md-6 text-center">
             <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
             <h1 class="mt-2">Site Admin</h1>      
         </div>
@@ -40,7 +40,7 @@
             <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
-                <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4"
+                <button class="btn bg-custom-black text-custom-white btn-lg custom-border-outset fs-4 w-100"
                          type="submit">Check Your Messages</button> 
             </form>
         </div>

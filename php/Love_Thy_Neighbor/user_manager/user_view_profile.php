@@ -11,7 +11,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     <div class="row align-items-start gy-3">
 
         <!------User Profile Image--------->
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
 
             <?php if ($profilePic == null) { ?>
                 <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
@@ -29,19 +29,19 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div> 
 
         <!--User Profile Data such as Name and Business-->
-        <div class="col-12 col-md-5">
-            <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
+        <div class="col-12 col-md-6 text-center">
+            <h1 class="mt-1"><strong><?php echo htmlspecialchars($user->getUserName()); ?></strong></h1>
             <?php if ($business == null) { ?>
             <?php } else { ?>
                 <?php if ($businessUser->getIsAdmin() == 1) { ?>
-                    <h2 class="mt-3">Representative of <?php echo htmlspecialchars($business->getName()); ?></h2>
+                    <h2 class="mt-3"><strong>Representative of <?php echo htmlspecialchars($business->getName()); ?></strong></h2>
                 <?php } else { ?>
-                    <h1 class="mt-3">Employee of <?php echo htmlspecialchars($business->getName()); ?></h1>
+                    <h1 class="mt-3"><strong>Employee of <?php echo htmlspecialchars($business->getName()); ?></strong></h1>
                 <?php } ?>
             <?php } ?>
-            <h3 class="mt-3">City: <?php echo htmlspecialchars($user->getCity()); ?></h3>
-            <h3 class="mt-2">State: <?php echo htmlspecialchars($user->getState()); ?></h3>
-            <h3 class="mt-2">Zip: <?php echo htmlspecialchars($user->getZip()); ?></h3>
+            <h3 class="mt-3"><strong>City:</strong> <?php echo htmlspecialchars($user->getCity()); ?></h3>
+            <h3 class="mt-2"><strong>State:</strong> <?php echo htmlspecialchars($user->getState()); ?></h3>
+            <h3 class="mt-2"><strong>Zip:</strong> <?php echo htmlspecialchars($user->getZip()); ?></h3>
         </div>
 
         <!----------------Messages Button------------->
@@ -73,7 +73,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                         <?php foreach ($requests as $request) : ?>
                             <div class="card mb-3 bg-custom-gold border custom-border-inset">
                                 <div class="card-body">
-                                    <h5 class="card-title fs-4"><strong><?php echo htmlspecialchars($request->getTitle()); ?></strong></h5>
+                                    <h5 class="card-title fs-4 border-bottom border-2 border-black"><strong><?php echo htmlspecialchars($request->getTitle()); ?></strong></h5>
 
                                     <?php if (!empty($request->getImages())) : ?>
                                         <div class="mb-2">
@@ -83,7 +83,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
                                         </div>
                                     <?php endif; ?>
 
-                                    <p class="card-text fs-4"><?php echo htmlspecialchars($request->getBody()); ?></p>
+                                    <p class="card-text fs-4 border-bottom border-2 border-black"><?php echo htmlspecialchars($request->getBody()); ?></p>
 
                                     <p class="fs-5"><strong>Request Status:</strong>
                                         <?php echo ($request->getRequestStatusTypeId() == 1) ? 'Unfulfilled' : 'Fulfilled'; ?>

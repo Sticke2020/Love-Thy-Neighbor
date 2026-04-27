@@ -99,9 +99,11 @@ switch ($action) {
 
                $db->commit();
           }
-          catch (PDOException $e) {
+          catch (Exception $e) {
                $db->rollBack();
-               echo "Transaction failed: " . $e->getMessage();
+               $error = "Transaction failed: " . $e->getMessage();
+               include('../errors/error.php');
+               exit;
           }
 
           $requests = RequestDB::getRequests();

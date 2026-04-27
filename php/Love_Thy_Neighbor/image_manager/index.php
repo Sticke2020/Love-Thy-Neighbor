@@ -62,7 +62,7 @@ switch ($action) {
         catch (Exception $e) {
             $db->rollBack();
             echo "Transaction failed: " . $e->getMessage();
-            $errorMessage = $e->getMessage();
+            $error = $e->getMessage();
             include('../errors/error.php');
             exit;
         }
