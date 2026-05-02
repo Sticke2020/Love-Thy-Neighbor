@@ -247,16 +247,16 @@ INSERT INTO report_type (id, description) VALUES
 (10, 'Technical Error'),
 (11, 'Need Assistance');
 
--- Insert user
+-- Insert user  Password for all Seeded Users is test
 INSERT INTO user (user_type_id, first_name, last_name, city, state, zip, email_address, phone, username, password,  date_created) VALUES
-(1, 'Matt', 'Feagin', 'New Richmond', 'WI', 54017, 'matt@matt.com', '715-777-7777', 'Admin', 'test', NOW()),
-(2, 'Alex', 'Prime', 'New Richmond', 'WI', 54017, 'prime@prime.com', '715-123-4567', 'Moderator', 'test', NOW()),
-(3, 'Susan', 'Smith', 'Somerset', 'WI', 54025, 'smith@smith.com', '715-111-1111', 'Susan', 'test', NOW()),
-(3, 'Ron', 'Nor', 'New Richmond', 'WI', 54017, 'ron@ron.com', '715-222-2222', 'Ronald', 'test', NOW()),
-(3, 'Debbie', 'James', 'New Richmond', 'WI', 54017, 'deb@deb.com', '715-333-3333', 'Debbs', 'test', NOW()),
-(3, 'Tiffany', 'Wood', 'New Richmond', 'WI', 54017, 'tiff@tiff.com', '715-444-4444', 'Tiff', 'test', NOW()),
-(3, 'Samuel', 'Rose', 'Somerset', 'WI', 54025, 'sam@sam.com', '715-555-5555', 'Sammy', 'test', NOW()),
-(3, 'Melissa', 'Heart', 'New Richmond', 'WI', 54017, 'mel@mel.com', '715-678-6677', 'Melissa', 'test', NOW());
+(1, 'Matt', 'Feagin', 'New Richmond', 'WI', 54017, 'matt@matt.com', '715-777-7777', 'Admin', '$2y$10$4t.5Zh7YjESShKY8XKtr/OdXqpi7jhFHMJ/g1BIAWmvBaY485HgLi', NOW()),
+(2, 'Alex', 'Prime', 'New Richmond', 'WI', 54017, 'prime@prime.com', '715-123-4567', 'Moderator', '$2y$10$dAYU7bIji7Vajm6YvyYJfe2lV8AIRo48MTyA4OmTBl1XJS9BHK.qK', NOW()),
+(3, 'Susan', 'Smith', 'Somerset', 'WI', 54025, 'smith@smith.com', '715-111-1111', 'Susan', '$2y$10$ncTPhDfuX/jStIMdyc/a2O8qQ84D4Pji7UpZ1u1XSGl8xqckLCkne', NOW()),
+(3, 'Ron', 'Nor', 'New Richmond', 'WI', 54017, 'ron@ron.com', '715-222-2222', 'Ronald', '$2y$10$3Om/t3XB.Urnsrh5GJ64BeyZXgBiWeUn0ZOUftdv42t8mvSjCiPYq', NOW()),
+(3, 'Debbie', 'James', 'New Richmond', 'WI', 54017, 'deb@deb.com', '715-333-3333', 'Debbs', '$2y$10$eQo9GtebQVD1yS.O1QPC0.gmd3FeQuzdmyPP8ZHY.hHQiZQSuqiIy', NOW()),
+(3, 'Tiffany', 'Wood', 'New Richmond', 'WI', 54017, 'tiff@tiff.com', '715-444-4444', 'Tiff', '$2y$10$I8at4uj8Sfim/sbEZuI5hO3QSnooy7HpF0HECDSKYyaxas.qWU20u', NOW()),
+(3, 'Samuel', 'Rose', 'Somerset', 'WI', 54025, 'sam@sam.com', '715-555-5555', 'Sammy', '$2y$10$glAv0SiCsAyzz2suf3i6judGmWQsYlwOWhNCI/U814EDl3uaNmiMW', NOW()),
+(3, 'Melissa', 'Heart', 'New Richmond', 'WI', 54017, 'mel@mel.com', '715-678-6677', 'Melissa', '$2y$10$dHpxkLNmHTq3LPOGC7QKDeNTU9S0NWYrLshZWW.lYCj.FfI5FOPP6', NOW());
 
 -- Insert business
 INSERT INTO business (name, phone, address, city, state, zip, description, verification_code, date_created) VALUES 

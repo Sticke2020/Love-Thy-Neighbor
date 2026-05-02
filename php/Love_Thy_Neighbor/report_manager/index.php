@@ -9,6 +9,8 @@ require_once('../model/Image.php');
 require_once('../model/Image_DB.php');
 require_once('../model/Message.php');
 require_once('../model/Message_DB.php');
+require_once('../model/Log.php');
+require_once('../model/Log_DB.php');
 require_once('../model/Utility.php');
 
 if(session_status() === PHP_SESSION_NONE) {
@@ -46,16 +48,19 @@ switch ($action) {
             $report->setUserId($userId);
 
             if (!$reportTypeId || !$reportBody || !$userId) {
-                $errorMessage = "Something went wrong, Please try again.";
+                $error = "Something went wrong, Please try again.";
                 include('../errors/error.php');
                 exit;
             }
-            else if ($reportBody > 2000) {
-                $errorMessage = "Report must be 2,000 characters or less.";
+            else if (strlen($reportBody) > 2000) {
+                $error = "Report must be 2,000 characters or less.";
                 include('../errors/error.php');
                 exit;
             }
 
+            $log = new Log($userId, 10); // 10 = File Report
+            LogDB::createLog($log);
+    
             ReportDB::createReport($report);
 
             include('../report_manager/report_created.php');

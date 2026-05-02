@@ -11,25 +11,18 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
     <div class="row align-items-start gy-3">
 
         <!------User Profile Image--------->
-        <div class="col-12 col-md-3">
+        <div id="center_image" class="col-12 col-sm-6 col-md-4 col-lg-4">
 
             <?php if ($profilePic == null) { ?>
-                <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
+                <img id="profile_pic" class="custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
             <?php } else { ?>
-                <img class="img-fluid custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
+                <img id="profile_pic" class="custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
             <?php } ?>
-            <!--This form is to keep uniformity with the dashboard layout since the image size is related
-                to the button size, there may be a better way to fix this later, the image doesnt display 
-                properly without this -->
-            <form >
-                <input type="hidden" />
-                <input class="btn bg-custom-gold w-100 mt-2 fs-4" style="border: none" value="                    " disabled/>
-            </form>
 
         </div> 
 
         <!--User Profile Data such as Name and Business-->
-        <div class="col-12 col-md-6 text-center">
+        <div class="col-12 col-sm-6 col-md-8 col-lg-5 text-center">
             <h1 class="mt-1"><strong><?php echo htmlspecialchars($user->getUserName()); ?></strong></h1>
             <?php if ($business == null) { ?>
             <?php } else { ?>
@@ -45,7 +38,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->getUserTypeId() == 1) {
         </div>
 
         <!----------------Messages Button------------->
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-sm-6 col-md-5 col-lg-3">
             <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="message_user">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">

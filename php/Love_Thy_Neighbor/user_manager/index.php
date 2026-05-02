@@ -831,6 +831,9 @@ switch ($action) {
 
                     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                     UserDB::updatePassword($userId, $hashedPassword);
+
+                    $log = new Log($userId, 14); // 14 = Password Changed
+                    LogDB::createLog($log);
                     include('../view/updates.php');
                     exit;
                }
@@ -857,6 +860,9 @@ switch ($action) {
 
                     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                     UserDB::updatePassword($userId, $hashedPassword);
+
+                    $log = new Log($userId, 14); // 14 = Password Changed
+                    LogDB::createLog($log);
                     include('../view/updates.php');
                     exit;
                }

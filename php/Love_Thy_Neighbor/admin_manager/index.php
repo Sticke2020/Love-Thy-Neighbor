@@ -26,9 +26,6 @@ if ( $action == NULL) {
 }
 
 switch ($action) { 
-     case 'hash_passwords':
-          UserDB::hashPasswordsInDB();
-          break;
 
      case 'home':
           Utility::adminReturnToDashboard();

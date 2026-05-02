@@ -51,16 +51,4 @@ if (isset($_SESSION['userId'])) {
 <h1 class="text-center"><?php echo $messageWelcome ?></h1><br>
 <h2 class="text-center bg-custom-red custom-border-outset mt-1 p-3"><?php echo $disclaimer ?></h2>
 
-
-<fieldset class="w-25">
-<p class="mt-3 fs-5">This button will hash the passwords in the DB if the DB was reset and the passwords are plain text</p>
-<div class="mt-1">
-    <form method="POST" action="admin_manager/index.php">
-        <input type="hidden" name="action" value="hash_passwords">
-        <input type="submit" class="btn btn-lg bg-custom-black text-custom-white" value="Hash Passwords">
-    </form>
-</div>
-</fieldset>
-
-
 <?php require_once 'view/footer.php'; ?>

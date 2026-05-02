@@ -4,12 +4,12 @@
     <div class="row align-items-start gy-3">
 
         <!-------------- Admin Profile Image ---------------->
-        <div class="col-12 col-md-3">
+        <div id="center_image" class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="d-inline-block">
                 <?php if ($profilePic == null) { ?>
-                    <img class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
+                    <img id="profile_pic" class="img-fluid custom-border-outset" src="https://api.dicebear.com/9.x/initials/svg?seed=<?php echo htmlspecialchars(urlencode($user->getUserName())); ?>">
                 <?php } else { ?>
-                    <img class="img-fluid custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
+                    <img id="profile_pic" class="img-fluid custom-border-outset" src="<?php echo htmlspecialchars($profilePic->getFileUrl()); ?>">
                 <?php } ?>
 
                 <form action="image_manager/index.php" method="POST">
@@ -20,14 +20,14 @@
         </div> 
 
         <!------------------ Admin Profile Data ----------------->
-        <div class="col-12 col-md-6 text-center">
+        <div class="col-12 col-sm-6 col-md-8 col-lg-5 text-center">
             <h1 class="mt-1"><?php echo htmlspecialchars($user->getUserName()); ?></h1>
             <h1 class="mt-2">Site Admin</h1>      
         </div>
 
         <!-- ---------Messages Button blinks if there are unread messages -------->
         <?php if ($unreadMessages == true) { ?>
-        <div class="col-12 col-md-3">
+        <div id="message_button" class="col-12 col-sm-6 col-md-5 col-lg-3">
             <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
@@ -36,7 +36,7 @@
             </form>
         </div>
         <?php } else { ?>
-        <div class="col-12 col-md-3"> <!-------------- No unread messages button is solid no blinking ------->
+        <div id="message_button" class="col-12 col-sm-6 col-md-5 col-lg-3"> <!-------------- No unread messages button is solid no blinking ------->
             <form action="message_manager/index.php" method="POST" class="text-md-end mt-3">
                 <input type="hidden" name="action" value="messages">
                 <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->getId()); ?>">
@@ -106,15 +106,5 @@
         </div>
     </div>
 </div>
-
-<fieldset class="w-25">
-<p class="mt-3 fs-5">This button will hash the passwords in the DB if the DB was reset and the passwords are plain text</p>
-<div class="mt-1">
-    <form method="POST" action="admin_manager/index.php">
-        <input type="hidden" name="action" value="hash_passwords">
-        <input type="submit" class="btn btn-lg bg-custom-black text-custom-white" value="Hash Passwords">
-    </form>
-</div>
-</fieldset>
 
 <?php require_once ('../view/footer.php'); ?>

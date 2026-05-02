@@ -479,41 +479,4 @@ public static function deleteUser($userId) {
     $statement->closeCursor();
 }
 
-
-// method is used to hash passwords in the DB when the DB is reset/rebuilt
-// and the passwords in the DB are in plain text
-public static function hashPasswordsInDB() {
-    $db = DataBase::getDB(); 
-    
-    $query = 'SELECT id, password
-    FROM user';
-
-    $statement = $db->prepare($query);
-    $statement->execute();
-
-    $users = array();
-    foreach ($statement as $row) {
-        $user = new User();
-        $user->setID($row['id']);
-        $user->setPassword($row['password']);
-
-        $users[] = $user;
-    }
-    foreach ($users as $user) {
-        $password = $user->getPassword();
-
-        if (strlen($password) === 60 && str_starts_with($password, '$2y$')) {
-            continue;
-        }
-
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $query = 'UPDATE user SET password = :password WHERE id = :id';
-        $statement = $db->prepare($query);
-        $statement->bindValue(':password', $hashedPassword);
-        $statement->bindValue(':id', $user->getId());
-        $statement->execute();
-    }
-}
-
 }
