@@ -55,37 +55,3 @@ main {
         padding: .2em;
     }
 }
-
-/*
-header h1 {
-    text-align: center;
-}
-#header{
-    background-color: #faffc1;
-    padding: 14px 70px;
-}
-ul {
-    display: flex;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #0c0c0c;
-    justify-content: center;
-}
-li {
-    float: left;
-    width: 20%;
-}
- li a {
-    font-size: 110%;
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 45px;
-    text-decoration: none;
-}
-li a:hover {
-    background-color: #292828;
-}
-*/
