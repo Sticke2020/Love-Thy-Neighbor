@@ -97,7 +97,7 @@ public static function deleteAccount($userId) {
         ImageDB::deleteImageById($imageId);
     }
 
-    if (isset($_SESSION['businessUser'])) {
+    if (isset($_SESSION['businessUser']) || (isset($_SESSION['user']) and BusinessDB::isBusinessUser($userId))) {
         $businessUser = BusinessDB::getBusinessUserByUserId($userId);
         
         if ($businessUser->getIsAdmin()) {
@@ -123,15 +123,20 @@ public static function deleteAccount($userId) {
     ReportDB::deleteReports($userId);
     LogDB::deleteLogs($userId);
     
-
-    $_SESSION = array();
-    session_destroy();
-    $lifetime = 60 * 60 * 24 * -14;
-    setcookie('userSession', '', $lifetime, '/');
-    include('user_login.php');
+    if (!isset($_SESSION['user'])) {
+        $_SESSION = array();
+        session_destroy();
+        $lifetime = 60 * 60 * 24 * -14;
+        setcookie('userSession', '', $lifetime, '/');
+        include('user_login.php');
+    }
 
     if ($user) {
         UserDB::deleteUser($userId);
+    }
+
+    if (isset($_SESSION['user'])) {
+        Utility::adminReturnToDashboard();
     }
     
     exit;

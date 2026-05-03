@@ -17,7 +17,7 @@
     <!---------------- Title Row -------------->
     <div class="container-fluid text-center py-3 bg-custom-blue border-0 shadow-sm">
         <a class="text-decoration-none text-custom-white fw-bold fs-1"
-        href="user_manager?action=home">
+        href="admin_manager?action=home">
             Love Thy Neighbor Admin
         </a>
     </div>

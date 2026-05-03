@@ -701,7 +701,16 @@ switch ($action) {
      case 'edit_business':
           $user = UserDB::getUserById($_SESSION['userId']);
           $business = BusinessDB::getBusinessById($_SESSION['businessUser']->getBusinessId());
-          $employees = BusinessDB::getBusinessEmployeesByBusinessId($business->getId());
+          $employees = array();
+          $employee = BusinessDB::getBusinessEmployeesByBusinessId($business->getId());
+
+          // filters out the business owner/rep so they cant delete themselves from the company
+          foreach ($employee as $e) {
+               if ($e->getUserId() !== $user->getId()) {
+                    $employees[] = $e;
+               }
+          }
+
           include("user_edit_business.php");
           break;
 
