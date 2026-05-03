@@ -197,6 +197,11 @@
                                     <p class="fs-5"><strong>Date Created:</strong>
                                         <?php echo htmlspecialchars($comment->getDateCreated()); ?>
                                     </p>
+                                    <form action="feedback_manager/index.php" method="POST">
+                                        <input type="hidden" name="action" value="delete_feedback">
+                                        <input type="hidden" name="feedback_id" value="<?php echo htmlspecialchars($comment->getId()); ?>">
+                                        <button type="submit" class="btn bg-custom-red text-custom-white btn-lg custom-border-outset fs-4">Delete Feedback</button>
+                                    </form>
                                 </div>
                             </div>
                         <?php endforeach; ?>

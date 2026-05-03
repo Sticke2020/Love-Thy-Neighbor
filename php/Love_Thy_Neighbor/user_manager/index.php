@@ -453,7 +453,7 @@ switch ($action) {
                $userId = UserDB::createUser($user);
                BusinessDB::createBusinessUser($userId, $businessId, 0);
 
-               $log = new Log($userId->getId(), 1);  // 1 = Account Created
+               $log = new Log($userId, 1);  // 1 = Account Created
                LogDB::createLog($log);
 
                include('user_employee_registered.php');

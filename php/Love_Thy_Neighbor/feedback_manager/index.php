@@ -63,7 +63,12 @@ switch ($action) {
      case 'delete_feedback':
           $feedbackId = filter_input(INPUT_POST, 'feedback_id');
           FeedbackDB::deleteFeedbackById($feedbackId);
-          Utility::adminReturnToDashboard();
+          if (isset($_SESSION['user'])) {
+               Utility::adminReturnToDashboard();
+          }
+          else {
+               Utility::returnToDashboard();
+          }
           break;
 
 
